@@ -1,4 +1,4 @@
-package multichoice.demo;
+package pl.pwr.eng.multichoice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

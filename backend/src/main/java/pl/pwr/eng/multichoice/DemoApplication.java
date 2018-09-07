@@ -1,4 +1,4 @@
-package multichoice.demo;
+package pl.pwr.eng.multichoice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
