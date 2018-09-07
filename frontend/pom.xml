@@ -4,9 +4,9 @@
 	<artifactId>frontend</artifactId>
 
 	<parent>
-		<groupId>de.jonashackt</groupId>
-		<artifactId>spring-boot-vuejs</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+    <groupId>com.multichoice</groupId>
+    <artifactId>multichoice</artifactId>
+    <version>0.0.1</version>
 	</parent>
 
 	<properties>
@@ -56,7 +56,7 @@
 							<arguments>run build</arguments>
             </configuration>
 					</execution>
-          <!-- Run Unit tests with Jest -->
+          <!-- Run Unit tests with Jest
           <execution>
             <id>npm run unit</id>
             <goals>
@@ -66,7 +66,7 @@
             <configuration>
               <arguments>run unit</arguments>
             </configuration>
-          </execution>
+          </execution>-->
           <!-- Run End2End tests with Nightwatch -->
           <!--
           <execution>
