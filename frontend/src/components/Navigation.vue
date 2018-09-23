@@ -1,17 +1,32 @@
 <template>
   <div>
-    <h2>Nav Bar</h2>
+    <h2 v-html="polonizePathName($route.name)"></h2>
     <nav>
-      <router-link class="spacing" v-for="routes in links"
-                                    v-bind:key="routes.id"
-                                    :to=routes.page>{{routes.text}}</router-link>
+      <router-link class="spacing"
+                   v-model="msg"
+                   v-for="routes in links"
+                   v-bind:key="routes.id"
+                   :to=routes.page>{{routes.text}}</router-link>
     </nav>
   </div>
 </template>
 
 <script>
+function polonizePathName (routeName) {
+  switch (routeName) {
+    case 'Questions': return 'Pytania'
+    case 'Tests': return 'Testy'
+    case 'Home': return 'Strona główna'
+    case 'Profile': return 'Profil'
+    default: return 'Unknown'
+  }
+}
+
 export default {
   name: 'Navigation',
+  methods: {
+    polonizePathName
+  },
   data () {
     return {
       links: [
@@ -39,6 +54,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>

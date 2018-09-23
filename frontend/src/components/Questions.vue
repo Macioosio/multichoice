@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Pytania</h1>
     <p>Pytania</p>
   </div>
 </template>
