@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 v-html="polonizePathName($route.name)"></h2>
+    <h2 v-html="polonizeRouteName($route.name)"></h2>
     <nav>
       <router-link class="spacing"
                    v-model="msg"
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-function polonizePathName (routeName) {
+function polonizeRouteName (routeName) {
   switch (routeName) {
     case 'Questions': return 'Pytania'
     case 'Tests': return 'Testy'
@@ -25,7 +25,7 @@ function polonizePathName (routeName) {
 export default {
   name: 'Navigation',
   methods: {
-    polonizePathName
+    polonizeRouteName
   },
   data () {
     return {
