@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <AppHeader></AppHeader>
     <Navigation></Navigation>
     <router-view/>
   </div>
@@ -7,10 +8,12 @@
 
 <script>
 import Navigation from './components/Navigation'
+import AppHeader from './components/AppHeader'
 
 export default {
   name: 'App',
   components: {
+    'AppHeader': AppHeader,
     'Navigation': Navigation
   }
 }
