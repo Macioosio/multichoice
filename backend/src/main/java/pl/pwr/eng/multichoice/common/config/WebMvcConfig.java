@@ -12,7 +12,6 @@ import pl.pwr.eng.multichoice.common.util.DTOModelMapper;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-// FIXME find alternatives for deprecated classes
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
