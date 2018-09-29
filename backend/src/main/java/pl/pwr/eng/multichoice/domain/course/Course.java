@@ -1,4 +1,4 @@
-package pl.pwr.eng.multichoice.domain.subject;
+package pl.pwr.eng.multichoice.domain.course;
 
 import javax.persistence.*;
 import java.util.UUID;
