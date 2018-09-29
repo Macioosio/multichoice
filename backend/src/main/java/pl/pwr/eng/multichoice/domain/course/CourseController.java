@@ -31,6 +31,15 @@ public class CourseController {
         return ResponseEntity.ok(course);
     }
 
+    @GetMapping("/{id}/areas")
+    public ResponseEntity getAreas(@PathVariable(value = "id") UUID uuid){
+        Course course = courseService.findById(uuid);
+        if (course == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(course.getAreas());
+    }
+
     @PostMapping
     public ResponseEntity addCourse(@Valid @RequestBody @DTO(CourseForm.class) Course course, BindingResult result) {
         if (result.hasErrors()) {
