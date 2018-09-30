@@ -20,6 +20,10 @@ public class AreaService {
         return areaRepository.findById(uuid);
     }
 
+    public List<Area> findByCourseId(UUID uuid) {
+        return areaRepository.findByCourseId(uuid);
+    }
+
     public void save(Area area) {
         areaRepository.save(area);
     }
@@ -27,6 +31,7 @@ public class AreaService {
     public void modifyArea(Area modifiedArea) {
         Area originalArea = findById(modifiedArea.getId());
         originalArea.setName(modifiedArea.getName());
+        originalArea.setCourse(modifiedArea.getCourse());
         save(originalArea);
     }
 

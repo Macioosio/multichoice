@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.DTO;
+import pl.pwr.eng.multichoice.domain.area.Area;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -37,7 +38,8 @@ public class CourseController {
         if (course == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(course.getAreas());
+        List<Area> areas = courseService.getAreas(course);
+        return ResponseEntity.ok(areas);
     }
 
     @PostMapping

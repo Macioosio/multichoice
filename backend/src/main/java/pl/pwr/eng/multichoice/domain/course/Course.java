@@ -23,12 +23,4 @@ public class Course {
 
     @Column(nullable = false)
     private String name;
-
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "course")
-    @JsonIgnore
-    private Set<Area> areas;
-
-
 }
