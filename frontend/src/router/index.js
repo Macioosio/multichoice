@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from '@/components/Home'
-import Questions from '@/components/Questions'
+import Courses from '@/components/Courses'
 import Tests from '@/components/Tests'
 import Profile from '@/components/Profile'
+import Areas from '@/components/Areas'
 
 Vue.use(Router)
 
@@ -16,9 +17,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/questions',
-      name: 'Questions',
-      component: Questions
+      path: '/courses',
+      name: 'Courses',
+      component: Courses
     },
     {
       path: '/tests',
@@ -29,6 +30,12 @@ export default new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/course/:courseId/areas',
+      name: 'Areas',
+      component: Areas,
+      props: true
     }
   ]
 })
