@@ -25,7 +25,7 @@ export default {
         {
           id: 1,
           text: 'Pytania',
-          page: '/questions'
+          page: '/courses'
         },
         {
           id: 2,
