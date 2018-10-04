@@ -1,9 +1,25 @@
 <template>
 <div>
+  <h2>Działy</h2>
+  <p v-if="!isEditMode">{{course.name}}</p>
   <p>
-  <p>Pytania</p>
+    <input v-if="isEditMode" v-model="course.name" placeholder="this.course.name"/>
+    <button v-if="!isEditMode && !isAddMode" v-on:click="turnOnAddMode">Dodaj dział</button>
+    <button v-if="!isEditMode && !isAddMode" v-on:click="turnOnEditMode">Edytuj</button>
+  </p>
+  <p>
+    <button v-if="isEditMode" v-on:click="saveChanges">Zapisz</button>
+    <button v-if="isEditMode" v-on:click="abandonChanges">Wróć</button>
+  </p>
+  <router-link v-if="!isAddMode" :to="'/courses'"><button v-on:click="deleteCourse">Usuń</button></router-link>
+
+  <input v-if="isAddMode" v-model="area.name" placeholder="Nazwa działu..."/>
+  <p>
+  <button v-if="isAddMode" v-on:click="saveAdding">Zapisz</button>
+  <button v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
+  </p>
   <ul>
-    <li v-for ="area in areas" v-bind:key="area.id">
+    <li v-if="!isAddMode" v-for ="area in areas" v-bind:key="area.id">
       {{area.name}}
     </li>
   </ul>
@@ -18,17 +34,59 @@ export default {
   props: ['courseId'],
   data () {
     return {
-      areas: null
+      areas: null,
+      course: null,
+      isEditMode: false,
+      isAddMode: false,
+      area: {
+        'course': null,
+        'name': null
+      }
     }
   },
   mounted () {
     this.fetchCourseAreas()
+    this.fetchCourse()
   },
   methods: {
     fetchCourseAreas () {
       axios
         .get('/api/courses/' + this.courseId + '/areas')
         .then(response => (this.areas = response.data))
+    },
+    fetchCourse () {
+      axios
+        .get('/api/courses/' + this.courseId)
+        .then(response => (this.course = response.data))
+    },
+    turnOnEditMode () {
+      this.isEditMode = true
+    },
+    turnOnAddMode () {
+      this.isAddMode = true
+    },
+    abandonChanges () {
+      this.isEditMode = false
+      this.isAddMode = false
+    },
+    saveChanges () {
+      axios
+        .put('/api/courses/', this.course)
+      this.isEditMode = false
+    },
+    saveAdding () {
+      this.area.course = this.course
+      axios
+        .post('api/areas', this.area)
+      this.isAddMode = false
+      this.$forceUpdate()
+    },
+    deleteCourse () {
+      this.isEditMode = false
+      axios
+        .delete('/api/courses/' + this.courseId)
+      this.fetchCourseAreas()
+      this.$forceUpdate()
     }
   }
 }

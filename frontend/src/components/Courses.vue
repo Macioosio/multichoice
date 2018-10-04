@@ -1,8 +1,15 @@
 <template>
   <div>
-    <p>Pytania</p>
+    <h2>Kursy</h2>
+    <button v-if="!isAddMode" v-on:click="turnOnAddMode">Dodaj</button>
+      <input v-if="isAddMode" v-model="course.name" placeholder="Nazwa kursu..."/>
+      <p>
+        <button v-if="isAddMode" v-on:click="saveChanges">Zapisz</button>
+        <button v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
+      </p>
+
     <ul>
-    <li v-for ="course in courses" v-bind:key="course.id">
+    <li v-if="!isAddMode" v-for ="course in courses" v-bind:key="course.id">
       <router-link :to="'/course/' + course.id + '/areas'">{{course.name}}</router-link>
     </li>
   </ul>
@@ -16,7 +23,11 @@ export default {
   name: 'Courses',
   data () {
     return {
-      courses: null
+      courses: null,
+      isAddMode: false,
+      course: {
+        'name': null
+      }
     }
   },
   mounted () {
@@ -27,6 +38,18 @@ export default {
       axios
         .get('/api/courses')
         .then(response => (this.courses = response.data))
+    },
+    saveChanges () {
+      axios
+        .post('/api/courses/', this.course)
+      this.isAddMode = false
+      this.loadData()
+    },
+    abandonChanges () {
+      this.isAddMode = false
+    },
+    turnOnAddMode () {
+      this.isAddMode = true
     }
   }
 }
