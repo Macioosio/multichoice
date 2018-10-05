@@ -32,6 +32,8 @@ public class QuestionService {
     public void modifyQuestion(Question modifiedQuestion) {
         Question originalQuestion = findById(modifiedQuestion.getId());
         originalQuestion.setContent(modifiedQuestion.getContent());
+        originalQuestion.setCourse(modifiedQuestion.getCourse());
+        originalQuestion.setArea(modifiedQuestion.getArea());
         save(originalQuestion);
     }
 
