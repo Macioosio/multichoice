@@ -78,15 +78,14 @@ export default {
       this.area.course = this.course
       axios
         .post('api/areas', this.area)
-      this.isAddMode = false
-      this.$forceUpdate()
+      setTimeout(this.isAddMode = false, 10000)
+      setTimeout(this.fetchCourseAreas(), 10000)
     },
     deleteCourse () {
       this.isEditMode = false
       axios
         .delete('/api/courses/' + this.courseId)
-      this.fetchCourseAreas()
-      this.$forceUpdate()
+      setTimeout(this.$forceUpdate(), 10000)
     }
   }
 }

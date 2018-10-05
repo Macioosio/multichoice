@@ -42,8 +42,8 @@ export default {
     saveChanges () {
       axios
         .post('/api/courses/', this.course)
-      this.isAddMode = false
-      this.loadData()
+      setTimeout(this.isAddMode = false, 10000)
+      setTimeout(this.loadData(), 10000)
     },
     abandonChanges () {
       this.isAddMode = false
