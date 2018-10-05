@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.DTO;
+import pl.pwr.eng.multichoice.common.util.ContraintViolationHandler;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/answers")
-public class AnswerController {
+public class AnswerController implements ContraintViolationHandler {
     @Autowired
     AnswerService answerService;
 

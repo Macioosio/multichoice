@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.pwr.eng.multichoice.common.util.ContraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
 
 import javax.validation.Valid;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/areas")
-public class AreaController {
+public class AreaController implements ContraintViolationHandler {
     @Autowired
     AreaService areaService;
 
