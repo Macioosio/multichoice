@@ -10,7 +10,7 @@ import java.util.UUID;
 public class AnswerService {
 
     @Autowired
-    AnswerService answerRepository;
+    AnswerRepository answerRepository;
 
     public List<Answer> findAll(){
         return answerRepository.findAll();
