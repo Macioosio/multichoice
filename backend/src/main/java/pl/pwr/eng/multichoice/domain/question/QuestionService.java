@@ -44,5 +44,13 @@ public class QuestionService {
     public List<Answer> getAnswers(Question question) {
         return answerService.findByQuestionId(question.getId());
     }
+
+    public List<Question> findByAreaId(UUID id) {
+        return questionRepository.findByAreaId(id);
+    }
+
+    public List<Question> findByCourseId(UUID id) {
+        return questionRepository.findByCourseId(id);
+    }
 }
 

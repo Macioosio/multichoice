@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.eng.multichoice.domain.area.Area;
 import pl.pwr.eng.multichoice.domain.area.AreaService;
+import pl.pwr.eng.multichoice.domain.question.Question;
+import pl.pwr.eng.multichoice.domain.question.QuestionService;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +18,9 @@ public class CourseService {
 
     @Autowired
     AreaService areaService;
+
+    @Autowired
+    QuestionService questionService;
 
     public List<Course> findAll(){
         return courseRepository.findAll();
@@ -41,5 +46,9 @@ public class CourseService {
 
     public void delete(Course course) {
         courseRepository.delete(course);
+    }
+
+    public List<Question> getQuestions(Course course) {
+        return questionService.findByCourseId(course.getId());
     }
 }

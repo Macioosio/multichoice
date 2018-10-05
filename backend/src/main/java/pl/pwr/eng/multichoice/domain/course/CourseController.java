@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.DTO;
 import pl.pwr.eng.multichoice.domain.area.Area;
 import pl.pwr.eng.multichoice.common.util.ContraintViolationHandler;
+import pl.pwr.eng.multichoice.domain.question.Question;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +43,17 @@ public class CourseController implements ContraintViolationHandler {
         List<Area> areas = courseService.getAreas(course);
         return ResponseEntity.ok(areas);
     }
+
+    @GetMapping("/{id}/questions")
+    public ResponseEntity getQuestions(@PathVariable(value = "id") UUID uuid){
+        Course course = courseService.findById(uuid);
+        if (course == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        List<Question> questions = courseService.getQuestions(course);
+        return ResponseEntity.ok(questions);
+    }
+
 
     @PostMapping
     public ResponseEntity addCourse(@Valid @RequestBody @DTO(CourseForm.class) Course course, BindingResult result) {
