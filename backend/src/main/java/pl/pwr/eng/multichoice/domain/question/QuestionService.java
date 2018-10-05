@@ -26,7 +26,7 @@ public class QuestionService {
 
     public void modifyQuestion(Question modifiedQuestion) {
         Question originalQuestion = findById(modifiedQuestion.getId());
-        originalQuestion.setName(modifiedQuestion.getName());
+        originalQuestion.setContent(modifiedQuestion.getContent());
         save(originalQuestion);
     }
 

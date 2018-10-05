@@ -18,6 +18,6 @@ public class Question {
     @GeneratedValue
     private UUID id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(columnDefinition = "text")
+    private String content;
 }

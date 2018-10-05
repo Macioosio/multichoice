@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class QuestionForm {
 
     @NotNull
-    private String name;
+    private String content;
 
 }
 
