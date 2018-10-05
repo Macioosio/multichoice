@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.DTO;
+import pl.pwr.eng.multichoice.domain.answer.Answer;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,6 +30,16 @@ public class QuestionController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(question);
+    }
+
+    @GetMapping("/{id}/answers")
+    public ResponseEntity getAnswers(@PathVariable(value = "id") UUID uuid){
+        Question question = questionService.findById(uuid);
+        if (question == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        List<Answer> answers = questionService.getAnswers(question);
+        return ResponseEntity.ok(answers);
     }
 
     @PostMapping

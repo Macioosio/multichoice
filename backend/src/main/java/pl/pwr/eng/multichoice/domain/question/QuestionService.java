@@ -2,6 +2,8 @@ package pl.pwr.eng.multichoice.domain.question;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.pwr.eng.multichoice.domain.answer.Answer;
+import pl.pwr.eng.multichoice.domain.answer.AnswerService;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +13,9 @@ public class QuestionService {
 
     @Autowired
     QuestionRepository questionRepository;
+
+    @Autowired
+    AnswerService answerService;
 
     public List<Question> findAll(){
         return questionRepository.findAll();
@@ -32,6 +37,10 @@ public class QuestionService {
 
     public void delete(Question question) {
         questionRepository.delete(question);
+    }
+
+    public List<Answer> getAnswers(Question question) {
+        return answerService.findByQuestionId(question.getId());
     }
 }
 
