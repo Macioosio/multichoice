@@ -160,6 +160,7 @@ export default {
   }
 
   #grid-template {
+    margin: 0 auto;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
