@@ -2,7 +2,6 @@
   <div>
     <nav>
       <router-link class="spacing"
-                   v-model="msg"
                    v-for="routes in links"
                    v-bind:key="routes.id"
                    :to=routes.page>{{routes.text}}</router-link>
