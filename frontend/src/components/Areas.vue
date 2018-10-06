@@ -20,7 +20,7 @@
   </p>
   <ul>
     <li v-if="!isAddMode" v-for ="area in areas" v-bind:key="area.id">
-      {{area.name}}
+      <router-link :to="'/questions'">{{area.name}}</router-link>
     </li>
   </ul>
 </div>

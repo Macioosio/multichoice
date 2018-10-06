@@ -6,6 +6,7 @@ import Courses from '@/components/Courses'
 import Tests from '@/components/Tests'
 import Profile from '@/components/Profile'
 import Areas from '@/components/Areas'
+import Questions from '@/components/Questions'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       name: 'Areas',
       component: Areas,
       props: true
+    },
+    {
+      path: '/questions',
+      name: 'Questions',
+      component: Questions
     }
   ]
 })
