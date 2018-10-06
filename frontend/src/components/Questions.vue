@@ -37,15 +37,8 @@ export default {
   name: 'Questions',
   data () {
     return {
-      data: [
-        { name: 'American alligator', location: 'Southeast United States' },
-        { name: 'Chinese alligator', location: 'Eastern China' },
-        { name: 'Spectacled caiman', location: 'Central & South America' },
-        { name: 'Broad-snouted caiman', location: 'South America' },
-        { name: 'Jacaré caiman', location: 'South America' },
-        { name: 'Black caiman', location: 'South America' }
-      ],
-      columns: ['name', 'location'],
+      data: [],
+      columns: ['id', 'content', 'course', 'area'],
       searchQuery: '',
       sortKey: '',
       sortOrders: {}
@@ -86,6 +79,9 @@ export default {
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
     fetchQuestions () {
+      axios
+        .get('/api/questions/')
+        .then(response => (this.data = response.data))
     }
   },
   created () {
@@ -96,7 +92,7 @@ export default {
     this.sortOrders = sortOrders
   },
   mounted () {
-
+    this.fetchQuestions()
   }
 }
 
