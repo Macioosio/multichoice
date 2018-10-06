@@ -39,8 +39,8 @@ export default {
       isEditMode: false,
       isAddMode: false,
       area: {
-        'course': null,
-        'name': null
+        'course': {},
+        'name': ''
       }
     }
   },
@@ -78,14 +78,15 @@ export default {
       this.area.course = this.course
       axios
         .post('api/areas', this.area)
-      this.areas.push(this.area)
+        // .then(() => this.areas.push(this.area))
+        .then(() => this.fetchCourseAreas())
       this.isAddMode = false
     },
     deleteCourse () {
       this.isEditMode = false
       axios
         .delete('/api/courses/' + this.courseId)
-      setTimeout(this.$forceUpdate(), 10000)
+        .then(() => setTimeout(this.$forceUpdate(), 10000))
     }
   }
 }

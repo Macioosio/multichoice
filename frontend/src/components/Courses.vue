@@ -42,7 +42,7 @@ export default {
     saveChanges () {
       axios
         .post('/api/courses/', this.course)
-      this.courses.push(this.course)
+        .then(() => this.loadData())
       this.isAddMode = false
     },
     abandonChanges () {
