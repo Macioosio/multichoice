@@ -30,8 +30,9 @@ public class AnswerService {
 
     public void modifyAnswer(Answer modifiedAnswer) {
         Answer originalAnswer = findById(modifiedAnswer.getId());
-        originalAnswer.setName(modifiedAnswer.getName());
+        originalAnswer.setContent(modifiedAnswer.getContent());
         originalAnswer.setQuestion(modifiedAnswer.getQuestion());
+        originalAnswer.setCorrect(modifiedAnswer.isCorrect());
         save(originalAnswer);
     }
 

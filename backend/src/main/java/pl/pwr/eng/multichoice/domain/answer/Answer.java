@@ -22,7 +22,10 @@ public class Answer {
     private UUID id;
 
     @Column(nullable = false)
-    private String name;
+    private String content;
+
+    @Column(nullable = false)
+    private boolean isCorrect;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)

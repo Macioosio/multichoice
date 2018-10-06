@@ -15,5 +15,8 @@ public class AnswerForm {
 
     @NotNull
     private Question question;
+
+    @NotNull
+    private boolean isCorrect;
 }
 
