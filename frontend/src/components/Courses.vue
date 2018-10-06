@@ -23,7 +23,7 @@ export default {
   name: 'Courses',
   data () {
     return {
-      courses: null,
+      courses: [],
       isAddMode: false,
       course: {
         'name': null
@@ -42,8 +42,8 @@ export default {
     saveChanges () {
       axios
         .post('/api/courses/', this.course)
-      setTimeout(this.isAddMode = false, 10000)
-      setTimeout(this.loadData(), 10000)
+      this.courses.push(this.course)
+      this.isAddMode = false
     },
     abandonChanges () {
       this.isAddMode = false

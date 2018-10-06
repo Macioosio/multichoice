@@ -34,8 +34,8 @@ export default {
   props: ['courseId'],
   data () {
     return {
-      areas: null,
-      course: null,
+      areas: [],
+      course: {},
       isEditMode: false,
       isAddMode: false,
       area: {
@@ -78,8 +78,8 @@ export default {
       this.area.course = this.course
       axios
         .post('api/areas', this.area)
-      setTimeout(this.isAddMode = false, 10000)
-      setTimeout(this.fetchCourseAreas(), 10000)
+      this.areas.push(this.area)
+      this.isAddMode = false
     },
     deleteCourse () {
       this.isEditMode = false
