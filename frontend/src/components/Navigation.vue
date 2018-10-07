@@ -1,12 +1,24 @@
 <template>
-  <div class="container">
-    <nav>
-      <router-link class="spacing"
+    <nav class="navbar container">
+      <div class="navbar-start">
+      <router-link class="navbar-item"
                    v-for="routes in links"
                    v-bind:key="routes.id"
                    :to=routes.page>{{routes.text}}</router-link>
+      </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-light">
+            Sign up
+          </a>
+          <a class="button is-light">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
     </nav>
-  </div>
 </template>
 
 <script>
