@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
   <md-table>
     <md-table-row>
       <md-table-head md-numeric>ID</md-table-head>

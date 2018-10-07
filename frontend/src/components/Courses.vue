@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h2>Kursy</h2>
     <button v-if="!isAddMode" v-on:click="turnOnAddMode">Dodaj</button>
       <input v-if="isAddMode" v-model="course.name" placeholder="Nazwa kursu..."/>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <nav>
       <router-link class="spacing"
                    v-for="routes in links"

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
   <h2>Działy</h2>
   <p v-if="!isEditMode">{{course.name}}</p>
   <p>

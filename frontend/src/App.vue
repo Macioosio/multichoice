@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="md-alignment-[center]-[center]">
+  <div id="app">
     <AppHeader></AppHeader>
     <Navigation></Navigation>
     <router-view/>
