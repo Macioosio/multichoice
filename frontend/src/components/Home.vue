@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <p>Homepage</p>
+  <p class = "subtitle">Homepage</p>
 </div>
 </template>
 

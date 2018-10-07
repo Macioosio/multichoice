@@ -1,24 +1,12 @@
 <template>
-    <nav class="navbar container">
-      <div class="navbar-start">
-      <router-link class="navbar-item"
-                   v-for="routes in links"
-                   v-bind:key="routes.id"
-                   :to=routes.page>{{routes.text}}</router-link>
-      </div>
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-light">
-            Sign up
-          </a>
-          <a class="button is-light">
-            Log in
-          </a>
-        </div>
-      </div>
-    </div>
-    </nav>
+  <div>
+  <md-tabs md-sync-route class="container" md-alignment="fixed">
+    <md-tab id="tab-home" md-label="Home" to="/"></md-tab>
+    <md-tab id="tab-pages" md-label="Pytania" to="/courses"></md-tab>
+    <md-tab id="tab-posts" md-label="Testy" to="/tests"></md-tab>
+    <md-tab id="tab-settings" md-label="Profil" to="/profile"></md-tab>
+  </md-tabs>
+  </div>
 </template>
 
 <script>

@@ -1,18 +1,22 @@
 <template>
   <div class="container">
-    <h2>Kursy</h2>
-    <button v-if="!isAddMode" v-on:click="turnOnAddMode">Dodaj</button>
-      <input v-if="isAddMode" v-model="course.name" placeholder="Nazwa kursu..."/>
-      <p>
-        <button v-if="isAddMode" v-on:click="saveChanges">Zapisz</button>
-        <button v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
-      </p>
-
-    <ul>
-    <li v-if="!isAddMode" v-for ="course in courses" v-bind:key="course.id">
-      <router-link :to="'/course/' + course.id + '/areas'">{{course.name}}</router-link>
-    </li>
-  </ul>
+    <div class="md-layout md-gutter">
+      <div class="md-layout-item"></div>
+      <div class="md-layout-item">
+        <h2 class = "subtitle">Kursy</h2>
+        <md-list>
+          <md-list-item v-if="!isAddMode"
+                        v-for ="course in courses" v-bind:key="course.id"
+                        :to="'/course/' + course.id + '/areas'">
+            {{course.name}}
+          </md-list-item>
+        </md-list>
+        <input class="input" v-if="isAddMode" v-model="course.name" placeholder="Nazwa kursu..."/>
+        <button class="button" v-if="isAddMode" v-on:click="saveChanges">Zapisz</button>
+        <button class="button" v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
+      </div>
+      <div class="md-layout-item"><button class="button" v-if="!isAddMode" v-on:click="turnOnAddMode">Dodaj</button></div>
+    </div>
   </div>
 </template>
 
@@ -56,5 +60,24 @@ export default {
 </script>
 
 <style scoped>
+  md-list-item.a{
+    text-align: center;
+  }
+  input::-webkit-input-placeholder {
+    color: black;
+  }
+  /* Firefox < 19 */
+  input:-moz-placeholder {
+    color: black;
+  }
 
+  /* Firefox > 19 */
+  input::-moz-placeholder {
+    color: black;
+  }
+
+  /* Internet Explorer 10 */
+  input:-ms-input-placeholder {
+    color: black;
+  }
 </style>

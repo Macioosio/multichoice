@@ -1,28 +1,31 @@
 <template>
 <div class="container">
-  <h2>Działy</h2>
-  <p v-if="!isEditMode">{{course.name}}</p>
+  <h2 class = "subtitle">Działy
+    <span v-if="!isEditMode">kursu {{course.name}}</span>
+    <span v-if="isEditMode">kursu <input v-model="course.name" placeholder="this.course.name"/></span>
+  </h2>
   <p>
-    <input v-if="isEditMode" v-model="course.name" placeholder="this.course.name"/>
-    <button v-if="!isEditMode && !isAddMode" v-on:click="turnOnAddMode">Dodaj dział</button>
-    <button v-if="!isEditMode && !isAddMode" v-on:click="turnOnEditMode">Edytuj</button>
-  </p>
   <p>
-    <button v-if="isEditMode" v-on:click="saveChanges">Zapisz</button>
-    <button v-if="isEditMode" v-on:click="abandonChanges">Wróć</button>
+    <button class="button" v-if="isEditMode" v-on:click="saveChanges">Zapisz</button>
+    <button class="button" v-if="isEditMode" v-on:click="abandonChanges">Wróć</button>
   </p>
-  <router-link v-if="!isAddMode" :to="'/courses'"><button v-on:click="deleteCourse">Usuń</button></router-link>
+    <button class="button" v-if="!isEditMode && !isAddMode" v-on:click="turnOnAddMode">Dodaj dział</button>
+    <button class="button" v-if="!isEditMode && !isAddMode" v-on:click="turnOnEditMode">Edytuj</button>
 
-  <input v-if="isAddMode" v-model="area.name" placeholder="Nazwa działu..."/>
+  <router-link v-if="!isAddMode" :to="'/courses'"><button class="button" v-on:click="deleteCourse">Usuń</button></router-link>
+
+  <input type="input" v-if="isAddMode" v-model="area.name" placeholder="Nazwa działu..."/>
   <p>
-  <button v-if="isAddMode" v-on:click="saveAdding">Zapisz</button>
-  <button v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
+  <button class="button" v-if="isAddMode" v-on:click="saveAdding">Zapisz</button>
+  <button class="button" v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
   </p>
-  <ul>
-    <li v-if="!isAddMode" v-for ="area in areas" v-bind:key="area.id">
-      <router-link :to="'/questions'">{{area.name}}</router-link>
-    </li>
-  </ul>
+  <md-list>
+    <md-list-item v-if="!isAddMode"
+                   v-for ="area in areas" v-bind:key="area.id"
+                  :to="'/questions'">
+      {{area.name}}
+    </md-list-item>
+  </md-list>
 </div>
 </template>
 
@@ -82,6 +85,7 @@ export default {
         .then(() => this.fetchCourseAreas())
       this.isAddMode = false
     },
+    // TODO: RETHINK!!!
     deleteCourse () {
       this.isEditMode = false
       axios

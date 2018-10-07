@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <p>Profil</p>
+    <p class = "subtitle">Profil</p>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container title">
   <h1>MULTICHOICE</h1>
 </div>
 </template>
