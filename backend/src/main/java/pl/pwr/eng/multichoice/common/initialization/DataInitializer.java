@@ -59,22 +59,18 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         a2c2.setCourse(course2);
 
         Question q1 = new Question();
-        q1.setCourse(course1);
         q1.setArea(a1c1);
         q1.setContent("Pytanie pierwsze, proszę odpowiedzieć");
 
         Question q2 = new Question();
-        q2.setCourse(course1);
         q2.setArea(a1c1);
         q2.setContent("Pytanie drugie, proszę odpowiedzieć");
 
         Question q3 = new Question();
-        q3.setCourse(course1);
         q3.setArea(a1c1);
         q3.setContent("Pytanie trzecie, proszę odpowiedzieć");
 
         Question q4 = new Question();
-        q4.setCourse(course1);
         q4.setArea(a1c1);
         q4.setContent("Pytanie czwarte, proszę odpowiedzieć");
 

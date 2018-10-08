@@ -15,9 +15,6 @@ public class QuestionForm {
     private String content;
 
     @NotNull
-    private Course course;
-
-    @NotNull
     private Area area;
 
 }

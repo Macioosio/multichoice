@@ -7,6 +7,7 @@ import pl.pwr.eng.multichoice.domain.answer.AnswerService;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -32,7 +33,6 @@ public class QuestionService {
     public void modifyQuestion(Question modifiedQuestion) {
         Question originalQuestion = findById(modifiedQuestion.getId());
         originalQuestion.setContent(modifiedQuestion.getContent());
-        originalQuestion.setCourse(modifiedQuestion.getCourse());
         originalQuestion.setArea(modifiedQuestion.getArea());
         save(originalQuestion);
     }
@@ -50,7 +50,10 @@ public class QuestionService {
     }
 
     public List<Question> findByCourseId(UUID id) {
-        return questionRepository.findByCourseId(id);
+        List<Question> questions = findAll().stream()
+                .filter(q -> q.getArea().getCourse().getId().equals(id))
+                .collect(Collectors.toList());
+        return questions;
     }
 }
 
