@@ -67,11 +67,11 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         q2.setContent("Pytanie drugie, proszę odpowiedzieć");
 
         Question q3 = new Question();
-        q3.setArea(a1c1);
+        q3.setArea(a1c2);
         q3.setContent("Pytanie trzecie, proszę odpowiedzieć");
 
         Question q4 = new Question();
-        q4.setArea(a1c1);
+        q4.setArea(a1c2);
         q4.setContent("Pytanie czwarte, proszę odpowiedzieć");
 
         Answer an1q1 = new Answer();
