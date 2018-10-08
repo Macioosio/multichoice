@@ -1,7 +1,9 @@
 <template>
 <div class="container">
   <div class="md-layout md-gutter">
-    <div class="md-layout-item"></div>
+    <div class="md-layout-item">
+      <router-link class="button" :to="'/course/' + courseId + '/questions'">Pokaż pytania</router-link>
+    </div>
     <div class="md-layout-item">
       <h2 class = "subtitle">Działy
         <span v-if="!isEditMode">kursu {{course.name}}</span>
@@ -15,7 +17,7 @@
       <md-list>
         <md-list-item v-if="!isAddMode"
                       v-for ="area in areas" v-bind:key="area.id"
-                      :to="'/questions'">
+                      :to="'/area/' + area.id +'/questions/'">
           {{area.name}}
         </md-list-item>
       </md-list>

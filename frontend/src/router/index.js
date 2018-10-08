@@ -46,8 +46,20 @@ export default new Router({
     },
     {
       path: '/questions',
-      name: 'Questions',
+      name: 'AllQuestions',
       component: Questions
+    },
+    {
+      path: '/area/:areaId/questions/',
+      name: 'QuestionsFromArea',
+      component: Questions,
+      props: true
+    },
+    {
+      path: '/course/:courseId/questions',
+      name: 'QuestionsFromCourse',
+      component: Questions,
+      props: true
     }
   ]
 })

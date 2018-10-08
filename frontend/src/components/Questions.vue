@@ -1,47 +1,62 @@
 <template>
 <div class="container">
-  <md-table>
-    <md-table-row>
-      <md-table-head md-numeric>ID</md-table-head>
-      <md-table-head>Name</md-table-head>
-      <md-table-head>Email</md-table-head>
-      <md-table-head>Gender</md-table-head>
-      <md-table-head>Job Title</md-table-head>
-    </md-table-row>
+  <md-table v-model="questions" md-card md-fixed-header>
+    <md-table-toolbar>
+      <h1 class="md-title">Pytania</h1>
+    </md-table-toolbar>
 
-    <md-table-row>
-      <md-table-cell md-numeric>1</md-table-cell>
-      <md-table-cell>Shawna Dubbin</md-table-cell>
-      <md-table-cell>sdubbin0@geocities.com</md-table-cell>
-      <md-table-cell>Male</md-table-cell>
-      <md-table-cell>Assistant Media Planner</md-table-cell>
-    </md-table-row>
-
-    <md-table-row>
-      <md-table-cell md-numeric>2</md-table-cell>
-      <md-table-cell>Odette Demageard</md-table-cell>
-      <md-table-cell>odemageard1@spotify.com</md-table-cell>
-      <md-table-cell>Female</md-table-cell>
-      <md-table-cell>Account Coordinator</md-table-cell>
-    </md-table-row>
-
-    <md-table-row>
-      <md-table-cell md-numeric>3</md-table-cell>
-      <md-table-cell>Vera Taleworth</md-table-cell>
-      <md-table-cell>vtaleworth2@google.ca</md-table-cell>
-      <md-table-cell>Male</md-table-cell>
-      <md-table-cell>Community Outreach Specialist</md-table-cell>
+    <md-table-row slot="md-table-row" slot-scope="{ item }">
+      <md-table-cell md-label="Pytanie" md-sort-by="content" width="800">{{ item.content }}</md-table-cell>
+      <md-table-cell md-label="Przedmiot" md-sort-by="item.area.course.name">{{ item.area.course.name }}</md-table-cell>
+      <md-table-cell md-label="Dział" md-sort-by="item.area">{{ item.area.name }}</md-table-cell>
+      <md-table-cell>
+        <router-link class="button" :to="'/questions'">Edytuj</router-link>
+      </md-table-cell>
     </md-table-row>
   </md-table>
 </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Questions',
+  props: ['courseId', 'areaId'],
   data () {
     return {
-      data: null
+      questions: []
+    }
+  },
+  mounted () {
+    this.fetchData()
+  },
+  methods: {
+    fetchData () {
+      if (this.courseId) {
+        this.fetchCourseQuestions()
+      } else {
+        if (this.areaId) {
+          this.fetchAreaQuestions()
+        } else {
+          this.fetchAllQuestions()
+        }
+      }
+    },
+    fetchAllQuestions () {
+      axios
+        .get('/api/questions')
+        .then(response => (this.questions = response.data))
+    },
+    fetchCourseQuestions () {
+      axios
+        .get('/api/courses/' + this.courseId + '/questions')
+        .then(response => (this.questions = response.data))
+    },
+    fetchAreaQuestions () {
+      axios
+        .get('/api/areas/' + this.areaId + '/questions')
+        .then(response => (this.questions = response.data))
     }
   }
 }

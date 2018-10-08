@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="md-layout md-gutter">
-      <div class="md-layout-item"></div>
+      <div class="md-layout-item">
+        <router-link class="button" :to="'/questions'">Pokaż pytania</router-link>
+      </div>
       <div class="md-layout-item">
         <h2 class = "subtitle">Kursy</h2>
         <md-list>
@@ -15,7 +17,9 @@
         <button class="button" v-if="isAddMode" v-on:click="saveChanges">Zapisz</button>
         <button class="button" v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
       </div>
-      <div class="md-layout-item"><button class="button" v-if="!isAddMode" v-on:click="turnOnAddMode">Dodaj</button></div>
+      <div class="md-layout-item">
+        <button class="button" v-if="!isAddMode" v-on:click="turnOnAddMode">Dodaj</button>
+      </div>
     </div>
   </div>
 </template>
