@@ -25,6 +25,7 @@ import axios from 'axios'
 
 export default {
   name: 'Courses',
+  props: ['courseId'],
   data () {
     return {
       courses: [],
@@ -41,7 +42,14 @@ export default {
     loadData () {
       axios
         .get('/api/courses')
-        .then(response => (this.courses = response.data))
+        .then(response => (this.handleData(response.data)))
+    },
+    handleData (data) {
+      this.courses = data
+      if (this.courseId) {
+        this.courses = this.courses.filter(c => { return c.id !== this.courseId })
+        axios.delete('/api/courses/' + this.courseId)
+      }
     },
     saveChanges () {
       axios

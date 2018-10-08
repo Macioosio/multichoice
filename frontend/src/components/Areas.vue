@@ -25,7 +25,7 @@
       <button class="button" v-if="!isEditMode && !isAddMode" v-on:click="turnOnEditMode">Edytuj</button>
       <button class="button" v-if="isEditMode" v-on:click="saveChanges">Zapisz</button>
       <button class="button" v-if="isEditMode" v-on:click="abandonChanges">Wróć</button>
-      <router-link v-if="!isAddMode" :to="'/courses'"><button class="button" v-on:click="deleteCourse">Usuń</button></router-link>
+      <router-link class="button" v-if="!isAddMode" :to="'/courses/delete/' + courseId">Usuń</router-link>
     </div>
   </div>
 </div>
@@ -86,13 +86,6 @@ export default {
         // .then(() => this.areas.push(this.area))
         .then(() => this.fetchCourseAreas())
       this.isAddMode = false
-    },
-    // TODO: RETHINK!!!
-    deleteCourse () {
-      this.isEditMode = false
-      axios
-        .delete('/api/courses/' + this.courseId)
-        .then(() => setTimeout(this.$forceUpdate(), 10000))
     }
   }
 }
