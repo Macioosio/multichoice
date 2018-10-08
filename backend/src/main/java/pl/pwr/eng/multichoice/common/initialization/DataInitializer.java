@@ -104,10 +104,41 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         an3q2.setCorrect(false);
         an3q2.setQuestion(q2);
 
+        Answer an1q3 = new Answer();
+        an1q3.setCorrect(true);
+        an1q3.setQuestion(q3);
+        an1q3.setContent("Prawda");
+
+        Answer an2q3 = new Answer();
+        an2q3.setContent("Fałsz");
+        an2q3.setCorrect(false);
+        an2q3.setQuestion(q3);
+
+        Answer an3q3 = new Answer();
+        an3q3.setContent("Fałsz");
+        an3q3.setCorrect(false);
+        an3q3.setQuestion(q3);
+
+        Answer an1q4 = new Answer();
+        an1q4.setCorrect(true);
+        an1q4.setQuestion(q4);
+        an1q4.setContent("Prawda");
+
+        Answer an2q4 = new Answer();
+        an2q4.setContent("Fałsz");
+        an2q4.setCorrect(false);
+        an2q4.setQuestion(q4);
+
+        Answer an3q4 = new Answer();
+        an3q4.setContent("Fałsz");
+        an3q4.setCorrect(false);
+        an3q4.setQuestion(q4);
+
         courseRepository.saveAll(Lists.newArrayList(course1, course2));
         areaRepository.saveAll(Lists.newArrayList(a1c1, a2c1, a1c2, a2c2));
         questionRepository.saveAll(Lists.newArrayList(q1, q2, q3, q4));
-        answerRepository.saveAll(Lists.newArrayList(an1q1, an2q1, an3q1, an1q2, an2q2, an3q2));
+        answerRepository.saveAll(Lists.newArrayList(an1q1, an2q1, an3q1, an1q2, an2q2, an3q2,
+                an1q3, an2q3, an3q3, an1q4, an2q4, an3q4));
     }
 
 }
