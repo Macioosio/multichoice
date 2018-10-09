@@ -2,9 +2,9 @@
 <div class="container">
   <md-table v-model="questions" md-card md-fixed-header>
     <md-table-toolbar>
-      <h1 class="md-title">Pytania</h1>
+      <h1 class="md-title md-toolbar-section-start">Pytania</h1>
+      <router-link class="button" :to="'/questions/add'">Dodaj</router-link>
     </md-table-toolbar>
-
     <md-table-row slot="md-table-row" slot-scope="{ item }">
       <md-table-cell md-label="Pytanie" md-sort-by="content" width="800">{{ item.content }}</md-table-cell>
       <md-table-cell md-label="Przedmiot" md-sort-by="item.area.course.name">{{ item.area.course.name }}</md-table-cell>
