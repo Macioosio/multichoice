@@ -89,14 +89,7 @@ export default {
         .get('/api/courses/' + course.id + '/areas')
         .then(response => (this.courseAreas = response.data))
     },
-    addAnswer () {
-      this.answers.push({'answer': {'content': 'I am an answer', 'isCorrect': false}})
-    },
-    removeAnswer () {
-      this.answers.pop()
-    },
     ...mapMutations(['addAnswerRow', 'removeAnswerRow'])
-
   },
   mounted () {
     this.fetchAllCourses()
