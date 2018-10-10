@@ -11,4 +11,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Question findById(UUID uuid);
 
     List<Question> findByAreaId(UUID id);
+
+    List<Question> findByCourseId(UUID id);
 }

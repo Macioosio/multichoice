@@ -27,5 +27,9 @@ public class Question {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
+    private Course course;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Area area;
 }
