@@ -3,6 +3,7 @@ package pl.pwr.eng.multichoice.domain.question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
+import pl.pwr.eng.multichoice.domain.answer.AnswerCreationForm;
 import pl.pwr.eng.multichoice.domain.answer.AnswerService;
 
 import java.util.List;
@@ -30,6 +31,15 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
+    public void save(QuestionCreationForm questionForm) {
+        Question question = new Question();
+        question.setContent(questionForm.getContent());
+        question.setArea(questionForm.getArea());
+        question.setCourse(questionForm.getCourse());
+        save(question);
+        answerService.save(questionForm.getAnswers(), question);
+    }
+
     public void modifyQuestion(Question modifiedQuestion) {
         Question originalQuestion = findById(modifiedQuestion.getId());
         originalQuestion.setContent(modifiedQuestion.getContent());
@@ -50,10 +60,7 @@ public class QuestionService {
     }
 
     public List<Question> findByCourseId(UUID id) {
-        List<Question> questions = findAll().stream()
-                .filter(q -> q.getArea().getCourse().getId().equals(id))
-                .collect(Collectors.toList());
-        return questions;
+        return questionRepository.findByCourseId(id);
     }
 }
 

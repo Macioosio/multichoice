@@ -44,11 +44,11 @@ public class QuestionController implements ContraintViolationHandler {
     }
 
     @PostMapping
-    public ResponseEntity addQuestion(@Valid @RequestBody @DTO(QuestionForm.class) Question question, BindingResult result) {
+    public ResponseEntity addQuestion(@Valid @RequestBody QuestionCreationForm questionForm, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        questionService.save(question);
+        questionService.save(questionForm);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

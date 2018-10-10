@@ -2,7 +2,9 @@ package pl.pwr.eng.multichoice.domain.answer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.pwr.eng.multichoice.domain.question.Question;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +28,17 @@ public class AnswerService {
 
     public void save(Answer answer) {
         answerRepository.save(answer);
+    }
+
+    public void save(List<AnswerCreationForm> answerForms, Question question) {
+        List<Answer> answers = new LinkedList<>();
+        for(AnswerCreationForm answerForm : answerForms){
+            Answer answer = new Answer();
+            answer.setContent(answerForm.getContent());
+            answer.setCorrect(answerForm.isCorrect());
+            answer.setQuestion(question);
+        }
+        answerRepository.saveAll(answers);
     }
 
     public void modifyAnswer(Answer modifiedAnswer) {
