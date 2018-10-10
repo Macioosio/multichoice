@@ -3,6 +3,7 @@
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
         <router-link class="button" :to="'/questions'">Pokaż pytania</router-link>
+        <router-link class="button" :to="'/questions/add'">Dodaj pytanie</router-link>
       </div>
       <div class="md-layout-item">
         <h2 class = "subtitle">Kursy</h2>
