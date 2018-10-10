@@ -1,11 +1,10 @@
 <template>
   <div class="container">
-
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
         <div class="field">
           <div class="control">
-          <label class="label">Kurs</label>
+            <label class="label">Kurs</label>
             <div class="select">
               <select v-model="selectedCourseName" v-on:change="fetchSelectedCourseAreas">
                 <option v-for="course in courses" :key="course.id">
@@ -36,15 +35,25 @@
           </div>
         </div>
         <label class="label">Odpowiedzi</label>
-            <div v-for="(answer, index) in answers" :key="index">
-              <component :is="answer"></component>
+        <div class="md-layout md-alignment-center-center" v-for="(answer, index) in answers" :key="index">
+          <div class="md-layout-item">
+            <md-checkbox v-model="answer.isCorrect"></md-checkbox>
+          </div>
+          <div class="md-layout-item md-size-90">
+            <div class="control">
+              <input class="input" v-model="answer.content"
+                     :class="{ 'is-success': answer.isCorrect }"
+                     placeholder="Odpowiedź">
             </div>
-        <button class="button" @click="addAnswer()">Dodaj odpowiedź</button>
-        <button class="button" @click="removeAnswer()">Usuń odpowiedź</button>
+          </div>
+        </div>
+        <button class="button" @click="addAnswerRow()">Dodaj odpowiedź</button>
+        <button class="button" @click="removeAnswerRow()">Usuń odpowiedź</button>
       </div>
       <div class="md-layout-item">
-        <button class="button" @click="addAnswer()">Zapisz</button>
-        <button class="button" @click="removeAnswer()">Wróć</button>
+        <button class="button" @click="addAnswerRow()">Zapisz</button>
+        <button class="button" @click="removeAnswerRow()">Wróć</button>
+        {{$store.state.answers}}
       </div>
     </div>
   </div>
@@ -52,38 +61,21 @@
 
 <script>
 import axios from 'axios'
-import Vue from 'vue'
-
-Vue.component('answer', {
-  template: '<div class="md-layout md-alignment-center-center">\n' +
-    '          <div></div>\n' +
-    '          <div class="md-layout-item"><md-checkbox v-model="isCorrect"></md-checkbox></div>\n' +
-    '          <div class="md-layout-item md-size-90">\n' +
-    '            <div class="control">\n' +
-    '              <input class="input" v-bind:class="{ \'is-success\': isCorrect }" placeholder="Odpowiedź">\n' +
-    '            </div>\n' +
-    '          </div>\n' +
-    '          <div v-for="(answer, index) in answers" :key="index">\n' +
-    '            <component :is="answer"></component>\n' +
-    '          </div>\n' +
-    '        </div>',
-  data () {
-    return {
-      isCorrect: false
-    }
-  }
-})
+import { mapMutations } from 'vuex'
+import { mapMultiRowFields } from 'vuex-map-fields'
 
 export default {
-  name: 'QuestionAdding',
+  name: 'question_adding',
   data () {
     return {
       courses: [],
       selectedCourseName: '',
       courseAreas: [],
-      selectedAreaName: '',
-      answers: ['answer', 'answer', 'answer', 'answer']
+      selectedAreaName: ''
     }
+  },
+  computed: {
+    ...mapMultiRowFields(['answers'])
   },
   methods: {
     fetchAllCourses () {
@@ -98,11 +90,13 @@ export default {
         .then(response => (this.courseAreas = response.data))
     },
     addAnswer () {
-      this.answers.push('answer')
+      this.answers.push({'answer': {'content': 'I am an answer', 'isCorrect': false}})
     },
     removeAnswer () {
       this.answers.pop()
-    }
+    },
+    ...mapMutations(['addAnswerRow', 'removeAnswerRow'])
+
   },
   mounted () {
     this.fetchAllCourses()
