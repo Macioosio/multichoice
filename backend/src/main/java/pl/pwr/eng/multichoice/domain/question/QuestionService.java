@@ -32,7 +32,8 @@ public class QuestionService {
     }
 
     public void save(QuestionCreationForm questionForm) {
-        Question question = new Question();
+        UUID questionId = questionForm.getId();
+        Question question = questionId == null ? new Question() : findById(questionId);
         question.setContent(questionForm.getContent());
         question.setArea(questionForm.getArea());
         question.setCourse(questionForm.getCourse());

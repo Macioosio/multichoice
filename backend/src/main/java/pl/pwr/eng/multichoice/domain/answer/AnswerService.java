@@ -33,7 +33,8 @@ public class AnswerService {
     public void save(List<AnswerCreationForm> answerForms, Question question) {
         List<Answer> answers = new LinkedList<>();
         for(AnswerCreationForm answerForm : answerForms){
-            Answer answer = new Answer();
+            UUID answerId = answerForm.getId();
+            Answer answer = answerId == null ? new Answer() : findById(answerId);
             answer.setContent(answerForm.getContent());
             answer.setCorrect(answerForm.isCorrect());
             answer.setQuestion(question);

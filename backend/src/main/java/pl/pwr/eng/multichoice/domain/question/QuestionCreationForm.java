@@ -9,19 +9,22 @@ import pl.pwr.eng.multichoice.domain.course.Course;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionCreationForm {
 
+    private UUID id;
+
     @NotNull
     private String content;
 
-    private Area area;
-
     @NotNull
     private Course course;
+
+    private Area area;
 
     @NotNull
     private List<AnswerCreationForm> answers;
