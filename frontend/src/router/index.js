@@ -63,6 +63,24 @@ export default new Router({
       props: true
     },
     {
+      path: '/area/:areaId/questions/add',
+      name: 'QuestionAddingFromArea',
+      component: QuestionAdding,
+      props: true
+    },
+    {
+      path: '/course/:courseId/questions/add',
+      name: 'QuestionAddingFromCourse',
+      component: QuestionAdding,
+      props: true
+    },
+    {
+      path: '/questions/edit/:questionId',
+      name: 'EditQuestion',
+      component: QuestionAdding,
+      props: true
+    },
+    {
       path: '/questions/add',
       name: 'AddQuestion',
       component: QuestionAdding

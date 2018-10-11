@@ -31,7 +31,7 @@
         <div class="field">
           <label class="label">Treść pytania</label>
           <div class="control">
-            <textarea class="textarea" placeholder="Treść"></textarea>
+            <textarea class="textarea" placeholder="Treść" v-model="content"></textarea>
           </div>
         </div>
         <label class="label">Odpowiedzi</label>
@@ -51,7 +51,7 @@
         <button class="button" @click="removeAnswerRow()">Usuń odpowiedź</button>
       </div>
       <div class="md-layout-item">
-        <button class="button" @click="addAnswerRow()">Zapisz</button>
+        <button class="button" @click="saveQuestion()">Zapisz</button>
         <button class="button" @click="removeAnswerRow()">Wróć</button>
         {{$store.state.answers}}
       </div>
@@ -63,11 +63,14 @@
 import axios from 'axios'
 import { mapMutations } from 'vuex'
 import { mapMultiRowFields } from 'vuex-map-fields'
+import $store from '../store/store'
 
 export default {
   name: 'question_adding',
+  props: ['courseId', 'areaId', 'questionId'],
   data () {
     return {
+      content: '',
       courses: [],
       selectedCourseName: '',
       courseAreas: [],
@@ -89,10 +92,82 @@ export default {
         .get('/api/courses/' + course.id + '/areas')
         .then(response => (this.courseAreas = response.data))
     },
-    ...mapMutations(['addAnswerRow', 'removeAnswerRow'])
+    ...mapMutations(['addAnswerRow', 'removeAnswerRow']),
+    saveQuestion () {
+      let selectedCourse = this.courses.find(c => { return c.name === this.selectedCourseName })
+      let selectedArea = this.courseAreas.find(a => { return a.name === this.selectedAreaName })
+      let questionAddingForm = {
+        'id': null,
+        'content': this.content,
+        'course': selectedCourse,
+        'area': selectedArea,
+        'answers': $store.state.answers
+      }
+      axios
+        .post('/api/questions', questionAddingForm)
+        .then(() => (this.clearElements()))
+    },
+    clearElements () {
+      this.content = ''
+      this.selectedCourseName = ''
+      this.courseAreas = []
+      this.selectedAreaName = ''
+      $store.state.answers = [
+        {
+          id: '',
+          content: '',
+          isCorrect: false
+        },
+        {
+          id: '',
+          content: '',
+          isCorrect: false
+        },
+        {
+          id: '',
+          content: '',
+          isCorrect: false
+        },
+        {
+          id: '',
+          content: '',
+          isCorrect: false
+        }
+      ]
+    },
+    prepareData () {
+      console.log('aaaaa')
+      this.fetchAllCourses()
+      if (this.courseId) {
+        console.log('kurs')
+        this.fetchAllCourses()
+        let defaultedCourse = this.courses.find(c => { return c.id === this.courseId })
+        this.selectedCourseName = defaultedCourse.name
+      }
+      if (this.areaId) {
+        console.log('area')
+        axios
+          .get('/api/areas/' + this.areaId)
+          .then(response => (this.selectedAreaName = response.data.name))
+      }
+      if (this.questionId) {
+        console.log('question')
+        axios
+          .get('/api/questions/' + this.questionId)
+          .then(response => (this.setDataFromQuestion(response.data)))
+      }
+    },
+    setDataFromQuestion (question) {
+      this.content = question.content
+      this.selectedCourseName = question.course.name
+      this.selectedAreaName = question.area.name
+      axios
+        .get('/api/questions/' + question.id + '/answers')
+        .then(response => ($store.state.answers = response.data))
+    }
   },
   mounted () {
-    this.fetchAllCourses()
+    this.prepareData()
   }
 }
 </script>
