@@ -38,6 +38,7 @@ public class AnswerService {
             answer.setContent(answerForm.getContent());
             answer.setCorrect(answerForm.isCorrect());
             answer.setQuestion(question);
+            answers.add(answer);
         }
         answerRepository.saveAll(answers);
     }
