@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="md-layout md-gutter">
-      <div class="md-layout-item">
+      <div class="md-layout-item padding-class">
         <div class="field">
           <div class="control">
             <label class="label">Kurs</label>
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <div class="md-layout-item">
+      <div class="md-layout-item padding-class">
         <div class="field">
           <label class="label">Treść pytania</label>
           <div class="control">
@@ -37,12 +37,12 @@
         <label class="label">Odpowiedzi</label>
         <div class="md-layout md-alignment-center-center" v-for="(answer, index) in answers" :key="index">
           <div class="md-layout-item">
-            <md-checkbox v-model="answer.isCorrect"></md-checkbox>
+            <md-checkbox v-model="answer.correct"></md-checkbox>
           </div>
           <div class="md-layout-item md-size-90">
             <div class="control">
               <input class="input" v-model="answer.content"
-                     :class="{ 'is-success': answer.isCorrect }"
+                     :class="{ 'is-success': answer.correct }"
                      placeholder="Odpowiedź">
             </div>
           </div>
@@ -50,11 +50,9 @@
         <button class="button" @click="addAnswerRow()">Dodaj odpowiedź</button>
         <button class="button" @click="removeAnswerRow()">Usuń odpowiedź</button>
       </div>
-      <div class="md-layout-item">
+      <div class="md-layout-item padding-class">
         <button class="button" @click="saveQuestion()">Zapisz</button>
         <router-link class="button" to="/questions/">Wróć</router-link>
-        {{$store.state.answers}}
-        {{content}}
         <br>
       </div>
     </div>
@@ -119,57 +117,54 @@ export default {
         {
           id: '',
           content: '',
-          isCorrect: false
+          correct: false
         },
         {
           id: '',
           content: '',
-          isCorrect: false
+          correct: false
         },
         {
           id: '',
           content: '',
-          isCorrect: false
+          correct: false
         },
         {
           id: '',
           content: '',
-          isCorrect: false
+          correct: false
         }
       ]
     },
     prepareData () {
-      this.clearElements()
       this.fetchAllCourses()
       if (this.courseId) {
+        this.clearElements()
         axios
           .get('/api/courses/' + this.courseId)
           .then(response => (this.setDataFromCourse(response.data)))
       }
       if (this.areaId) {
+        this.clearElements()
         axios
           .get('/api/areas/' + this.areaId)
           .then(response => (this.setDataFromArea(response.data)))
       }
       if (this.questionId) {
-        console.log('question')
         axios
           .get('/api/questions/' + this.questionId)
           .then(response => (this.setDataFromQuestion(response.data)))
       }
     },
     setDataFromCourse (course) {
-      console.log('setDataFromCourse')
       this.selectedCourseName = course.name
     },
     setDataFromArea (area) {
-      console.log('setDataFromArea')
       this.setDataFromCourse(area.course)
       this.fetchSelectedCourseAreas()
       this.selectedAreaName = area.name
     },
     setDataFromQuestion (question) {
-      console.log('setDataFromQuestion')
       this.setDataFromArea(question.area)
       this.content = question.content
       axios
@@ -177,15 +172,13 @@ export default {
         .then(response => (this.setAnswersData(response.data)))
     },
     setAnswersData (answers) {
-      console.log(answers.length)
       let mappedAnswers = answers.map(function (answer) {
         return {
           id: answer.id,
           content: answer.content,
-          isCorrect: answer.correct
+          correct: answer.correct
         }
       })
-      mappedAnswers.forEach(answer => console.log(answer))
       $store.state.answers = mappedAnswers
     }
   },
@@ -196,5 +189,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .padding-class {
+    padding: 25px;
+  }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <div class="md-layout md-gutter">
-      <div class="md-layout-item">
+      <div class="md-layout-item padding-class">
         <router-link class="button" :to="'/questions'">Pokaż pytania</router-link>
         <router-link class="button" :to="'/questions/add'">Dodaj pytanie</router-link>
       </div>
-      <div class="md-layout-item">
+      <div class="md-layout-item padding-class">
         <h2 class = "subtitle">Kursy</h2>
         <md-list>
           <md-list-item v-if="!isAddMode"
@@ -18,7 +18,7 @@
         <button class="button" v-if="isAddMode" v-on:click="saveChanges">Zapisz</button>
         <button class="button" v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
       </div>
-      <div class="md-layout-item">
+      <div class="md-layout-item padding-class">
         <button class="button" v-if="!isAddMode" v-on:click="turnOnAddMode">Dodaj</button>
       </div>
     </div>
@@ -92,5 +92,8 @@ export default {
   /* Internet Explorer 10 */
   input:-ms-input-placeholder {
     color: black;
+  }
+  .padding-class {
+    padding: 25px;
   }
 </style>

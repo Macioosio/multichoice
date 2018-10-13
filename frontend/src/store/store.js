@@ -13,22 +13,22 @@ export default new Vuex.Store({
       {
         id: '',
         content: '',
-        isCorrect: false
+        correct: false
       },
       {
         id: '',
         content: '',
-        isCorrect: false
+        correct: false
       },
       {
         id: '',
         content: '',
-        isCorrect: false
+        correct: false
       },
       {
         id: '',
         content: '',
-        isCorrect: false
+        correct: false
       }
     ]
   },
@@ -40,7 +40,7 @@ export default new Vuex.Store({
     addAnswerRow (state) {
       state.answers.push({
         id: '',
-        isCorrect: false,
+        correct: false,
         content: ''
       })
     },

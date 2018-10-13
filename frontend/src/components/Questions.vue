@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container padding-class">
   <md-table v-model="questions" md-card md-fixed-header>
     <md-table-toolbar>
       <h1 class="md-title md-toolbar-section-start">Pytania</h1>
@@ -73,4 +73,7 @@ export default {
 </script>
 
 <style scoped>
+  .padding-class {
+    padding: 25px;
+  }
 </style>

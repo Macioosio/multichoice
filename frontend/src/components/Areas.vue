@@ -1,11 +1,11 @@
 <template>
 <div class="container">
   <div class="md-layout md-gutter">
-    <div class="md-layout-item">
+    <div class="md-layout-item padding-class">
       <router-link class="button" :to="'/course/' + courseId + '/questions'">Pokaż pytania</router-link>
       <router-link class="button" :to="'/course/' + courseId + '/questions/add'">Dodaj pytanie</router-link>
     </div>
-    <div class="md-layout-item">
+    <div class="md-layout-item padding-class">
       <h2 class = "subtitle">Działy
         <span v-if="!isEditMode">kursu {{course.name}}</span>
         <span v-if="isEditMode">kursu <input v-model="course.name" placeholder="this.course.name"/></span>
@@ -23,7 +23,7 @@
         </md-list-item>
       </md-list>
     </div>
-    <div class="md-layout-item">
+    <div class="md-layout-item padding-class">
       <button class="button" v-if="!isEditMode && !isAddMode" v-on:click="turnOnAddMode">Dodaj dział</button>
       <button class="button" v-if="!isEditMode && !isAddMode" v-on:click="turnOnEditMode">Edytuj</button>
       <button class="button" v-if="isEditMode" v-on:click="saveChanges">Zapisz</button>
@@ -95,5 +95,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .padding-class {
+    padding: 25px;
+  }
 </style>
