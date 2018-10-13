@@ -52,7 +52,7 @@
       </div>
       <div class="md-layout-item">
         <button class="button" @click="saveQuestion()">Zapisz</button>
-        <button class="button" @click="removeAnswerRow()">Wróć</button>
+        <router-link class="button" to="/questions/">Wróć</router-link>
         {{$store.state.answers}}
         {{content}}
         <br>
@@ -96,10 +96,11 @@ export default {
     },
     ...mapMutations(['addAnswerRow', 'removeAnswerRow']),
     saveQuestion () {
+      let id = this.questionId ? this.questionId : null
       let selectedCourse = this.courses.find(c => { return c.name === this.selectedCourseName })
       let selectedArea = this.courseAreas.find(a => { return a.name === this.selectedAreaName })
       let questionAddingForm = {
-        'id': null,
+        'id': id,
         'content': this.content,
         'course': selectedCourse,
         'area': selectedArea,
@@ -173,24 +174,19 @@ export default {
       this.content = question.content
       axios
         .get('/api/questions/' + question.id + '/answers')
-        .then(response => (this.setAnswersData(response)))
+        .then(response => (this.setAnswersData(response.data)))
     },
     setAnswersData (answers) {
-      console.log('setAnswersData')
-      let newAnswers = []
-      console.log(answers)
-      console.log(answers.size())
-      for (let i = 0; i < answers.size(); i++) {
-        let transformed = {
-          id: answers[i].id,
-          content: answers[i].content,
-          isCorrect: answers[i].isCorrect
+      console.log(answers.length)
+      let mappedAnswers = answers.map(function (answer) {
+        return {
+          id: answer.id,
+          content: answer.content,
+          isCorrect: answer.correct
         }
-        newAnswers.push(transformed)
-        console.log('mappedAnswers')
-        console.log(newAnswers)
-      }
-      $store.state.answers = newAnswers
+      })
+      mappedAnswers.forEach(answer => console.log(answer))
+      $store.state.answers = mappedAnswers
     }
   },
   mounted () {
