@@ -54,6 +54,8 @@
         <button class="button" @click="saveQuestion()">Zapisz</button>
         <button class="button" @click="removeAnswerRow()">Wróć</button>
         {{$store.state.answers}}
+        {{content}}
+        <br>
       </div>
     </div>
   </div>
@@ -136,19 +138,17 @@ export default {
       ]
     },
     prepareData () {
-      console.log('aaaaa')
+      this.clearElements()
       this.fetchAllCourses()
       if (this.courseId) {
-        console.log('kurs')
-        this.fetchAllCourses()
-        let defaultedCourse = this.courses.find(c => { return c.id === this.courseId })
-        this.selectedCourseName = defaultedCourse.name
+        axios
+          .get('/api/courses/' + this.courseId)
+          .then(response => (this.setDataFromCourse(response.data)))
       }
       if (this.areaId) {
-        console.log('area')
         axios
           .get('/api/areas/' + this.areaId)
-          .then(response => (this.selectedAreaName = response.data.name))
+          .then(response => (this.setDataFromArea(response.data)))
       }
       if (this.questionId) {
         console.log('question')
@@ -157,13 +157,40 @@ export default {
           .then(response => (this.setDataFromQuestion(response.data)))
       }
     },
+    setDataFromCourse (course) {
+      console.log('setDataFromCourse')
+      this.selectedCourseName = course.name
+    },
+    setDataFromArea (area) {
+      console.log('setDataFromArea')
+      this.setDataFromCourse(area.course)
+      this.fetchSelectedCourseAreas()
+      this.selectedAreaName = area.name
+    },
     setDataFromQuestion (question) {
+      console.log('setDataFromQuestion')
+      this.setDataFromArea(question.area)
       this.content = question.content
-      this.selectedCourseName = question.course.name
-      this.selectedAreaName = question.area.name
       axios
         .get('/api/questions/' + question.id + '/answers')
-        .then(response => ($store.state.answers = response.data))
+        .then(response => (this.setAnswersData(response)))
+    },
+    setAnswersData (answers) {
+      console.log('setAnswersData')
+      let newAnswers = []
+      console.log(answers)
+      console.log(answers.size())
+      for (let i = 0; i < answers.size(); i++) {
+        let transformed = {
+          id: answers[i].id,
+          content: answers[i].content,
+          isCorrect: answers[i].isCorrect
+        }
+        newAnswers.push(transformed)
+        console.log('mappedAnswers')
+        console.log(newAnswers)
+      }
+      $store.state.answers = newAnswers
     }
   },
   mounted () {
