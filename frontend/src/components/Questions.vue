@@ -19,10 +19,11 @@
 
 <script>
 import axios from 'axios'
+import $store from '../store/store'
 
 export default {
   name: 'Questions',
-  props: ['courseId', 'areaId'],
+  props: ['courseId', 'areaId', 'questionId'],
   data () {
     return {
       questions: []
@@ -45,18 +46,27 @@ export default {
     },
     fetchAllQuestions () {
       axios
-        .get('/api/questions')
-        .then(response => (this.questions = response.data))
+        .get('/api/questions/')
+        .then(response => (this.handleData(response.data)))
     },
     fetchCourseQuestions () {
       axios
         .get('/api/courses/' + this.courseId + '/questions')
-        .then(response => (this.questions = response.data))
+        .then(response => (this.handleData(response.data)))
     },
     fetchAreaQuestions () {
       axios
         .get('/api/areas/' + this.areaId + '/questions')
-        .then(response => (this.questions = response.data))
+        .then(response => (this.handleData(response.data)))
+    },
+    handleData (questions) {
+      if (this.questionId) {
+        this.questions = questions.filter(c => { return c.id !== this.questionId })
+        this.clearStoredAnswers()
+        axios.delete('/api/questions/' + this.questionId)
+      } else {
+        this.questions = questions
+      }
     },
     getRoute () {
       let route = '/questions/add'
@@ -67,6 +77,30 @@ export default {
         route = '/course/' + this.courseId + route
       }
       return route
+    },
+    clearStoredAnswers () {
+      $store.state.answers = [
+        {
+          id: '',
+          content: '',
+          correct: false
+        },
+        {
+          id: '',
+          content: '',
+          correct: false
+        },
+        {
+          id: '',
+          content: '',
+          correct: false
+        },
+        {
+          id: '',
+          content: '',
+          correct: false
+        }
+      ]
     }
   }
 }

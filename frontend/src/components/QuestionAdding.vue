@@ -53,7 +53,7 @@
       <div class="md-layout-item padding-class">
         <button class="button" @click="saveQuestion()">Zapisz</button>
         <router-link class="button" to="/questions/">Wróć</router-link>
-        <br>
+        <router-link class="button" v-if="questionId" :to="'/questions/delete/' + questionId">Usuń</router-link>
       </div>
     </div>
   </div>

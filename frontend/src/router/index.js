@@ -63,6 +63,12 @@ export default new Router({
       props: true
     },
     {
+      path: '/questions/delete/:questionId',
+      name: 'QuestionsWithDelete',
+      component: Questions,
+      props: true
+    },
+    {
       path: '/area/:areaId/questions/add',
       name: 'QuestionAddingFromArea',
       component: QuestionAdding,
