@@ -158,6 +158,7 @@ export default {
     },
     setDataFromCourse (course) {
       this.selectedCourseName = course.name
+      this.fetchSelectedCourseAreas()
     },
     setDataFromArea (area) {
       this.setDataFromCourse(area.course)
