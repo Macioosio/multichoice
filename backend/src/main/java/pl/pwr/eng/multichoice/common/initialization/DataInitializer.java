@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
 import pl.pwr.eng.multichoice.domain.answer.AnswerRepository;
@@ -14,6 +15,10 @@ import pl.pwr.eng.multichoice.domain.course.Course;
 import pl.pwr.eng.multichoice.domain.course.CourseRepository;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.question.QuestionRepository;
+import pl.pwr.eng.multichoice.domain.student.Student;
+import pl.pwr.eng.multichoice.domain.student.StudentRepository;
+import pl.pwr.eng.multichoice.domain.teacher.Teacher;
+import pl.pwr.eng.multichoice.domain.teacher.TeacherRepository;
 
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
@@ -30,12 +35,29 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     @Autowired
     AnswerRepository answerRepository;
 
+    @Autowired
+    TeacherRepository teacherRepository;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    StudentRepository studentRepository;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         init();
     }
 
     private void init() {
+        Teacher teacher = new Teacher();
+        teacher.setEmail("email@email.com");
+        teacher.setPassword(bCryptPasswordEncoder.encode("password"));
+
+        Student student = new Student();
+        student.setEmail("student@email.com");
+        student.setPassword(bCryptPasswordEncoder.encode("password"));
+
         Course course1 = new Course();
         course1.setName("Logika");
 
@@ -138,6 +160,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         an3q4.setCorrect(false);
         an3q4.setQuestion(q4);
 
+        teacherRepository.save(teacher);
+        studentRepository.save(student);
         courseRepository.saveAll(Lists.newArrayList(course1, course2));
         areaRepository.saveAll(Lists.newArrayList(a1c1, a2c1, a1c2, a2c2));
         questionRepository.saveAll(Lists.newArrayList(q1, q2, q3, q4));
