@@ -3,10 +3,11 @@ package pl.pwr.eng.multichoice.domain.course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.DTO;
-import pl.pwr.eng.multichoice.common.util.IsTeacher;
+
 import pl.pwr.eng.multichoice.domain.area.Area;
 import pl.pwr.eng.multichoice.common.util.ContraintViolationHandler;
 import pl.pwr.eng.multichoice.domain.question.Question;
@@ -15,19 +16,18 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@PreAuthorize("hasAuthority('TEACHER')")
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController implements ContraintViolationHandler {
     @Autowired
     CourseService courseService;
 
-    @IsTeacher
     @GetMapping
     public List<Course> getAllCourses(){
         return courseService.findAll();
     }
 
-    @IsTeacher
     @GetMapping("/{id}")
     public ResponseEntity getCourse(@PathVariable(value = "id") UUID uuid){
         Course course = courseService.findById(uuid);
@@ -37,7 +37,6 @@ public class CourseController implements ContraintViolationHandler {
         return ResponseEntity.ok(course);
     }
 
-    @IsTeacher
     @GetMapping("/{id}/areas")
     public ResponseEntity getAreas(@PathVariable(value = "id") UUID uuid){
         Course course = courseService.findById(uuid);
@@ -48,7 +47,6 @@ public class CourseController implements ContraintViolationHandler {
         return ResponseEntity.ok(areas);
     }
 
-    @IsTeacher
     @GetMapping("/{id}/questions")
     public ResponseEntity getQuestions(@PathVariable(value = "id") UUID uuid){
         Course course = courseService.findById(uuid);
@@ -59,7 +57,6 @@ public class CourseController implements ContraintViolationHandler {
         return ResponseEntity.ok(questions);
     }
 
-    @IsTeacher
     @PostMapping
     public ResponseEntity addCourse(@Valid @RequestBody @DTO(CourseForm.class) Course course, BindingResult result) {
         if (result.hasErrors()) {
@@ -69,7 +66,6 @@ public class CourseController implements ContraintViolationHandler {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @IsTeacher
     @PutMapping
     public ResponseEntity modifyCourse(@Valid @RequestBody Course course, BindingResult result) {
         if (result.hasErrors()) {
@@ -79,7 +75,6 @@ public class CourseController implements ContraintViolationHandler {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @IsTeacher
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCourse(@PathVariable(value = "id") UUID uuid){
         Course course = courseService.findById(uuid);
@@ -89,6 +84,4 @@ public class CourseController implements ContraintViolationHandler {
         courseService.delete(course);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

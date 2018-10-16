@@ -3,30 +3,29 @@ package pl.pwr.eng.multichoice.domain.area;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ContraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
-import pl.pwr.eng.multichoice.common.util.IsTeacher;
 import pl.pwr.eng.multichoice.domain.question.Question;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@PreAuthorize("hasAuthority('TEACHER')")
 @RestController
 @RequestMapping("/api/areas")
 public class AreaController implements ContraintViolationHandler {
     @Autowired
     AreaService areaService;
 
-    @IsTeacher
     @GetMapping
     public List<Area> getAllAreas(){
         return areaService.findAll();
     }
 
-    @IsTeacher
     @GetMapping("/{id}")
     public ResponseEntity getArea(@PathVariable(value = "id") UUID uuid){
         Area area = areaService.findById(uuid);
@@ -36,7 +35,6 @@ public class AreaController implements ContraintViolationHandler {
         return ResponseEntity.ok(area);
     }
 
-    @IsTeacher
     @GetMapping("/{id}/questions")
     public ResponseEntity getQuestions(@PathVariable(value = "id") UUID uuid){
         Area area = areaService.findById(uuid);
@@ -47,7 +45,6 @@ public class AreaController implements ContraintViolationHandler {
         return ResponseEntity.ok(questions);
     }
 
-    @IsTeacher
     @PostMapping
     public ResponseEntity addArea(@Valid @RequestBody @DTO(AreaForm.class) Area area, BindingResult result) {
         if (result.hasErrors()) {
@@ -57,7 +54,6 @@ public class AreaController implements ContraintViolationHandler {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @IsTeacher
     @PutMapping
     public ResponseEntity modifyArea(@Valid @RequestBody Area area, BindingResult result) {
         if (result.hasErrors()) {
@@ -67,7 +63,6 @@ public class AreaController implements ContraintViolationHandler {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @IsTeacher
     @DeleteMapping("/{id}")
     public ResponseEntity deleteArea(@PathVariable(value = "id") UUID uuid){
         Area area = areaService.findById(uuid);
