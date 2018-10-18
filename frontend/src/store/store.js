@@ -9,6 +9,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // ...
   state: {
+    authToken: localStorage.getItem('user-token') || '',
+    authority: localStorage.getItem('user-authority') || '',
     answers: [
       {
         id: '',
@@ -33,7 +35,12 @@ export default new Vuex.Store({
     ]
   },
   getters: {
-    getField
+    getField,
+    getAuthHeader: (state) => {
+      return {
+        headers: {'Authorization': state.authToken}
+      }
+    }
   },
   mutations: {
     updateField,
@@ -46,9 +53,9 @@ export default new Vuex.Store({
     },
     removeAnswerRow (state) {
       let answerToRemove = state.answers.pop()
-      if (!answerToRemove) {
+      if (answerToRemove) {
         axios
-          .delete('/api/answers/' + answerToRemove.id)
+          .delete('/api/answers/' + answerToRemove.id, this.getters.getAuthHeader)
       }
     }
   }

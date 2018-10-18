@@ -46,24 +46,25 @@ export default {
     },
     fetchAllQuestions () {
       axios
-        .get('/api/questions/')
+        .get('/api/questions/', $store.getters.getAuthHeader)
         .then(response => (this.handleData(response.data)))
     },
     fetchCourseQuestions () {
       axios
-        .get('/api/courses/' + this.courseId + '/questions')
+        .get('/api/courses/' + this.courseId + '/questions', $store.getters.getAuthHeader)
         .then(response => (this.handleData(response.data)))
     },
     fetchAreaQuestions () {
       axios
-        .get('/api/areas/' + this.areaId + '/questions')
+        .get('/api/areas/' + this.areaId + '/questions', $store.getters.getAuthHeader)
         .then(response => (this.handleData(response.data)))
     },
     handleData (questions) {
       if (this.questionId) {
         this.questions = questions.filter(c => { return c.id !== this.questionId })
         this.clearStoredAnswers()
-        axios.delete('/api/questions/' + this.questionId)
+        axios
+          .delete('/api/questions/' + this.questionId, $store.getters.getAuthHeader)
       } else {
         this.questions = questions
       }

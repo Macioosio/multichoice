@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isVisible">
   <md-tabs md-sync-route class="container" md-alignment="fixed">
     <md-tab id="tab-home" md-label="Home" to="/"></md-tab>
     <md-tab id="tab-pages" md-label="Pytania" to="/courses"></md-tab>
@@ -15,6 +15,7 @@ export default {
   name: 'Navigation',
   data () {
     return {
+      isVisible: true,
       links: [
         {
           id: 0,
@@ -37,6 +38,19 @@ export default {
           page: '/profile'
         }
       ]
+    }
+  },
+  methods: {
+    setVisibleOnLoad () {
+      this.isVisible = this.$route.fullPath !== '/login'
+    }
+  },
+  mounted () {
+    this.setVisibleOnLoad()
+  },
+  watch: {
+    $route (to, from) {
+      this.isVisible = this.$route.fullPath !== '/login'
     }
   }
 }
