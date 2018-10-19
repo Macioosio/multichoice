@@ -42,7 +42,8 @@ export default {
   },
   methods: {
     setVisibleOnLoad () {
-      this.isVisible = this.$route.fullPath !== '/login'
+      let route = this.$route.fullPath
+      this.isVisible = route !== '/login' && route !== '/register'
     }
   },
   mounted () {
@@ -50,7 +51,8 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.isVisible = this.$route.fullPath !== '/login'
+      let route = this.$route.fullPath
+      this.isVisible = route !== '/login' && route !== '/register'
     }
   }
 }

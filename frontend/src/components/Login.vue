@@ -15,6 +15,7 @@
         <span>Logowanie nie powiodło się</span>
       </md-snackbar>
     </form>
+    <router-link to="/register">Zarejestruj się</router-link>
   </div>
 </template>
 

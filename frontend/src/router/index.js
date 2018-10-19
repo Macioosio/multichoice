@@ -9,6 +9,7 @@ import Areas from '@/components/Areas'
 import Questions from '@/components/Questions'
 import QuestionAdding from '@/components/QuestionAdding'
 import Login from '@/components/Login'
+import Register from '@/components/Register'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/courses',
