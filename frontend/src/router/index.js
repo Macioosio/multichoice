@@ -9,8 +9,6 @@ import Areas from '@/components/Areas'
 import Questions from '@/components/Questions'
 import QuestionAdding from '@/components/QuestionAdding'
 import Login from '@/components/Login'
-import $store from '../store/store'
-// import $store from '../store/store'
 
 Vue.use(Router)
 
@@ -116,8 +114,8 @@ export const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  let authToken = $store.state.authToken
-  let authority = $store.state.authority
+  let authToken = sessionStorage.getItem('user-token')
+  let authority = sessionStorage.getItem('user-authority')
   if (to.meta.requiresAuth) {
     if (!authToken || !authority) {
       next({name: 'Login'})

@@ -9,8 +9,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // ...
   state: {
-    authToken: localStorage.getItem('user-token') || '',
-    authority: localStorage.getItem('user-authority') || '',
     answers: [
       {
         id: '',
@@ -36,9 +34,9 @@ export default new Vuex.Store({
   },
   getters: {
     getField,
-    getAuthHeader: (state) => {
+    getAuthHeader: () => {
       return {
-        headers: {'Authorization': state.authToken}
+        headers: {'Authorization': sessionStorage.getItem('user-token')}
       }
     }
   },

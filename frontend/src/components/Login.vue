@@ -42,19 +42,17 @@ export default {
         .catch(error => (this.handleError()))
     },
     handleLoginResponse (response) {
-      this.user = response
       if (response.status === 200) {
-        localStorage.setItem('user-token', response.headers.authorization)
-        localStorage.setItem('user-authority', response.data.authorities[0].authority)
-        // to trigger store refresh
-        localStorage.getItem('user-token')
-        localStorage.getItem('user-authority')
+        sessionStorage.setItem('user-token', response.headers.authorization)
+        sessionStorage.setItem('user-authority', response.data.authorities[0].authority)
+        sessionStorage.setItem('user-email', response.data.username)
         router.push('/')
       }
     },
     handleError () {
-      localStorage.removeItem('user-token')
-      localStorage.removeItem('user-authority')
+      sessionStorage.removeItem('user-token')
+      sessionStorage.removeItem('user-authority')
+      sessionStorage.removeItem('user-email')
       this.showSnackbar = true
     }
   }
