@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.pwr.eng.multichoice.common.util.ContraintViolationHandler;
+import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
 import pl.pwr.eng.multichoice.domain.question.Question;
 
@@ -17,7 +17,7 @@ import java.util.UUID;
 @PreAuthorize("hasAuthority('TEACHER')")
 @RestController
 @RequestMapping("/api/areas")
-public class AreaController implements ContraintViolationHandler {
+public class AreaController implements ConstraintViolationHandler {
     @Autowired
     AreaService areaService;
 

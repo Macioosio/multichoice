@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.DTO;
 
 import pl.pwr.eng.multichoice.domain.area.Area;
-import pl.pwr.eng.multichoice.common.util.ContraintViolationHandler;
+import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.domain.question.Question;
 
 import javax.validation.Valid;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @PreAuthorize("hasAuthority('TEACHER')")
 @RestController
 @RequestMapping("/api/courses")
-public class CourseController implements ContraintViolationHandler {
+public class CourseController implements ConstraintViolationHandler {
     @Autowired
     CourseService courseService;
 

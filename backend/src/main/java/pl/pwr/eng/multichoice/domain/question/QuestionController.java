@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
-import pl.pwr.eng.multichoice.common.util.ContraintViolationHandler;
+import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @PreAuthorize("hasAuthority('TEACHER')")
 @RestController
 @RequestMapping("/api/questions")
-public class QuestionController implements ContraintViolationHandler {
+public class QuestionController implements ConstraintViolationHandler {
     @Autowired
     QuestionService questionService;
 
