@@ -15,7 +15,7 @@
       <input class="input input-width" required v-model="passwordRepeat" type="password" placeholder="Password"/>
     </div>
     <div class="small-padding-class">
-    <md-radio v-model="role" value="STUDENT" selected>Student</md-radio>
+    <md-radio v-model="role" value="STUDENT">Student</md-radio>
     <md-radio v-model="role" value="TEACHER">Nauczyciel</md-radio>
     </div>
     <button class="button" type="submit">Zarejestruj się</button>
