@@ -10,7 +10,7 @@
       <label class="label">Hasło</label>
       <input class="input input-width" required v-model="password" type="password" placeholder="Password"/>
       </div>
-      <button class="button" type="submit">Login</button>
+      <button class="button" type="submit">Zaloguj się</button>
       <md-snackbar :md-position="snackBarPosition" :md-duration="snackBarDuration" :md-active.sync="showSnackbar" md-persistent>
         <span>Logowanie nie powiodło się</span>
       </md-snackbar>
