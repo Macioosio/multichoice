@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Courses from '@/components/Courses'
 import Tests from '@/components/Tests'
+import TestAdding from '@/components/TestAdding'
 import Profile from '@/components/Profile'
 import Areas from '@/components/Areas'
 import Questions from '@/components/Questions'
@@ -41,6 +42,12 @@ export const router = new Router({
       path: '/tests',
       name: 'Tests',
       component: Tests,
+      meta: { requiresAuth: true, teacherAuth: true, studentAuth: false }
+    },
+    {
+      path: '/tests/add',
+      name: 'AddTest',
+      component: TestAdding,
       meta: { requiresAuth: true, teacherAuth: true, studentAuth: false }
     },
     {
