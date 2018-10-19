@@ -19,6 +19,11 @@ import pl.pwr.eng.multichoice.domain.student.Student;
 import pl.pwr.eng.multichoice.domain.student.StudentRepository;
 import pl.pwr.eng.multichoice.domain.teacher.Teacher;
 import pl.pwr.eng.multichoice.domain.teacher.TeacherRepository;
+import pl.pwr.eng.multichoice.domain.test.Test;
+import pl.pwr.eng.multichoice.domain.test.TestRepository;
+
+import java.util.Calendar;
+import java.util.Date;
 
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
@@ -39,10 +44,13 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     TeacherRepository teacherRepository;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    StudentRepository studentRepository;
 
     @Autowired
-    StudentRepository studentRepository;
+    TestRepository testRepository;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -160,6 +168,25 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         an3q4.setCorrect(false);
         an3q4.setQuestion(q4);
 
+        Date todayDate = new Date();
+        Calendar todayCalendar = Calendar.getInstance();
+        todayCalendar.setTime(todayDate);
+        int currentYear = todayCalendar.get(Calendar.YEAR);
+        int currentMonth = todayCalendar.get(Calendar.MONTH);
+        int currentDay = todayCalendar.get(Calendar.DAY_OF_MONTH);
+
+        Calendar cal = Calendar.getInstance();
+
+        Test test = new Test();
+        cal.set(currentYear, currentMonth, currentDay, 12, 00, 00);
+        test.setStart(cal.getTime());
+        cal.set(currentYear, currentMonth, currentDay, 24, 00, 00);
+        test.setEnd(cal.getTime());
+        test.setPassword("password");
+        test.setCourse(course1);
+        test.setStudents(Lists.newArrayList(student));
+        test.setQuestions(Lists.newArrayList(q1, q2));
+
         teacherRepository.save(teacher);
         studentRepository.save(student);
         courseRepository.saveAll(Lists.newArrayList(course1, course2));
@@ -167,6 +194,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         questionRepository.saveAll(Lists.newArrayList(q1, q2, q3, q4));
         answerRepository.saveAll(Lists.newArrayList(an1q1, an2q1, an3q1, an1q2, an2q2, an3q2,
                 an1q3, an2q3, an3q3, an1q4, an2q4, an3q4));
+        testRepository.saveAll(Lists.newArrayList(test));
     }
 
 }
