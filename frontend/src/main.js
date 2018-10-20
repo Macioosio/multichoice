@@ -5,13 +5,16 @@ import App from './App'
 import {router} from './router'
 import store from './store/store'
 import VueMaterial from 'vue-material'
+import Datetime from 'vue-datetime'
 import 'bulma/css/bulma.css'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/black-green-light.css'
+import 'vue-datetime/dist/vue-datetime.css'
 
 /* eslint-disable no-new */
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
+Vue.use(Datetime)
 new Vue({
   el: '#app',
   store,
