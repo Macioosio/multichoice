@@ -9,9 +9,9 @@
         <md-table-cell md-label="Test" width="400">{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Przedmiot">{{ item.course.name }}</md-table-cell>
         <md-table-cell md-label="Start" md-sort-by="item.start">{{convertDate(item.start)}}</md-table-cell>
-        <!--<md-table-cell>
-          <router-link class="button" :to="'/questions/edit/' + item.id">Edytuj</router-link>
-        </md-table-cell>-->
+        <md-table-cell width="50">
+          <router-link class="button" :to="'/tests/edit/' + item.id">Edytuj</router-link>
+        </md-table-cell>
       </md-table-row>
     </md-table>
   </div>

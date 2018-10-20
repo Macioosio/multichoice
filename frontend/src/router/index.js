@@ -51,6 +51,13 @@ export const router = new Router({
       meta: { requiresAuth: true, teacherAuth: true, studentAuth: false }
     },
     {
+      path: '/tests/edit/:testId',
+      name: 'EditTest',
+      component: TestAdding,
+      props: true,
+      meta: { requiresAuth: true, teacherAuth: true, studentAuth: false }
+    },
+    {
       path: '/profile',
       name: 'Profile',
       component: Profile,
