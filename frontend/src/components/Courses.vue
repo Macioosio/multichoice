@@ -7,7 +7,7 @@
       </div>
       <div class="md-layout-item padding-class">
         <h2 class = "subtitle">Kursy</h2>
-        <md-list>
+        <md-list v-if="!isAddMode">
           <md-list-item v-if="!isAddMode"
                         v-for ="course in courses" v-bind:key="course.id"
                         :to="'/course/' + course.id + '/areas'">

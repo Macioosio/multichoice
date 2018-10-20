@@ -10,18 +10,18 @@
         <span v-if="!isEditMode">kursu {{course.name}}</span>
         <span v-if="isEditMode">kursu <input v-model="course.name" placeholder="this.course.name"/></span>
       </h2>
-      <!--break-->
-      <input class="input" v-if="isAddMode" v-model="area.name" placeholder="Nazwa działu..."/>
-      <button class="button" v-if="isAddMode" v-on:click="saveAdding">Zapisz</button>
-      <button class="button" v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
-      <!--break-->
-      <md-list>
+      <md-list v-if="!isAddMode">
         <md-list-item v-if="!isAddMode"
                       v-for ="area in areas" v-bind:key="area.id"
                       :to="'/area/' + area.id +'/questions/'">
           {{area.name}}
         </md-list-item>
       </md-list>
+      <!--break-->
+      <input class="input" v-if="isAddMode" v-model="area.name" placeholder="Nazwa działu..."/>
+      <button class="button" v-if="isAddMode" v-on:click="saveAdding">Zapisz</button>
+      <button class="button" v-if="isAddMode" v-on:click="abandonChanges">Wróć</button>
+      <!--break-->
     </div>
     <div class="md-layout-item padding-class">
       <button class="button" v-if="!isEditMode && !isAddMode" v-on:click="turnOnAddMode">Dodaj dział</button>
