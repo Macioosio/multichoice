@@ -24,6 +24,7 @@ import pl.pwr.eng.multichoice.domain.test.TestRepository;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
@@ -169,7 +170,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         an3q4.setQuestion(q4);
 
         Date todayDate = new Date();
-        Calendar todayCalendar = Calendar.getInstance();
+        Calendar todayCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+1"));
         todayCalendar.setTime(todayDate);
         int currentYear = todayCalendar.get(Calendar.YEAR);
         int currentMonth = todayCalendar.get(Calendar.MONTH);
