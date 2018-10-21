@@ -22,7 +22,7 @@ public class TestController implements ConstraintViolationHandler {
 
     @GetMapping
     public List<Test> getAllTests(){
-        return testService.findAll();
+        return testService.findAllOfAuthor();
     }
 
     @GetMapping("/{id}")
@@ -39,7 +39,7 @@ public class TestController implements ConstraintViolationHandler {
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        testService.save(test);
+        testService.addTest(test);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

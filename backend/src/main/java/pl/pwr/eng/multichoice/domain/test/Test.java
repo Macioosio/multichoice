@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import pl.pwr.eng.multichoice.domain.course.Course;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.student.Student;
+import pl.pwr.eng.multichoice.domain.teacher.Teacher;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -43,4 +44,6 @@ public class Test {
     @ManyToMany
     private List<Student> students;
 
+    @ManyToOne
+    private Teacher author;
 }

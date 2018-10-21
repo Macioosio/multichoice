@@ -187,6 +187,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         test.setCourse(course1);
         test.setStudents(Lists.newArrayList(student));
         test.setQuestions(Lists.newArrayList(q1, q2));
+        test.setAuthor(teacher);
 
         teacherRepository.save(teacher);
         studentRepository.save(student);
