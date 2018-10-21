@@ -1,11 +1,16 @@
 <template>
   <div v-if="isVisible">
-  <md-tabs md-sync-route class="container" md-alignment="fixed">
-    <md-tab id="tab-home" md-label="Home" to="/"></md-tab>
-    <md-tab id="tab-pages" md-label="Pytania" to="/courses"></md-tab>
-    <md-tab id="tab-posts" md-label="Testy" to="/tests"></md-tab>
-    <md-tab id="tab-settings" md-label="Profil" to="/profile"></md-tab>
-  </md-tabs>
+    <md-tabs md-sync-route class="container" md-alignment="fixed" v-if="teacherView">
+      <md-tab id="tab-home" md-label="Home" to="/"></md-tab>
+      <md-tab id="tab-pages" md-label="Pytania" to="/courses"></md-tab>
+      <md-tab id="tab-posts" md-label="Testy" to="/tests"></md-tab>
+      <md-tab id="tab-settings" md-label="Profil" to="/profile"></md-tab>
+    </md-tabs>
+    <md-tabs md-sync-route class="container" md-alignment="fixed" v-if="studentView">
+      <md-tab id="tab-home" md-label="Home" to="/"></md-tab>
+      <md-tab id="tab-posts" md-label="Testy" to="/tests"></md-tab>
+      <md-tab id="tab-settings" md-label="Profil" to="/profile"></md-tab>
+    </md-tabs>
   </div>
 </template>
 
@@ -16,6 +21,8 @@ export default {
   data () {
     return {
       isVisible: true,
+      teacherView: false,
+      studentView: false,
       links: [
         {
           id: 0,
@@ -41,18 +48,27 @@ export default {
     }
   },
   methods: {
-    setVisibleOnLoad () {
+    setVisible () {
       let route = this.$route.fullPath
       this.isVisible = route !== '/login' && route !== '/register'
+    },
+    setView () {
+      if (sessionStorage.getItem('user-authority') === 'TEACHER') {
+        this.studentView = false
+        this.teacherView = true
+      } else {
+        this.teacherView = false
+        this.studentView = true
+      }
     }
   },
   mounted () {
-    this.setVisibleOnLoad()
+    this.setVisible()
   },
   watch: {
     $route (to, from) {
-      let route = this.$route.fullPath
-      this.isVisible = route !== '/login' && route !== '/register'
+      this.setVisible()
+      this.setView()
     }
   }
 }
