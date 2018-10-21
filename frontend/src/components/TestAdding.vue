@@ -61,8 +61,8 @@
       <md-table v-model="allQuestions" md-card md-fixed-header @md-selected="onSelectQuestions">
         <md-table-toolbar>
           <h1 class="md-title md-toolbar-section-start">Pytania</h1>
-          <button class="button" v-on:click="isQuestionChoosingMode=false">Zapisz</button>
-          <button class="button" v-on:click="isQuestionChoosingMode=false">Wróć</button>
+          <button class="button" v-on:click="addSelectedQuestions">Dodaj</button>
+          <button class="button" v-on:click="clearSelectedQuestions">Wróć</button>
         </md-table-toolbar>
         <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple">
           <md-table-cell md-label="Pytanie" md-sort-by="content" width="800">{{ item.content }}</md-table-cell>
@@ -75,14 +75,16 @@
       <md-table v-model="allStudents" md-card md-fixed-header @md-selected="onSelectStudents">
         <md-table-toolbar>
           <h1 class="md-title md-toolbar-section-start">Studenci</h1>
-          <button class="button" v-on:click="isStudentChoosingMode=false">Zapisz</button>
-          <button class="button" v-on:click="isStudentChoosingMode=false">Wróć</button>
+          <button class="button" v-on:click="addSelectedStudents">Dodaj</button>
+          <button class="button" v-on:click="clearSelectedStudents">Wróć</button>
         </md-table-toolbar>
         <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple">
           <md-table-cell md-label="email" md-sort-by="content">{{ item.email }}</md-table-cell>
         </md-table-row>
       </md-table>
     </div>
+    {{selectedQuestions}}
+    {{selectedStudents}}
   </div>
 </template>
 
@@ -166,6 +168,18 @@ export default {
         axios
           .put('/api/tests', course, $store.getters.getAuthHeader)
           .then(() => router.push('/tests'))
+      } else {
+        let course = {
+          'start': this.start,
+          'end': this.end,
+          'password': this.password,
+          'course': this.getCourse(this.course.name),
+          'questions': this.questions,
+          'students': this.students
+        }
+        axios
+          .post('/api/tests', course, $store.getters.getAuthHeader)
+          .then(() => router.push('/tests'))
       }
     },
     getCourse (courseName) {
@@ -178,19 +192,51 @@ export default {
       this.isQuestionChoosingMode = true
       axios
         .get('/api/questions', $store.getters.getAuthHeader)
-        .then(response => (this.allQuestions = response.data))
+        .then(response => (this.allQuestions = this.filterAlreadySelectedQuestions(response.data)))
     },
     setStudentChoosingMode () {
       this.isStudentChoosingMode = true
       axios
         .get('/api/students', $store.getters.getAuthHeader)
-        .then(response => (this.allStudents = response.data))
+        .then(response => (this.allStudents = this.filterAlreadySelectedStudents(response.data)))
     },
     onSelectQuestions (questions) {
       this.selectedQuestions = questions
     },
     onSelectStudents (students) {
       this.selectedStudents = students
+    },
+    addSelectedQuestions () {
+      this.questions = this.questions.concat(this.selectedQuestions)
+      this.clearSelectedQuestions()
+    },
+    addSelectedStudents () {
+      this.students = this.students.concat(this.selectedStudents)
+      this.clearSelectedStudents()
+    },
+    clearSelectedQuestions () {
+      this.selectedQuestions = []
+      this.isQuestionChoosingMode = false
+    },
+    clearSelectedStudents () {
+      this.selectedStudents = []
+      this.isStudentChoosingMode = false
+    },
+    filterAlreadySelectedQuestions (fetchedQuestions) {
+      for (let question of this.questions) {
+        fetchedQuestions = fetchedQuestions.filter(function (s) {
+          return s.id !== question.id
+        })
+      }
+      return fetchedQuestions
+    },
+    filterAlreadySelectedStudents (fetchedStudents) {
+      for (let student of this.students) {
+        fetchedStudents = fetchedStudents.filter(function (s) {
+          return s.id !== student.id
+        })
+      }
+      return fetchedStudents
     }
   }
 }
