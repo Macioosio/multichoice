@@ -27,7 +27,7 @@ public class TeacherController implements ConstraintViolationHandler {
         return teacherService.findAll();
     }
 
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping("/{id}")
     public ResponseEntity getTeacher(@PathVariable(value = "id") UUID uuid){
         Teacher teacher = teacherService.findById(uuid);

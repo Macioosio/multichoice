@@ -20,13 +20,13 @@ public class StudentController implements ConstraintViolationHandler {
     @Autowired
     StudentService studentService;
 
-    @PreAuthorize("denyAll()")
+    @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping
     public List<Student> getAllStudents(){
         return studentService.findAll();
     }
 
-    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @PreAuthorize("hasAuthority('STUDENT')")
     @GetMapping("/{id}")
     public ResponseEntity getStudent(@PathVariable(value = "id") UUID uuid){
         Student student = studentService.findById(uuid);
