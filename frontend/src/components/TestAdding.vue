@@ -83,8 +83,6 @@
         </md-table-row>
       </md-table>
     </div>
-    {{selectedQuestions}}
-    {{selectedStudents}}
   </div>
 </template>
 
