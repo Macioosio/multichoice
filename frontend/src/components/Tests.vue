@@ -8,7 +8,8 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Test" width="400">{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Przedmiot">{{ item.course.name }}</md-table-cell>
-        <md-table-cell md-label="Start" md-sort-by="item.start">{{convertDate(item.start)}}</md-table-cell>
+        <md-table-cell md-label="Start" md-sort-by="start">{{convertDate(item.start)}}</md-table-cell>
+        <md-table-cell md-label="Koniec" md-sort-by="end">{{convertDate(item.end)}}</md-table-cell>
         <md-table-cell width="50">
           <router-link class="button" :to="'/tests/edit/' + item.id">Edytuj</router-link>
         </md-table-cell>
@@ -20,6 +21,8 @@
 <script>
 import axios from 'axios'
 import $store from '../store/store'
+import * as moment from 'moment'
+
 export default {
   name: 'Tests',
   data () {
@@ -38,9 +41,7 @@ export default {
     },
     convertDate (dateJavaFormat) {
       // 2018-10-19T10:00:00.628+0000
-      let year = dateJavaFormat.substring(0, 10)
-      let time = dateJavaFormat.substring(11, 19)
-      return year + ' ' + time
+      return moment(dateJavaFormat).format('YYYY-MM-DD HH:mm')
     }
   }
 
