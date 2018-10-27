@@ -34,6 +34,5 @@ public class Solution {
     @ManyToMany
     private List<Answer> answers;
 
-
     private int points;
 }
