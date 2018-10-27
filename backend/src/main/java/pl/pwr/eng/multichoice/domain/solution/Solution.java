@@ -24,7 +24,7 @@ public class Solution {
     private UUID id;
 
     @NotNull
-    @OneToMany
+    @ManyToOne
     private Student author;
 
     @NotNull
