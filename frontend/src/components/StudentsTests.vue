@@ -1,13 +1,52 @@
 <template>
-<div></div>
+  <div class="container padding-class">
+    <md-table v-model="tests" md-card md-fixed-header>
+      <md-table-toolbar>
+        <h1 class="md-title md-toolbar-section-start">Testy</h1>
+      </md-table-toolbar>
+      <md-table-row slot="md-table-row" slot-scope="{ item }">
+        <md-table-cell md-label="Przedmiot">{{ item.course.name }}</md-table-cell>
+        <md-table-cell md-label="Start" md-sort-by="start">{{convertDate(item.start)}}</md-table-cell>
+        <md-table-cell md-label="Koniec" md-sort-by="end">{{convertDate(item.end)}}</md-table-cell>
+        <md-table-cell width="50">
+          <button class="button">Rozwiąż</button>
+        </md-table-cell>
+      </md-table-row>
+    </md-table>
+  </div>
 </template>
 
 <script>
+import axios from 'axios'
+import $store from '../store/store'
+import * as moment from 'moment'
+
 export default {
-  name: 'StudentsTests'
+  name: 'StudentsTests',
+  data () {
+    return {
+      tests: []
+    }
+  },
+  mounted () {
+    this.fetchStudentsTests()
+  },
+  methods: {
+    fetchStudentsTests () {
+      axios
+        .get('/api/students/tests/mine', $store.getters.getAuthHeader)
+        .then(response => (this.tests = response.data))
+    },
+    convertDate (dateJavaFormat) {
+      // 2018-10-19T10:00:00.628+0000
+      return moment(dateJavaFormat).format('YYYY-MM-DD HH:mm')
+    }
+  }
 }
 </script>
 
 <style scoped>
-
+  .padding-class {
+    padding: 25px;
+  }
 </style>
