@@ -56,14 +56,19 @@ export default {
       if (sessionStorage.getItem('user-authority') === 'TEACHER') {
         this.studentView = false
         this.teacherView = true
+        this.isVisible = true
       } else {
-        this.teacherView = false
-        this.studentView = true
+        if (sessionStorage.getItem('user-authority') === 'STUDENT') {
+          this.teacherView = false
+          this.studentView = true
+          this.isVisible = true
+        }
       }
     }
   },
   mounted () {
     this.setVisible()
+    this.setView()
   },
   watch: {
     $route (to, from) {
