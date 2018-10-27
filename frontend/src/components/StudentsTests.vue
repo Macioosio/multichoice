@@ -9,7 +9,7 @@
         <md-table-cell md-label="Start" md-sort-by="start">{{convertDate(item.start)}}</md-table-cell>
         <md-table-cell md-label="Koniec" md-sort-by="end">{{convertDate(item.end)}}</md-table-cell>
         <md-table-cell width="50">
-          <button class="button">Rozwiąż</button>
+          <button class="button" :disabled="!isSolvingTime(item)" v-on:click="routeToTestSolving(item)">Rozwiąż</button>
         </md-table-cell>
       </md-table-row>
     </md-table>
@@ -17,9 +17,11 @@
 </template>
 
 <script>
+// TODO Conditionally change "rozwiąż" button to test result.
 import axios from 'axios'
 import $store from '../store/store'
 import * as moment from 'moment'
+import {router} from '../router/index'
 
 export default {
   name: 'StudentsTests',
@@ -40,6 +42,12 @@ export default {
     convertDate (dateJavaFormat) {
       // 2018-10-19T10:00:00.628+0000
       return moment(dateJavaFormat).format('YYYY-MM-DD HH:mm')
+    },
+    isSolvingTime (test) {
+      return moment().isBetween(test.start, test.end)
+    },
+    routeToTestSolving (test) {
+      router.push('/test/solving/' + test.id)
     }
   }
 }
