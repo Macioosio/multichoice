@@ -1,17 +1,32 @@
 package pl.pwr.eng.multichoice.domain.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.pwr.eng.multichoice.domain.student.Student;
+import pl.pwr.eng.multichoice.domain.test.StudentTransferTestForm;
+import pl.pwr.eng.multichoice.domain.test.Test;
+import pl.pwr.eng.multichoice.domain.test.TestService;
+import pl.pwr.eng.multichoice.domain.user.User;
+import pl.pwr.eng.multichoice.domain.user.UserService;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
     
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    UserService userService;
+    
+    @Autowired
+    TestService testService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -40,5 +55,27 @@ public class StudentService {
         String encodedPassword = bCryptPasswordEncoder.encode(modifiedStudent.getPassword());
         originalStudent.setPassword(encodedPassword);
         save(originalStudent);
+    }
+
+    public List<StudentTransferTestForm> findTestsOfStudent() {
+        Student student = getStudentFromAuthentication();
+        List<StudentTransferTestForm> studentsTests = testService.findAll()
+                .stream()
+                .filter(test -> test.getStudents().contains(student))
+                .map(StudentTransferTestForm::new)
+                .collect(Collectors.toList());
+        return studentsTests;
+    }
+    
+    private Student getStudentFromAuthentication(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Student student = findByEmail(authentication.getName());
+        return student;
+    }
+
+    public Student findByEmail(String email) {
+        User user = userService.findByEmail(email);
+        Student student = findById(user.getId());
+        return student;
     }
 }

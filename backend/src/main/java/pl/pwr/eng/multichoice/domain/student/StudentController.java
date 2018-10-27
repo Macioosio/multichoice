@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
+import pl.pwr.eng.multichoice.domain.test.StudentTransferTestForm;
+import pl.pwr.eng.multichoice.domain.test.Test;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -34,6 +36,16 @@ public class StudentController implements ConstraintViolationHandler {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(student);
+    }
+
+    @PreAuthorize("hasAuthority('STUDENT')")
+    @GetMapping("/tests/mine")
+    public ResponseEntity getStudentsTests(){
+        List<StudentTransferTestForm> tests = studentService.findTestsOfStudent();
+        if (tests == null || tests.size() == 0) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(tests);
     }
 
     @PreAuthorize("permitAll()")
