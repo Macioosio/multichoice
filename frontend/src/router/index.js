@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 import Courses from '@/components/Courses'
 import Tests from '@/components/Tests'
 import TestAdding from '@/components/TestAdding'
+import StudentsTests from '@/components/StudentsTests'
 import Profile from '@/components/Profile'
 import Areas from '@/components/Areas'
 import Questions from '@/components/Questions'
@@ -56,6 +57,12 @@ export const router = new Router({
       component: TestAdding,
       props: true,
       meta: { requiresAuth: true, teacherAuth: true, studentAuth: false }
+    },
+    {
+      path: '/tests/mine',
+      name: 'StudentsTests',
+      component: StudentsTests,
+      meta: { requiresAuth: true, teacherAuth: false, studentAuth: true }
     },
     {
       path: '/profile',
@@ -143,13 +150,13 @@ router.beforeEach((to, from, next) => {
       if (authority === 'TEACHER') {
         next()
       } else {
-        next()
+        next('/home')
       }
     } else if (to.meta.studentAuth) {
       if (authority === 'STUDENT') {
         next()
       } else {
-        next()
+        next('/home')
       }
     }
   } else {
