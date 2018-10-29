@@ -67,13 +67,13 @@ public class StudentService {
         return studentsTests;
     }
     
-    private Student getStudentFromAuthentication(){
+    public Student getStudentFromAuthentication(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Student student = findByEmail(authentication.getName());
         return student;
     }
 
-    public Student findByEmail(String email) {
+    private Student findByEmail(String email) {
         User user = userService.findByEmail(email);
         Student student = findById(user.getId());
         return student;
