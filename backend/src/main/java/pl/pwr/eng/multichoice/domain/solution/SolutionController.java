@@ -3,6 +3,7 @@ package pl.pwr.eng.multichoice.domain.solution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
@@ -44,21 +45,23 @@ public class SolutionController implements ConstraintViolationHandler {
         return ResponseEntity.ok(answers);
     }
 
+    @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping
-    public ResponseEntity addSolution(@Valid @RequestBody @DTO(SolutionForm.class) Solution solution, BindingResult result) {
+    public ResponseEntity addOrGetSolution(@Valid @RequestBody SolutionForm solutionForm, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        solutionService.save(solution);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Solution solution = solutionService.addOrGetSolution(solutionForm);
+        return ResponseEntity.ok(solution);
     }
 
-    @PutMapping
-    public ResponseEntity modifySolution(@Valid @RequestBody Solution solution, BindingResult result) {
+    @PreAuthorize("hasAuthority('STUDENT')")
+    @PatchMapping("/{id}/add/answers")
+    public ResponseEntity addAnswer(@PathVariable(value = "id") UUID uuid, @Valid @RequestBody AnswersAddingForm answers, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        solutionService.modifySolution(solution);
+        solutionService.addAnswers(answers, uuid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

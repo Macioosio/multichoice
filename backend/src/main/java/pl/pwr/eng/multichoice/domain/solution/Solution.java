@@ -35,4 +35,6 @@ public class Solution {
     private List<Answer> answers;
 
     private int points;
+
+    private boolean posted;
 }
