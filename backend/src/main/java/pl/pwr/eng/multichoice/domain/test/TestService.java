@@ -5,6 +5,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.pwr.eng.multichoice.domain.question.Question;
+import pl.pwr.eng.multichoice.domain.question.QuestionService;
+import pl.pwr.eng.multichoice.domain.question.dto.SafeQuestionForm;
 import pl.pwr.eng.multichoice.domain.teacher.Teacher;
 import pl.pwr.eng.multichoice.domain.teacher.TeacherService;
 
@@ -21,6 +23,9 @@ public class TestService {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private QuestionService questionService;
 
 
     public List<Test> findAll(){
@@ -50,9 +55,19 @@ public class TestService {
         save(test);
     }
 
-    public List<Question> getTestsQuestions(UUID uuid) {
+    public List<SafeQuestionForm> getTestsQuestionsSafe(UUID uuid) {
         Test test = findById(uuid);
-        return test.getQuestions();
+        List<SafeQuestionForm> questionFormList = test.getQuestions()
+                .stream()
+                .map(question ->
+                        new SafeQuestionForm (
+                        question.getId(),
+                        question.getContent(),
+                        questionService.getAnswersSafe(question)
+                        )
+                )
+                .collect(Collectors.toList());
+        return questionFormList;
     }
 
     public void modifyTest(Test modifiedTest) {

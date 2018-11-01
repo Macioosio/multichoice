@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
 import pl.pwr.eng.multichoice.domain.question.Question;
+import pl.pwr.eng.multichoice.domain.question.dto.SafeQuestionForm;
 import pl.pwr.eng.multichoice.domain.test.dto.TestForm;
 
 import javax.validation.Valid;
@@ -39,7 +40,7 @@ public class TestController implements ConstraintViolationHandler {
     @PreAuthorize("hasAnyAuthority('TEACHER', 'STUDENT')")
     @GetMapping("/{id}/questions")
     public ResponseEntity getTestsQuestions(@PathVariable(value = "id") UUID uuid) {
-        List<Question> questions = testService.getTestsQuestions(uuid);
+        List<SafeQuestionForm> questions = testService.getTestsQuestionsSafe(uuid);
         if (questions == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
