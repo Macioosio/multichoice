@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 import Courses from '@/components/Courses'
 import Tests from '@/components/Tests'
 import TestAdding from '@/components/TestAdding'
+import TestSolving from '@/components/TestSolving'
 import StudentsTests from '@/components/StudentsTests'
 import Profile from '@/components/Profile'
 import Areas from '@/components/Areas'
@@ -57,6 +58,13 @@ export const router = new Router({
       component: TestAdding,
       props: true,
       meta: { requiresAuth: true, teacherAuth: true, studentAuth: false }
+    },
+    {
+      path: '/test/solving/:testId',
+      name: 'TestSolving',
+      component: TestSolving,
+      props: true,
+      meta: { requiresAuth: true, teacherAuth: false, studentAuth: true }
     },
     {
       path: '/tests/mine',
