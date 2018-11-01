@@ -10,6 +10,7 @@ import pl.pwr.eng.multichoice.common.util.DTO;
 
 import pl.pwr.eng.multichoice.domain.area.Area;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
+import pl.pwr.eng.multichoice.domain.course.dto.CourseForm;
 import pl.pwr.eng.multichoice.domain.question.Question;
 
 import javax.validation.Valid;

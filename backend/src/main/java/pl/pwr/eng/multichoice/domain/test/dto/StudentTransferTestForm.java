@@ -1,7 +1,8 @@
-package pl.pwr.eng.multichoice.domain.test;
+package pl.pwr.eng.multichoice.domain.test.dto;
 
 import lombok.Data;
 import pl.pwr.eng.multichoice.domain.course.Course;
+import pl.pwr.eng.multichoice.domain.test.Test;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;

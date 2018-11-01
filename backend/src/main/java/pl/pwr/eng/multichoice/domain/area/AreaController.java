@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
+import pl.pwr.eng.multichoice.domain.area.dto.AreaForm;
 import pl.pwr.eng.multichoice.domain.question.Question;
 
 import javax.validation.Valid;

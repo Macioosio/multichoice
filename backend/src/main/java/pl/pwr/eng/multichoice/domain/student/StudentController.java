@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
-import pl.pwr.eng.multichoice.domain.test.StudentTransferTestForm;
-import pl.pwr.eng.multichoice.domain.test.Test;
+import pl.pwr.eng.multichoice.domain.student.dto.StudentForm;
+import pl.pwr.eng.multichoice.domain.test.dto.StudentTransferTestForm;
 
 import javax.validation.Valid;
 import java.util.List;
