@@ -40,7 +40,7 @@ public class TestController implements ConstraintViolationHandler {
     @GetMapping("/{id}/questions")
     public ResponseEntity getTestsQuestions(@PathVariable(value = "id") UUID uuid) {
         List<Question> questions = testService.getTestsQuestions(uuid);
-        if (questions == null || questions.isEmpty()) {
+        if (questions == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(questions);
