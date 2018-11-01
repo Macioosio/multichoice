@@ -1,15 +1,17 @@
 package pl.pwr.eng.multichoice.domain.solution;
 
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
 import pl.pwr.eng.multichoice.domain.answer.AnswerService;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.question.QuestionService;
+import pl.pwr.eng.multichoice.domain.solution.dto.SolutionCreationForm;
+import pl.pwr.eng.multichoice.domain.solution.dto.SolutionTransferForm;
 import pl.pwr.eng.multichoice.domain.student.Student;
 import pl.pwr.eng.multichoice.domain.student.StudentService;
 import pl.pwr.eng.multichoice.domain.test.Test;
+import pl.pwr.eng.multichoice.domain.test.TestService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +33,9 @@ public class SolutionService {
     @Autowired
     AnswerService answerService;
 
+    @Autowired
+    TestService testService;
+
     public List<Solution> findAll(){
         return solutionRepository.findAll();
     }
@@ -43,8 +48,8 @@ public class SolutionService {
         solutionRepository.save(solution);
     }
 
-    public Solution addOrGetSolution(SolutionForm solutionForm) {
-        Test test = solutionForm.getTest();
+    public SolutionTransferForm addOrGetSolution(SolutionCreationForm solutionCreationForm) {
+        Test test = testService.findById(solutionCreationForm.getTestId());
         Student author = studentService.getStudentFromAuthentication();
         List<Solution> solutionsOfTest = solutionRepository.findAllByTest(test);
         Solution solution = solutionsOfTest
@@ -52,14 +57,15 @@ public class SolutionService {
                 .findFirst()
                 .orElse(null);
         if (solution == null) {
-            solution = newSolutionFromForm(solutionForm);
+            solution = newSolutionFromForm(solutionCreationForm);
         }
-        return solution;
+        SolutionTransferForm stf = new SolutionTransferForm(solution.getId(), solution.getAnswers());
+        return stf;
     }
 
-    public Solution newSolutionFromForm(SolutionForm solutionForm) {
+    public Solution newSolutionFromForm(SolutionCreationForm solutionCreationForm) {
         Solution solution = new Solution();
-        solution.setTest(solutionForm.getTest());
+        solution.setTest(testService.findById(solutionCreationForm.getTestId()));
         solution.setAuthor(studentService.getStudentFromAuthentication());
         solution.setPoints(0);
         solution.setPosted(false);
@@ -89,7 +95,6 @@ public class SolutionService {
                 .stream()
                 .map(answerService::findById)
                 .collect(Collectors.toList());
-
 
         List<Answer> existingAnswersToQuestion = answersInSolution
                 .stream()

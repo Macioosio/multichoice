@@ -7,8 +7,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
-import pl.pwr.eng.multichoice.common.util.DTO;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
+import pl.pwr.eng.multichoice.domain.solution.dto.SolutionCreationForm;
+import pl.pwr.eng.multichoice.domain.solution.dto.SolutionTransferForm;
 
 
 import javax.validation.Valid;
@@ -47,11 +48,11 @@ public class SolutionController implements ConstraintViolationHandler {
 
     @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping
-    public ResponseEntity addOrGetSolution(@Valid @RequestBody SolutionForm solutionForm, BindingResult result) {
+    public ResponseEntity addOrGetSolution(@Valid @RequestBody SolutionCreationForm solutionCreationForm, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        Solution solution = solutionService.addOrGetSolution(solutionForm);
+        SolutionTransferForm solution = solutionService.addOrGetSolution(solutionCreationForm);
         return ResponseEntity.ok(solution);
     }
 
