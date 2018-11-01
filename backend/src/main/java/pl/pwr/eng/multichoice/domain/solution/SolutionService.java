@@ -6,6 +6,7 @@ import pl.pwr.eng.multichoice.domain.answer.Answer;
 import pl.pwr.eng.multichoice.domain.answer.AnswerService;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.question.QuestionService;
+import pl.pwr.eng.multichoice.domain.solution.dto.AnswersAddingForm;
 import pl.pwr.eng.multichoice.domain.solution.dto.SolutionCreationForm;
 import pl.pwr.eng.multichoice.domain.solution.dto.SolutionTransferForm;
 import pl.pwr.eng.multichoice.domain.student.Student;

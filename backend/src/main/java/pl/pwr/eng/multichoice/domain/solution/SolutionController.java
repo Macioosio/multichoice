@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
+import pl.pwr.eng.multichoice.domain.solution.dto.AnswersAddingForm;
 import pl.pwr.eng.multichoice.domain.solution.dto.SolutionCreationForm;
 import pl.pwr.eng.multichoice.domain.solution.dto.SolutionTransferForm;
 
