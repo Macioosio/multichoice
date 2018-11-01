@@ -3,7 +3,7 @@ package pl.pwr.eng.multichoice.domain.question.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.pwr.eng.multichoice.domain.answer.AnswerCreationForm;
+import pl.pwr.eng.multichoice.domain.answer.dto.AnswerCreationForm;
 import pl.pwr.eng.multichoice.domain.area.Area;
 import pl.pwr.eng.multichoice.domain.course.Course;
 

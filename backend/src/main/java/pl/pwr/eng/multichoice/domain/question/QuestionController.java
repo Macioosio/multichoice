@@ -45,6 +45,16 @@ public class QuestionController implements ConstraintViolationHandler {
         return ResponseEntity.ok(answers);
     }
 
+    @PreAuthorize("hasAnyAuthority('TEACHER', 'STUDENT')")
+    @GetMapping("/{id}/answers/safe")
+    public ResponseEntity getAnswersSafe(@PathVariable(value = "id") UUID uuid){
+        Question question = questionService.findById(uuid);
+        if (question == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(questionService.getAnswersSafe(question));
+    }
+
     @PostMapping
     public ResponseEntity addQuestion(@Valid @RequestBody QuestionCreationForm questionForm, BindingResult result) {
         if (result.hasErrors()) {

@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
 import pl.pwr.eng.multichoice.domain.answer.AnswerService;
+import pl.pwr.eng.multichoice.domain.answer.dto.SafeAnswerForm;
 import pl.pwr.eng.multichoice.domain.question.dto.QuestionCreationForm;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -61,6 +63,14 @@ public class QuestionService {
 
     public List<Question> findByCourseId(UUID id) {
         return questionRepository.findByCourseId(id);
+    }
+
+    public List<SafeAnswerForm> getAnswersSafe(Question question) {
+        List<SafeAnswerForm> answers = getAnswers(question)
+                .stream()
+                .map(answer -> new SafeAnswerForm(answer.getId(), answer.getContent()))
+                .collect(Collectors.toList());
+        return answers;
     }
 }
 
