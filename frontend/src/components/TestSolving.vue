@@ -24,15 +24,16 @@
 </template>
 
 <script>
+// TODO activequestion -> at first the first button next changes to the next question. on last question this button is not visible
 import axios from 'axios'
 import $store from '../store/store'
-
 export default {
   name: 'TestSolving',
   props: ['testId'],
   data () {
     return {
       questions: {},
+      activeQuestion: {},
       solution: {}
     }
   },
