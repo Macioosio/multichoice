@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.teacher.Teacher;
 import pl.pwr.eng.multichoice.domain.teacher.TeacherService;
 
@@ -47,6 +48,11 @@ public class TestService {
         Teacher author = getTeacherFromAuthentication();
         test.setAuthor(author);
         save(test);
+    }
+
+    public List<Question> getTestsQuestions(UUID uuid) {
+        Test test = findById(uuid);
+        return test.getQuestions();
     }
 
     public void modifyTest(Test modifiedTest) {

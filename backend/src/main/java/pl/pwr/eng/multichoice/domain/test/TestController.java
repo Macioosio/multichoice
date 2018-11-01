@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
+import pl.pwr.eng.multichoice.domain.question.Question;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -32,6 +33,16 @@ public class TestController implements ConstraintViolationHandler {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(test);
+    }
+
+    @PreAuthorize("hasAnyAuthority('TEACHER', 'STUDENT')")
+    @GetMapping("/{id}/questions")
+    public ResponseEntity getTestsQuestions(@PathVariable(value = "id") UUID uuid) {
+        List<Question> questions = testService.getTestsQuestions(uuid);
+        if (questions == null || questions.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(questions);
     }
 
     @PostMapping
