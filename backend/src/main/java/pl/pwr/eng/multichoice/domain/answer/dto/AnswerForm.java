@@ -1,4 +1,4 @@
-package pl.pwr.eng.multichoice.domain.answer;
+package pl.pwr.eng.multichoice.domain.answer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
