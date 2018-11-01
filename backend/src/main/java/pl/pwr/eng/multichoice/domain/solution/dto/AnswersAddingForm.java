@@ -19,6 +19,5 @@ public class AnswersAddingForm {
     UUID questionID;
 
     @NotNull
-    @NotEmpty
     List<UUID> answerIDs;
 }

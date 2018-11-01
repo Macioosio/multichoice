@@ -17,4 +17,5 @@ public class SafeAnswerForm {
     @NotNull
     private String content;
 
+    private UUID questionId;
 }

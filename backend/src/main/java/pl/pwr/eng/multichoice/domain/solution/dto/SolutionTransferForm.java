@@ -3,7 +3,7 @@ package pl.pwr.eng.multichoice.domain.solution.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.pwr.eng.multichoice.domain.answer.Answer;
+import pl.pwr.eng.multichoice.domain.answer.dto.SafeAnswerForm;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,5 +15,5 @@ public class SolutionTransferForm {
 
     private UUID solutionId;
 
-    private List<Answer> answers;
+    private List<SafeAnswerForm> answers;
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
 import pl.pwr.eng.multichoice.domain.answer.AnswerService;
+import pl.pwr.eng.multichoice.domain.answer.dto.SafeAnswerForm;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.question.QuestionService;
 import pl.pwr.eng.multichoice.domain.solution.dto.AnswersAddingForm;
@@ -60,8 +61,17 @@ public class SolutionService {
         if (solution == null) {
             solution = newSolutionFromForm(solutionCreationForm);
         }
-        SolutionTransferForm stf = new SolutionTransferForm(solution.getId(), solution.getAnswers());
+        SolutionTransferForm stf = createSolutionTrasferForm(solution);
         return stf;
+    }
+
+    private SolutionTransferForm createSolutionTrasferForm(Solution solution) {
+        List<SafeAnswerForm> safeAnswerForms =
+                solution.getAnswers()
+                .stream()
+                .map(answer -> new SafeAnswerForm(answer.getId(), answer.getContent(), answer.getQuestion().getId()))
+                .collect(Collectors.toList());
+        return new SolutionTransferForm(solution.getId(), safeAnswerForms);
     }
 
     public Solution newSolutionFromForm(SolutionCreationForm solutionCreationForm) {

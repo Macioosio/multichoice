@@ -68,7 +68,7 @@ public class QuestionService {
     public List<SafeAnswerForm> getAnswersSafe(Question question) {
         List<SafeAnswerForm> answers = getAnswers(question)
                 .stream()
-                .map(answer -> new SafeAnswerForm(answer.getId(), answer.getContent()))
+                .map(answer -> new SafeAnswerForm(answer.getId(), answer.getContent(), answer.getQuestion().getId()))
                 .collect(Collectors.toList());
         return answers;
     }
