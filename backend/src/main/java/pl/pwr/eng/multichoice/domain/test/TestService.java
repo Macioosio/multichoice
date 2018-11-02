@@ -91,4 +91,9 @@ public class TestService {
         Teacher teacher = teacherService.findByEmail(authentication.getName());
         return teacher;
     }
+
+    public boolean authorizeSolving(UUID uuid, String password) {
+        Test test = findById(uuid);
+        return password.equals(test.getPassword());
+    }
 }

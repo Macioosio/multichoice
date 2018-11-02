@@ -47,6 +47,16 @@ public class TestController implements ConstraintViolationHandler {
         return ResponseEntity.ok(questions);
     }
 
+    @PreAuthorize("hasAnyAuthority('TEACHER', 'STUDENT')")
+    @GetMapping("/{id}/{password}/authorize")
+    public ResponseEntity authorizeTestSolving(@PathVariable(value = "id") UUID uuid, @PathVariable(value = "password") String password ) {
+        boolean isAuthorized = testService.authorizeSolving(uuid, password);
+        if (!isAuthorized) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity addTest(@Valid @RequestBody @DTO(TestForm.class) Test test, BindingResult result) {
         if (result.hasErrors()) {
