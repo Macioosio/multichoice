@@ -33,12 +33,7 @@ export default new Vuex.Store({
     ]
   },
   getters: {
-    getField,
-    getAuthHeader: () => {
-      return {
-        headers: {'Authorization': sessionStorage.getItem('user-token')}
-      }
-    }
+    getField
   },
   mutations: {
     updateField,
