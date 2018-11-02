@@ -1,10 +1,18 @@
 <template>
   <div class="container padding-class">
     <div class="md-layout md-gutter" v-if="!isAuthorized">
-      <div class="md-layout-item">
+      <div class="md-layout-item" >
       </div>
       <div class="md-layout-item">
-        <button class="button" v-on:click="startTest">Zacznij rozwiązywać</button>
+        <div v-if="!solution.posted">
+          <input class="input input-width" v-model="password" type="password" placeholder="Password"/>
+          <button class="button" v-on:click="startTest">Zacznij rozwiązywać</button>
+        </div>
+        <div class="box" v-if="solution.posted">
+          Twoje rozwiązanie zostało już przesłane
+          <hr>
+          Twój wynik to:
+        </div>
       </div>
       <div class="md-layout-item">
       </div>
@@ -18,6 +26,7 @@
             {{index + 1}}
           </button>
         </div>
+        <button class="button is-danger" v-on:click="confirmTestEnd">Zakończ test</button>
       </div>
       <div class="md-layout-item md-size-50">
         <div class="box is-large">
@@ -32,9 +41,15 @@
         </div>
       </div>
       <div class="md-layout-item">
-        <button class="button" v-on:click="handleNextQuestion">Kolejne pytanie</button>
+        <div class="box buttons center">
+          <button class="button" v-on:click="addAnswersToSolution">Zapisz odpowiedź</button>
+          <button class="button" v-on:click="handleNextQuestion">Kolejne pytanie</button>
+        </div>
       </div>
     </div>
+    <md-snackbar :md-position="snackBarPosition" :md-duration="snackBarDuration" :md-active.sync="showSnackbar" md-persistent>
+      <span>Wprowadzone hasło nie jest poprawne</span>
+    </md-snackbar>
   </div>
 </template>
 
@@ -47,9 +62,13 @@ export default {
   data () {
     return {
       isAuthorized: false,
+      password: '',
       questions: {},
       activeQuestion: {},
-      solution: {}
+      solution: {},
+      showSnackbar: false,
+      snackBarDuration: 10000,
+      snackBarPosition: 'center'
     }
   },
   mounted () {
@@ -77,6 +96,17 @@ export default {
       return questions
     },
     startTest () {
+      if (this.password === '') {
+        this.showSnackbar = true
+      } else {
+        axios
+          .get('/api/tests/' + this.testId + '/' + this.password + '/authorize', $store.getters.getAuthHeader)
+          .then(() => this.startTestPositive())
+          .catch(() => (this.showSnackbar = true))
+      }
+    },
+    startTestPositive () {
+      this.password = ''
       this.isAuthorized = true
       this.setSelectedAnswers()
     },
@@ -127,6 +157,17 @@ export default {
         result = 'is-info'
       }
       return result
+    },
+    confirmTestEnd () {
+      if (confirm('Czy na pewno chcesz zakończyć test?')) {
+        axios
+          .patch('/api/solutions/' + this.solution.solutionId + '/post', {}, $store.getters.getAuthHeader)
+          .then(() => this.handleTestEnd())
+      }
+    },
+    handleTestEnd () {
+      this.isAuthorized = false
+      this.solution.posted = true
     }
   }
 }
