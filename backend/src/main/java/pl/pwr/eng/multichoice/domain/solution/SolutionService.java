@@ -61,17 +61,17 @@ public class SolutionService {
         if (solution == null) {
             solution = newSolutionFromForm(solutionCreationForm);
         }
-        SolutionTransferForm stf = createSolutionTrasferForm(solution);
+        SolutionTransferForm stf = createSolutionTransferForm(solution);
         return stf;
     }
 
-    private SolutionTransferForm createSolutionTrasferForm(Solution solution) {
+    private SolutionTransferForm createSolutionTransferForm(Solution solution) {
         List<SafeAnswerForm> safeAnswerForms =
                 solution.getAnswers()
                 .stream()
                 .map(answer -> new SafeAnswerForm(answer.getId(), answer.getContent(), answer.getQuestion().getId()))
                 .collect(Collectors.toList());
-        return new SolutionTransferForm(solution.getId(), safeAnswerForms);
+        return new SolutionTransferForm(solution.getId(), solution.isPosted(), safeAnswerForms);
     }
 
     public Solution newSolutionFromForm(SolutionCreationForm solutionCreationForm) {

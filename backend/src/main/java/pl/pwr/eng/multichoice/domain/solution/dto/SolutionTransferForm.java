@@ -15,5 +15,7 @@ public class SolutionTransferForm {
 
     private UUID solutionId;
 
+    private boolean posted;
+
     private List<SafeAnswerForm> answers;
 }
