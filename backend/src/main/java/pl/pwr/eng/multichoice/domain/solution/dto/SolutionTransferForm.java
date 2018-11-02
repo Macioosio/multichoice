@@ -17,5 +17,7 @@ public class SolutionTransferForm {
 
     private boolean posted;
 
+    private int points;
+
     private List<SafeAnswerForm> answers;
 }

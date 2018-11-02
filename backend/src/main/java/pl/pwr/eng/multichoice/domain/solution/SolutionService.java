@@ -71,7 +71,7 @@ public class SolutionService {
                 .stream()
                 .map(answer -> new SafeAnswerForm(answer.getId(), answer.getContent(), answer.getQuestion().getId()))
                 .collect(Collectors.toList());
-        return new SolutionTransferForm(solution.getId(), solution.isPosted(), safeAnswerForms);
+        return new SolutionTransferForm(solution.getId(), solution.isPosted(), solution.getPoints(), safeAnswerForms);
     }
 
     public Solution newSolutionFromForm(SolutionCreationForm solutionCreationForm) {
@@ -117,6 +117,12 @@ public class SolutionService {
         }
 
         answersInSolution.addAll(submittedAnswers);
+        save(solution);
+    }
+
+    public void postSolution(UUID uuid) {
+        Solution solution = findById(uuid);
+        solution.setPosted(true);
         save(solution);
     }
 }

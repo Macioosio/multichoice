@@ -67,6 +67,13 @@ public class SolutionController implements ConstraintViolationHandler {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('STUDENT')")
+    @PatchMapping("/{id}/post")
+    public ResponseEntity postSolution(@PathVariable(value = "id") UUID uuid) {
+        solutionService.postSolution(uuid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteSolution(@PathVariable(value = "id") UUID uuid){
         Solution solution = solutionService.findById(uuid);
