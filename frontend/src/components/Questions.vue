@@ -46,17 +46,17 @@ export default {
     },
     fetchAllQuestions () {
       axios
-        .get('/api/questions/', $store.getters.getAuthHeader)
+        .get('/api/questions/', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.handleData(response.data)))
     },
     fetchCourseQuestions () {
       axios
-        .get('/api/courses/' + this.courseId + '/questions', $store.getters.getAuthHeader)
+        .get('/api/courses/' + this.courseId + '/questions', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.handleData(response.data)))
     },
     fetchAreaQuestions () {
       axios
-        .get('/api/areas/' + this.areaId + '/questions', $store.getters.getAuthHeader)
+        .get('/api/areas/' + this.areaId + '/questions', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.handleData(response.data)))
     },
     handleData (questions) {
@@ -64,7 +64,7 @@ export default {
         this.questions = questions.filter(c => { return c.id !== this.questionId })
         this.clearStoredAnswers()
         axios
-          .delete('/api/questions/' + this.questionId, $store.getters.getAuthHeader)
+          .delete('/api/questions/' + this.questionId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
       } else {
         this.questions = questions
       }

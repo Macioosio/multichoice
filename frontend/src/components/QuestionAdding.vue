@@ -83,13 +83,13 @@ export default {
   methods: {
     fetchAllCourses () {
       axios
-        .get('/api/courses', $store.getters.getAuthHeader)
+        .get('/api/courses', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.courses = response.data))
     },
     fetchSelectedCourseAreas () {
       let course = this.courses.find(c => { return c.name === this.selectedCourseName })
       axios
-        .get('/api/courses/' + course.id + '/areas', $store.getters.getAuthHeader)
+        .get('/api/courses/' + course.id + '/areas', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.courseAreas = response.data))
     },
     ...mapMutations(['addAnswerRow', 'removeAnswerRow']),
@@ -105,7 +105,7 @@ export default {
         'answers': $store.state.answers
       }
       axios
-        .post('/api/questions', questionAddingForm, $store.getters.getAuthHeader)
+        .post('/api/questions', questionAddingForm, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(() => (this.clearElements()))
     },
     clearElements () {
@@ -141,18 +141,18 @@ export default {
       if (this.courseId) {
         this.clearElements()
         axios
-          .get('/api/courses/' + this.courseId, $store.getters.getAuthHeader)
+          .get('/api/courses/' + this.courseId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(response => (this.setDataFromCourse(response.data)))
       }
       if (this.areaId) {
         this.clearElements()
         axios
-          .get('/api/areas/' + this.areaId, $store.getters.getAuthHeader)
+          .get('/api/areas/' + this.areaId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(response => (this.setDataFromArea(response.data)))
       }
       if (this.questionId) {
         axios
-          .get('/api/questions/' + this.questionId, $store.getters.getAuthHeader)
+          .get('/api/questions/' + this.questionId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(response => (this.setDataFromQuestion(response.data)))
       }
     },
@@ -169,7 +169,7 @@ export default {
       this.setDataFromArea(question.area)
       this.content = question.content
       axios
-        .get('/api/questions/' + question.id + '/answers', $store.getters.getAuthHeader)
+        .get('/api/questions/' + question.id + '/answers', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.setAnswersData(response.data)))
     },
     setAnswersData (answers) {

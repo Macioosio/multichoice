@@ -27,7 +27,6 @@
 
 <script>
 import axios from 'axios'
-import $store from '../store/store'
 
 export default {
   name: 'Courses',
@@ -47,19 +46,19 @@ export default {
   methods: {
     loadData () {
       axios
-        .get('/api/courses', $store.getters.getAuthHeader)
+        .get('/api/courses', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.handleData(response.data)))
     },
     handleData (data) {
       this.courses = data
       if (this.courseId) {
         this.courses = this.courses.filter(c => { return c.id !== this.courseId })
-        axios.delete('/api/courses/' + this.courseId, $store.getters.getAuthHeader)
+        axios.delete('/api/courses/' + this.courseId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
       }
     },
     saveChanges () {
       axios
-        .post('/api/courses/', this.course, $store.getters.getAuthHeader)
+        .post('/api/courses/', this.course, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(() => this.loadData())
       this.isAddMode = false
     },

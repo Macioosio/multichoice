@@ -36,7 +36,6 @@
 
 <script>
 import axios from 'axios'
-import $store from '../store/store'
 
 export default {
   name: 'Areas',
@@ -60,12 +59,12 @@ export default {
   methods: {
     fetchCourseAreas () {
       axios
-        .get('/api/courses/' + this.courseId + '/areas', $store.getters.getAuthHeader)
+        .get('/api/courses/' + this.courseId + '/areas', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.areas = response.data))
     },
     fetchCourse () {
       axios
-        .get('/api/courses/' + this.courseId, $store.getters.getAuthHeader)
+        .get('/api/courses/' + this.courseId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.course = response.data))
     },
     turnOnEditMode () {
@@ -80,13 +79,13 @@ export default {
     },
     saveChanges () {
       axios
-        .put('/api/courses/', this.course, $store.getters.getAuthHeader)
+        .put('/api/courses/', this.course, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
       this.isEditMode = false
     },
     saveAdding () {
       this.area.course = this.course
       axios
-        .post('api/areas', this.area, $store.getters.getAuthHeader)
+        .post('api/areas', this.area, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         // .then(() => this.areas.push(this.area))
         .then(() => this.fetchCourseAreas())
       this.isAddMode = false

@@ -88,7 +88,6 @@
 
 <script>
 import axios from 'axios'
-import $store from '../store/store'
 import {router} from '../router/index'
 import * as moment from 'moment'
 
@@ -120,7 +119,7 @@ export default {
       this.fetchAllCourses()
       if (this.testId) {
         axios
-          .get('/api/tests/' + this.testId, $store.getters.getAuthHeader)
+          .get('/api/tests/' + this.testId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(response => this.setData(response.data))
       }
     },
@@ -134,7 +133,7 @@ export default {
     },
     fetchAllCourses () {
       axios
-        .get('/api/courses', $store.getters.getAuthHeader)
+        .get('/api/courses', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.courses = response.data))
     },
     convertDate (dateJavaFormat) {
@@ -164,7 +163,7 @@ export default {
           'students': this.students
         }
         axios
-          .put('/api/tests', course, $store.getters.getAuthHeader)
+          .put('/api/tests', course, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(() => router.push('/tests'))
       } else {
         let course = {
@@ -176,7 +175,7 @@ export default {
           'students': this.students
         }
         axios
-          .post('/api/tests', course, $store.getters.getAuthHeader)
+          .post('/api/tests', course, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(() => router.push('/tests'))
       }
     },
@@ -189,13 +188,13 @@ export default {
     setQuestionChoosingMode () {
       this.isQuestionChoosingMode = true
       axios
-        .get('/api/questions', $store.getters.getAuthHeader)
+        .get('/api/questions', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.allQuestions = this.filterAlreadySelectedQuestions(response.data)))
     },
     setStudentChoosingMode () {
       this.isStudentChoosingMode = true
       axios
-        .get('/api/students', $store.getters.getAuthHeader)
+        .get('/api/students', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.allStudents = this.filterAlreadySelectedStudents(response.data)))
     },
     onSelectQuestions (questions) {

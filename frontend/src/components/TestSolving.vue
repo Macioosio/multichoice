@@ -55,7 +55,7 @@
 
 <script>
 import axios from 'axios'
-import $store from '../store/store'
+
 export default {
   name: 'TestSolving',
   props: ['testId'],
@@ -80,12 +80,12 @@ export default {
       let testId = this.testId
       let testIdForm = { testId }
       axios
-        .post('/api/solutions/', testIdForm, $store.getters.getAuthHeader)
+        .post('/api/solutions/', testIdForm, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.solution = response.data))
     },
     prepareQuestions () {
       axios
-        .get('/api/tests/' + this.testId + '/questions', $store.getters.getAuthHeader)
+        .get('/api/tests/' + this.testId + '/questions', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.questions = this.handleQuestions(response.data)))
     },
     handleQuestions (questions) {
@@ -100,7 +100,7 @@ export default {
         this.showSnackbar = true
       } else {
         axios
-          .get('/api/tests/' + this.testId + '/' + this.password + '/authorize', $store.getters.getAuthHeader)
+          .get('/api/tests/' + this.testId + '/' + this.password + '/authorize', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(() => this.startTestPositive())
           .catch(() => (this.showSnackbar = true))
       }
@@ -137,7 +137,7 @@ export default {
         .patch(
           '/api/solutions/' + this.solution.solutionId + '/add/answers',
           transferData,
-          $store.getters.getAuthHeader
+          {headers: {'Authorization': sessionStorage.getItem('user-token')}}
         )
     },
     navigateToNextQuestion () {
@@ -161,7 +161,7 @@ export default {
     confirmTestEnd () {
       if (confirm('Czy na pewno chcesz zakończyć test?')) {
         axios
-          .patch('/api/solutions/' + this.solution.solutionId + '/post', {}, $store.getters.getAuthHeader)
+          .patch('/api/solutions/' + this.solution.solutionId + '/post', {}, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(() => this.handleTestEnd())
       }
     },

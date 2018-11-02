@@ -20,7 +20,6 @@
 
 <script>
 import axios from 'axios'
-import $store from '../store/store'
 import * as moment from 'moment'
 
 export default {
@@ -36,7 +35,7 @@ export default {
   methods: {
     fetchData () {
       axios
-        .get('/api/tests', $store.getters.getAuthHeader)
+        .get('/api/tests', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.tests = response.data))
     },
     convertDate (dateJavaFormat) {

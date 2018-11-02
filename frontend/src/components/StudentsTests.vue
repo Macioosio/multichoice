@@ -19,7 +19,6 @@
 <script>
 // TODO Conditionally change "rozwiąż" button to test result.
 import axios from 'axios'
-import $store from '../store/store'
 import * as moment from 'moment'
 import {router} from '../router/index'
 
@@ -36,7 +35,7 @@ export default {
   methods: {
     fetchStudentsTests () {
       axios
-        .get('/api/students/tests/mine', $store.getters.getAuthHeader)
+        .get('/api/students/tests/mine', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.tests = response.data))
     },
     convertDate (dateJavaFormat) {
