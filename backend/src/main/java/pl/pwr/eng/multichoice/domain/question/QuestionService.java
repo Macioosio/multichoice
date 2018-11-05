@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
 import pl.pwr.eng.multichoice.domain.answer.AnswerService;
+import pl.pwr.eng.multichoice.domain.answer.dto.AnswerCreationForm;
 import pl.pwr.eng.multichoice.domain.answer.dto.SafeAnswerForm;
 import pl.pwr.eng.multichoice.domain.question.dto.QuestionCreationForm;
 
@@ -38,15 +39,32 @@ public class QuestionService {
         question.setContent(questionForm.getContent());
         question.setArea(questionForm.getArea());
         question.setCourse(questionForm.getCourse());
+        question.setPoints(getPoints(questionForm.getAnswers()));
         save(question);
         answerService.save(questionForm.getAnswers(), question);
+    }
+
+    private int getPoints(List<AnswerCreationForm> answers) {
+        int pointsSum = answers.stream()
+                .map(AnswerCreationForm::getPoints)
+                .reduce(0, Integer::sum);
+        return pointsSum;
     }
 
     public void modifyQuestion(Question modifiedQuestion) {
         Question originalQuestion = findById(modifiedQuestion.getId());
         originalQuestion.setContent(modifiedQuestion.getContent());
         originalQuestion.setArea(modifiedQuestion.getArea());
+        originalQuestion.setPoints(sumPoints(modifiedQuestion));
         save(originalQuestion);
+    }
+
+    private int sumPoints(Question question) {
+        int sumPoints = getAnswers(question).stream()
+                .map(Answer::getPoints)
+                .filter(points -> points >= 0)
+                .reduce(0, Integer::sum);
+        return sumPoints;
     }
 
     public void delete(Question question) {

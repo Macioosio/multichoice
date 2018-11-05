@@ -25,6 +25,9 @@ public class Question {
     @Column(columnDefinition = "text")
     private String content;
 
+    @Column(nullable = false)
+    private int points;
+
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;

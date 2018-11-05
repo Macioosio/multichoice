@@ -13,22 +13,26 @@ export default new Vuex.Store({
       {
         id: '',
         content: '',
-        correct: false
+        correct: false,
+        points: 0
       },
       {
         id: '',
         content: '',
-        correct: false
+        correct: false,
+        points: 0
       },
       {
         id: '',
         content: '',
-        correct: false
+        correct: false,
+        points: 0
       },
       {
         id: '',
         content: '',
-        correct: false
+        correct: false,
+        points: 0
       }
     ]
   },

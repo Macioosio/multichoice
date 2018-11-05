@@ -18,5 +18,8 @@ public class AnswerForm {
 
     @NotNull
     private boolean isCorrect;
+
+    @NotNull
+    private int points;
 }
 

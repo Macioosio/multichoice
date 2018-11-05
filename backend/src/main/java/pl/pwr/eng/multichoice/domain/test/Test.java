@@ -35,6 +35,9 @@ public class Test {
     @NotEmpty
     private String password;
 
+    @Column(nullable = false)
+    private int points;
+
     @ManyToOne
     private Course course;
 

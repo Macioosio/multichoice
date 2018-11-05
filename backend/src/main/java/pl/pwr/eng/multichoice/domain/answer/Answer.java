@@ -27,6 +27,9 @@ public class Answer {
     @Column(nullable = false)
     private boolean isCorrect;
 
+    @Column(nullable = false)
+    private int points;
+
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Question question;

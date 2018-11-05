@@ -38,6 +38,7 @@ public class AnswerService {
             Answer answer = answerId == null ? new Answer() : findById(answerId);
             answer.setContent(answerForm.getContent());
             answer.setCorrect(answerForm.isCorrect());
+            answer.setPoints(answerForm.getPoints());
             answer.setQuestion(question);
             answers.add(answer);
         }
@@ -49,6 +50,7 @@ public class AnswerService {
         originalAnswer.setContent(modifiedAnswer.getContent());
         originalAnswer.setQuestion(modifiedAnswer.getQuestion());
         originalAnswer.setCorrect(modifiedAnswer.isCorrect());
+        originalAnswer.setPoints(modifiedAnswer.getPoints());
         save(originalAnswer);
     }
 

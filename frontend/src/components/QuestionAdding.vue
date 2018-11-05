@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="md-layout md-gutter">
-      <div class="md-layout-item padding-class">
+      <div class="md-layout-item padding-class md-size-20">
         <div class="field">
           <div class="control">
             <label class="label">Kurs</label>
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <div class="md-layout-item padding-class">
+      <div class="md-layout-item padding-class md-size-60">
         <div class="field">
           <label class="label">Treść pytania</label>
           <div class="control">
@@ -36,21 +36,24 @@
         </div>
         <label class="label">Odpowiedzi</label>
         <div class="md-layout md-alignment-center-center" v-for="(answer, index) in answers" :key="index">
-          <div class="md-layout-item">
+          <div class="md-layout-item md-size-5">
             <md-checkbox v-model="answer.correct"></md-checkbox>
           </div>
-          <div class="md-layout-item md-size-90">
+          <div class="md-layout-item md-size-85">
             <div class="control">
               <input class="input" v-model="answer.content"
                      :class="{ 'is-success': answer.correct }"
                      placeholder="Odpowiedź">
             </div>
           </div>
+          <div class="md-layout-item md-size-10">
+            <input class="input" type="number" v-model="answer.points"/>
+          </div>
         </div>
         <button class="button" @click="addAnswerRow()">Dodaj odpowiedź</button>
         <button class="button" @click="removeAnswerRow()">Usuń odpowiedź</button>
       </div>
-      <div class="md-layout-item padding-class">
+      <div class="md-layout-item padding-class md-size-20">
         <button class="button" @click="saveQuestion()">Zapisz</button>
         <router-link class="button" to="/questions/">Wróć</router-link>
         <router-link class="button" v-if="questionId" :to="'/questions/delete/' + questionId">Usuń</router-link>
@@ -117,22 +120,26 @@ export default {
         {
           id: '',
           content: '',
-          correct: false
+          correct: false,
+          points: 0
         },
         {
           id: '',
           content: '',
-          correct: false
+          correct: false,
+          points: 0
         },
         {
           id: '',
           content: '',
-          correct: false
+          correct: false,
+          points: 0
         },
         {
           id: '',
           content: '',
-          correct: false
+          correct: false,
+          points: 0
         }
       ]
     },
@@ -177,7 +184,8 @@ export default {
         return {
           id: answer.id,
           content: answer.content,
-          correct: answer.correct
+          correct: answer.correct,
+          points: answer.points
         }
       })
       $store.state.answers = mappedAnswers

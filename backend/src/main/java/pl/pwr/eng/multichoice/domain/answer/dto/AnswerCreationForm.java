@@ -19,4 +19,7 @@ public class AnswerCreationForm {
 
     @NotNull
     private boolean isCorrect;
+
+    @NotNull
+    private int points;
 }

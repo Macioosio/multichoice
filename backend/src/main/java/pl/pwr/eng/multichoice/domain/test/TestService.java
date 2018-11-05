@@ -40,6 +40,7 @@ public class TestService {
     public void save(Test test) {
         testRepository.save(test);
     }
+
     public List<Test> findAllOfAuthor(){
         Teacher author = getTeacherFromAuthentication();
         List<Test> allTests = findAll();
@@ -53,7 +54,16 @@ public class TestService {
     public void addTest(Test test) {
         Teacher author = getTeacherFromAuthentication();
         test.setAuthor(author);
+        test.setPoints(sumPoints(test));
         save(test);
+    }
+
+    private int sumPoints(Test test) {
+        int sumPoints = test.getQuestions().stream()
+                .map(Question::getPoints)
+                .filter(points -> points >= 0)
+                .reduce(0, Integer::sum);
+        return sumPoints;
     }
 
     public List<SafeQuestionForm> getTestsQuestionsSafe(UUID uuid) {
@@ -81,6 +91,7 @@ public class TestService {
         originalTest.setQuestions(modifiedTest.getQuestions());
         originalTest.setStudents(modifiedTest.getStudents());
         originalTest.setAuthor(getTeacherFromAuthentication());
+        originalTest.setPoints(sumPoints(modifiedTest));
         save(originalTest);
     }
 
