@@ -11,6 +11,7 @@ import pl.pwr.eng.multichoice.domain.answer.Answer;
 import pl.pwr.eng.multichoice.domain.solution.dto.AnswersAddingForm;
 import pl.pwr.eng.multichoice.domain.solution.dto.SolutionCreationForm;
 import pl.pwr.eng.multichoice.domain.solution.dto.SolutionTransferForm;
+import pl.pwr.eng.multichoice.domain.test.grading.GradeForm;
 
 
 import javax.validation.Valid;
@@ -71,6 +72,7 @@ public class SolutionController implements ConstraintViolationHandler {
     @PatchMapping("/{id}/post")
     public ResponseEntity postSolution(@PathVariable(value = "id") UUID uuid) {
         solutionService.postSolution(uuid);
+        GradeForm grade = solutionService.gradeSolution(uuid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

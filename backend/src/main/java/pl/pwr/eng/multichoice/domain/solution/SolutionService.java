@@ -14,6 +14,8 @@ import pl.pwr.eng.multichoice.domain.student.Student;
 import pl.pwr.eng.multichoice.domain.student.StudentService;
 import pl.pwr.eng.multichoice.domain.test.Test;
 import pl.pwr.eng.multichoice.domain.test.TestService;
+import pl.pwr.eng.multichoice.domain.test.grading.GradeForm;
+import pl.pwr.eng.multichoice.domain.test.grading.GradingService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,6 +39,9 @@ public class SolutionService {
 
     @Autowired
     TestService testService;
+
+    @Autowired
+    GradingService gradingService;
 
     public List<Solution> findAll(){
         return solutionRepository.findAll();
@@ -124,6 +129,11 @@ public class SolutionService {
         Solution solution = findById(uuid);
         solution.setPosted(true);
         save(solution);
+    }
+
+    public GradeForm gradeSolution(UUID uuid) {
+        Solution solution = findById(uuid);
+        return gradingService.gradeSolution(solution);
     }
 }
 
