@@ -7,6 +7,7 @@ import pl.pwr.eng.multichoice.domain.course.Course;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.student.Student;
 import pl.pwr.eng.multichoice.domain.teacher.Teacher;
+import pl.pwr.eng.multichoice.domain.test.grading.GradingMethod;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -37,6 +38,13 @@ public class Test {
 
     @Column(nullable = false)
     private int points;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private GradingMethod gradingMethod;
+
+    @Column(nullable = false)
+    private boolean navigable;
 
     @ManyToOne
     private Course course;

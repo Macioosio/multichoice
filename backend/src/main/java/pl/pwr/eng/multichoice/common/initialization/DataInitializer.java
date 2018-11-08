@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.pwr.eng.multichoice.domain.answer.Answer;
@@ -21,6 +20,7 @@ import pl.pwr.eng.multichoice.domain.teacher.Teacher;
 import pl.pwr.eng.multichoice.domain.teacher.TeacherRepository;
 import pl.pwr.eng.multichoice.domain.test.Test;
 import pl.pwr.eng.multichoice.domain.test.TestRepository;
+import pl.pwr.eng.multichoice.domain.test.grading.GradingMethod;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -205,6 +205,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         test.setQuestions(Lists.newArrayList(q1, q2));
         test.setAuthor(teacher);
         test.setPoints(3);
+        test.setGradingMethod(GradingMethod.CO);
+        test.setNavigable(true);
 
         teacherRepository.save(teacher);
         studentRepository.save(student);

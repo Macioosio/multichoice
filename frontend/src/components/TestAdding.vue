@@ -23,6 +23,31 @@
           <input class="input input-width" required v-model="password" placeholder="Password"/>
         </div>
         <div class="small-padding-class">
+            <label class="label">Metoda oceniania</label>
+            <div class="select">
+              <select v-model="gradingMethod">
+                <option v-for="(gMethod, index) in gradingMethods" :key="index">
+                  {{gMethod}}
+                </option>
+              </select>
+            </div>
+        </div>
+        <label class="label">Nawigowalność</label>
+          <div class="control">
+          <label class="radio">
+            <input type="radio" name="navigable" value="true" v-model="navigable">
+            Tak
+          </label>
+          <label class="radio">
+            <input type="radio" name="navigable" value="false" v-model="navigable">
+            Nie
+          </label>
+        </div>
+        <div class="small-padding-class">
+          <label class="label">Punkty</label>
+          <input class="input" disabled v-model="points"/>
+        </div>
+        <div class="small-padding-class">
           <button class="button" v-on:click="saveAndClose">Zapisz</button>
           <router-link class="button" to="/tests">Wróć</router-link>
         </div>
@@ -100,6 +125,10 @@ export default {
       start: {},
       end: {},
       password: '',
+      gradingMethod: '',
+      gradingMethods: ['DO', 'CO', 'TO', 'TO_MINUS'],
+      navigable: true,
+      points: 0,
       questions: [],
       students: [],
       courses: [],
@@ -128,6 +157,9 @@ export default {
       this.start = this.convertDate(data.start)
       this.end = this.convertDate(data.end)
       this.password = data.password
+      this.gradingMethod = data.gradingMethod
+      this.points = data.points
+      this.navigable = data.navigable
       this.questions = data.questions
       this.students = data.students
     },
@@ -145,6 +177,7 @@ export default {
       this.questions = this.questions.filter(function (q) {
         return q.id !== question.id
       })
+      this.points = this.calculatePoints()
     },
     removeStudent (student) {
       this.students = this.students.filter(function (s) {
@@ -153,29 +186,33 @@ export default {
     },
     saveAndClose () {
       if (this.testId) {
-        let course = {
+        let test = {
           'id': this.testId,
           'start': this.start,
           'end': this.end,
           'password': this.password,
+          'gradingMethod': this.gradingMethod,
+          'navigable': this.navigable,
           'course': this.getCourse(this.course.name),
           'questions': this.questions,
           'students': this.students
         }
         axios
-          .put('/api/tests', course, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
+          .put('/api/tests', test, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(() => router.push('/tests'))
       } else {
-        let course = {
+        let test = {
           'start': this.start,
           'end': this.end,
           'password': this.password,
+          'gradingMethod': this.gradingMethod,
+          'navigable': this.navigable,
           'course': this.getCourse(this.course.name),
           'questions': this.questions,
           'students': this.students
         }
         axios
-          .post('/api/tests', course, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
+          .post('/api/tests', test, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(() => router.push('/tests'))
       }
     },
@@ -205,7 +242,16 @@ export default {
     },
     addSelectedQuestions () {
       this.questions = this.questions.concat(this.selectedQuestions)
+      this.points = this.calculatePoints()
       this.clearSelectedQuestions()
+    },
+    calculatePoints () {
+      let maxPoints = this.questions
+        .filter(question => question.points > 0)
+        .map(question => question.points)
+        .reduce((a, b) => a + b, 0)
+      console.log(maxPoints)
+      return maxPoints
     },
     addSelectedStudents () {
       this.students = this.students.concat(this.selectedStudents)

@@ -22,10 +22,14 @@ public class StudentTransferTestForm {
     @NotNull
     private Course course;
 
+    @NotNull
+    private boolean navigable;
+
     public StudentTransferTestForm(Test test) {
         this.setId(test.getId());
         this.setStart(test.getStart());
         this.setEnd(test.getEnd());
         this.setCourse(test.getCourse());
+        this.setNavigable(test.isNavigable());
     }
 }

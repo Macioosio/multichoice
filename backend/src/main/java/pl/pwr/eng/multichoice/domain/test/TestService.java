@@ -88,6 +88,8 @@ public class TestService {
         originalTest.setEnd(modifiedTest.getEnd());
         originalTest.setCourse(modifiedTest.getCourse());
         originalTest.setPassword(modifiedTest.getPassword());
+        originalTest.setNavigable(modifiedTest.isNavigable());
+        originalTest.setGradingMethod(modifiedTest.getGradingMethod());
         originalTest.setQuestions(modifiedTest.getQuestions());
         originalTest.setStudents(modifiedTest.getStudents());
         originalTest.setAuthor(getTeacherFromAuthentication());
