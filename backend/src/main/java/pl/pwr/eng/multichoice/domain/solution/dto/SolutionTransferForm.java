@@ -20,4 +20,6 @@ public class SolutionTransferForm {
     private int points;
 
     private List<SafeAnswerForm> answers;
+
+    private List<UUID> answeredQuestionIds;
 }

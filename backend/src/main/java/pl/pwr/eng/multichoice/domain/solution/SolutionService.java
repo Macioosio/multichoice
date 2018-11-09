@@ -71,12 +71,13 @@ public class SolutionService {
     }
 
     private SolutionTransferForm createSolutionTransferForm(Solution solution) {
+        List<UUID> questionIds = solution.getAnswers().stream().map(a -> a.getQuestion().getId()).collect(Collectors.toList());
         List<SafeAnswerForm> safeAnswerForms =
                 solution.getAnswers()
                 .stream()
                 .map(answer -> new SafeAnswerForm(answer.getId(), answer.getContent(), answer.getQuestion().getId()))
                 .collect(Collectors.toList());
-        return new SolutionTransferForm(solution.getId(), solution.isPosted(), solution.getPoints(), safeAnswerForms);
+        return new SolutionTransferForm(solution.getId(), solution.isPosted(), solution.getPoints(), safeAnswerForms, questionIds);
     }
 
     public Solution newSolutionFromForm(SolutionCreationForm solutionCreationForm) {

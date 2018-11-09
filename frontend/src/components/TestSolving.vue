@@ -27,7 +27,10 @@
         <div class="box buttons has-addons">
           <button v-for="(question, index) in questions" :key="index"
                   class="button is-selected"
-                  v-on:click="navigateToQuestion(question)" v-bind:class="successIfActive(question)">
+                  v-on:click="navigateToQuestion(question)"
+                  v-bind:class="successIfActive(question)"
+                  :disabled="isAnswered(question)"
+          >
             {{index + 1}}
           </button>
         </div>
@@ -48,7 +51,7 @@
       <div class="md-layout-item">
         <div class="box buttons center">
           <button class="button" v-on:click="addAnswersToSolution">Zapisz odpowiedź</button>
-          <button class="button" v-on:click="handleNextQuestion">Kolejne pytanie</button>
+          <button class="button" v-on:click="handleNextQuestion" :disabled="this.answeredQuestions.size === this.questions.length -1">Kolejne pytanie</button>
         </div>
       </div>
     </div>
@@ -69,10 +72,12 @@ export default {
       isAuthorized: false,
       password: '',
       questions: {},
+      answeredQuestions: new Set(),
       activeQuestion: {},
       solution: {},
       maxPoints: 0,
       percent: 0,
+      navigable: true,
       showSnackbar: false,
       snackBarDuration: 10000,
       snackBarPosition: 'center'
@@ -102,10 +107,12 @@ export default {
     },
     prepareQuestions () {
       axios
-        .get('/api/tests/' + this.testId + '/questions', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
+        .get('/api/tests/' + this.testId + '/solve', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.questions = this.handleQuestions(response.data)))
     },
-    handleQuestions (questions) {
+    handleQuestions (solvingDto) {
+      this.navigable = solvingDto.navigable
+      let questions = solvingDto.questions
       questions.forEach(
         question => question.answers.forEach(answer => (answer.selected = false))
       )
@@ -124,8 +131,11 @@ export default {
     },
     startTestPositive () {
       this.password = ''
-      this.isAuthorized = true
       this.setSelectedAnswers()
+      if (!this.navigable) {
+        this.activeQuestion = this.questions.find(q => !this.isAnswered(q))
+      }
+      this.isAuthorized = true
     },
     setSelectedAnswers () {
       let selectedAnswers = this.solution.answers
@@ -134,13 +144,22 @@ export default {
           let answerIsSelected = selectedAnswers.filter(ans => ans.id === answer.id).length > 0
           if (answerIsSelected) {
             answer.selected = true
+            if (!this.navigable) {
+              this.answeredQuestions.add(question)
+            }
           }
         }
       }
     },
     handleNextQuestion () {
+      this.addToAnsweredQuestions()
       this.addAnswersToSolution()
       this.navigateToNextQuestion()
+    },
+    addToAnsweredQuestions () {
+      if (!this.navigable) {
+        this.answeredQuestions.add(this.activeQuestion)
+      }
     },
     addAnswersToSolution () {
       let selectedAnswersIds = this.activeQuestion.answers
@@ -163,9 +182,13 @@ export default {
         activeQuestionIndex = -1
       }
       this.activeQuestion = this.questions[activeQuestionIndex + 1]
+      if (this.isAnswered(this.activeQuestion)) {
+        this.navigateToNextQuestion()
+      }
     },
     navigateToQuestion (question) {
       this.addAnswersToSolution()
+      this.addToAnsweredQuestions()
       this.activeQuestion = question
     },
     successIfActive (question) {
@@ -189,6 +212,9 @@ export default {
       this.solution.points = gradeDto.points
       this.maxPoints = gradeDto.maxPoints
       this.percent = (gradeDto.points / gradeDto.maxPoints) * 100
+    },
+    isAnswered (question) {
+      return this.answeredQuestions.has(question)
     }
   }
 }

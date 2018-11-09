@@ -9,6 +9,7 @@ import pl.pwr.eng.multichoice.domain.question.QuestionService;
 import pl.pwr.eng.multichoice.domain.question.dto.SafeQuestionForm;
 import pl.pwr.eng.multichoice.domain.teacher.Teacher;
 import pl.pwr.eng.multichoice.domain.teacher.TeacherService;
+import pl.pwr.eng.multichoice.domain.test.dto.TestSolvingForm;
 
 
 import java.util.Collections;
@@ -110,5 +111,11 @@ public class TestService {
     public boolean authorizeSolving(UUID uuid, String password) {
         Test test = findById(uuid);
         return password.equals(test.getPassword());
+    }
+
+    public TestSolvingForm getTestSolving(UUID uuid) {
+        boolean navigable = findById(uuid).isNavigable();
+        List<SafeQuestionForm> questions = getTestsQuestionsSafe(uuid);
+        return new TestSolvingForm(navigable, questions);
     }
 }

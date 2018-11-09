@@ -11,6 +11,7 @@ import pl.pwr.eng.multichoice.common.util.DTO;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.question.dto.SafeQuestionForm;
 import pl.pwr.eng.multichoice.domain.test.dto.TestForm;
+import pl.pwr.eng.multichoice.domain.test.dto.TestSolvingForm;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -45,6 +46,13 @@ public class TestController implements ConstraintViolationHandler {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(questions);
+    }
+
+    @PreAuthorize("hasAnyAuthority('TEACHER', 'STUDENT')")
+    @GetMapping("/{id}/solve")
+    public ResponseEntity getTestToSolve(@PathVariable(value = "id") UUID uuid) {
+        TestSolvingForm test = testService.getTestSolving(uuid);
+        return ResponseEntity.ok(test);
     }
 
     @PreAuthorize("hasAnyAuthority('TEACHER', 'STUDENT')")
