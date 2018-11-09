@@ -6,6 +6,7 @@ import pl.pwr.eng.multichoice.domain.answer.Answer;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.question.QuestionService;
 import pl.pwr.eng.multichoice.domain.solution.Solution;
+import pl.pwr.eng.multichoice.domain.solution.SolutionService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,10 +17,15 @@ public class GradingService {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    SolutionService solutionService;
+
     public GradeForm gradeSolution(Solution solution) {
         int maxPoints = solution.getTest().getPoints();
         int points = gradeWithMethod(solution);
-        double percent = (points / maxPoints) * 100;
+        double percent = (points * 100d) / maxPoints;
+        solution.setPoints(points);
+        solutionService.save(solution);
         return new GradeForm(points, maxPoints, percent);
     }
 

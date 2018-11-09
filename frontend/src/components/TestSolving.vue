@@ -8,10 +8,15 @@
           <input class="input input-width" v-model="password" type="password" placeholder="Password"/>
           <button class="button" v-on:click="startTest">Zacznij rozwiązywać</button>
         </div>
-        <div class="box" v-if="solution.posted">
+        <div class="box" style="font-size: medium" v-if="solution.posted">
+          <p>
           Twoje rozwiązanie zostało już przesłane
-          <hr>
+          </p>
           Twój wynik to:
+          <hr>
+          {{solution.points}} / {{maxPoints}}
+          <hr>
+          {{percent}}%
         </div>
       </div>
       <div class="md-layout-item">
@@ -66,6 +71,8 @@ export default {
       questions: {},
       activeQuestion: {},
       solution: {},
+      maxPoints: 0,
+      percent: 0,
       showSnackbar: false,
       snackBarDuration: 10000,
       snackBarPosition: 'center'
@@ -81,7 +88,17 @@ export default {
       let testIdForm = { testId }
       axios
         .post('/api/solutions/', testIdForm, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
-        .then(response => (this.solution = response.data))
+        .then(response => this.handlePostedSolution(response.data))
+    },
+    handlePostedSolution (data) {
+      this.solution = data
+      axios
+        .get('/api/solutions/' + this.solution.solutionId + '/grade', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
+        .then(response => this.setSolvedSolutionData(response.data))
+    },
+    setSolvedSolutionData (gradeDto) {
+      this.maxPoints = gradeDto.maxPoints
+      this.percent = gradeDto.percent
     },
     prepareQuestions () {
       axios
@@ -159,15 +176,19 @@ export default {
       return result
     },
     confirmTestEnd () {
-      if (confirm('Czy na pewno chcesz zakończyć test?')) {
+      this.addAnswersToSolution()
+      if (confirm('Czy na pewno chcesz zakończyć test?\nNiezapisane odpowiedzi nie będą brane pod uwagę')) {
         axios
           .patch('/api/solutions/' + this.solution.solutionId + '/post', {}, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
-          .then(() => this.handleTestEnd())
+          .then((response) => this.handleTestEnd(response.data))
       }
     },
-    handleTestEnd () {
+    handleTestEnd (gradeDto) {
       this.isAuthorized = false
       this.solution.posted = true
+      this.solution.points = gradeDto.points
+      this.maxPoints = gradeDto.maxPoints
+      this.percent = (gradeDto.points / gradeDto.maxPoints) * 100
     }
   }
 }

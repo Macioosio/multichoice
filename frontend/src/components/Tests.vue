@@ -8,8 +8,8 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Test" width="400">{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Przedmiot">{{ item.course.name }}</md-table-cell>
-        <md-table-cell md-label="Start" md-sort-by="start">{{convertDate(item.start)}}</md-table-cell>
-        <md-table-cell md-label="Koniec" md-sort-by="end">{{convertDate(item.end)}}</md-table-cell>
+        <md-table-cell md-label="Start">{{convertDate(item.start)}}</md-table-cell>
+        <md-table-cell md-label="Koniec">{{convertDate(item.end)}}</md-table-cell>
         <md-table-cell width="50">
           <router-link class="button" :to="'/tests/edit/' + item.id">Edytuj</router-link>
         </md-table-cell>
@@ -36,7 +36,10 @@ export default {
     fetchData () {
       axios
         .get('/api/tests', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
-        .then(response => (this.tests = response.data))
+        .then(response => (this.sortTests(response.data)))
+    },
+    sortTests (tests) {
+      this.tests = tests.sort((a, b) => (a.start < b.start) ? 1 : ((b.start > a.start) ? -1 : 0))
     },
     convertDate (dateJavaFormat) {
       // 2018-10-19T10:00:00.628+0000

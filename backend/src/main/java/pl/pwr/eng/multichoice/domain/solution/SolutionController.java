@@ -73,7 +73,13 @@ public class SolutionController implements ConstraintViolationHandler {
     public ResponseEntity postSolution(@PathVariable(value = "id") UUID uuid) {
         solutionService.postSolution(uuid);
         GradeForm grade = solutionService.gradeSolution(uuid);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(grade);
+    }
+
+    @PreAuthorize("hasAuthority('STUDENT')")
+    @GetMapping("/{id}/grade")
+    public ResponseEntity getGrade(@PathVariable(value = "id") UUID uuid) {
+        return ResponseEntity.ok(solutionService.getGrade(uuid));
     }
 
     @DeleteMapping("/{id}")

@@ -120,10 +120,10 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         an1q1.setPoints(1);
 
         Answer an2q1 = new Answer();
-        an2q1.setContent("Fałsz");
-        an2q1.setCorrect(false);
+        an2q1.setContent("Prawda");
+        an2q1.setCorrect(true);
         an2q1.setQuestion(q1);
-        an2q1.setPoints(-1);
+        an2q1.setPoints(1);
 
         Answer an3q1 = new Answer();
         an3q1.setContent("Fałsz");
@@ -194,19 +194,61 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
         Calendar cal = Calendar.getInstance();
 
-        Test test = new Test();
-        cal.set(currentYear, currentMonth, currentDay, 12, 00, 00);
-        test.setStart(cal.getTime());
+        Test test1 = new Test();
+        cal.set(currentYear, currentMonth, currentDay, 8, 00, 00);
+        test1.setStart(cal.getTime());
         cal.set(currentYear, currentMonth, currentDay, 24, 00, 00);
-        test.setEnd(cal.getTime());
-        test.setPassword("password");
-        test.setCourse(course1);
-        test.setStudents(Lists.newArrayList(student));
-        test.setQuestions(Lists.newArrayList(q1, q2));
-        test.setAuthor(teacher);
-        test.setPoints(3);
-        test.setGradingMethod(GradingMethod.CO);
-        test.setNavigable(true);
+        test1.setEnd(cal.getTime());
+        test1.setPassword("password");
+        test1.setCourse(course1);
+        test1.setStudents(Lists.newArrayList(student));
+        test1.setQuestions(Lists.newArrayList(q1, q2));
+        test1.setAuthor(teacher);
+        test1.setPoints(3);
+        test1.setGradingMethod(GradingMethod.DO);
+        test1.setNavigable(true);
+
+        Test test2 = new Test();
+        cal.set(currentYear, currentMonth, currentDay, 9, 00, 00);
+        test2.setStart(cal.getTime());
+        cal.set(currentYear, currentMonth, currentDay, 24, 00, 00);
+        test2.setEnd(cal.getTime());
+        test2.setPassword("password");
+        test2.setCourse(course1);
+        test2.setStudents(Lists.newArrayList(student));
+        test2.setQuestions(Lists.newArrayList(q1, q2));
+        test2.setAuthor(teacher);
+        test2.setPoints(3);
+        test2.setGradingMethod(GradingMethod.CO);
+        test2.setNavigable(true);
+
+        Test test3 = new Test();
+        cal.set(currentYear, currentMonth, currentDay, 10, 00, 00);
+        test3.setStart(cal.getTime());
+        cal.set(currentYear, currentMonth, currentDay, 24, 00, 00);
+        test3.setEnd(cal.getTime());
+        test3.setPassword("password");
+        test3.setCourse(course1);
+        test3.setStudents(Lists.newArrayList(student));
+        test3.setQuestions(Lists.newArrayList(q1, q2));
+        test3.setAuthor(teacher);
+        test3.setPoints(3);
+        test3.setGradingMethod(GradingMethod.TO);
+        test3.setNavigable(true);
+
+        Test test4 = new Test();
+        cal.set(currentYear, currentMonth, currentDay, 11, 00, 00);
+        test4.setStart(cal.getTime());
+        cal.set(currentYear, currentMonth, currentDay, 24, 00, 00);
+        test4.setEnd(cal.getTime());
+        test4.setPassword("password");
+        test4.setCourse(course1);
+        test4.setStudents(Lists.newArrayList(student));
+        test4.setQuestions(Lists.newArrayList(q1, q2));
+        test4.setAuthor(teacher);
+        test4.setPoints(3);
+        test4.setGradingMethod(GradingMethod.TO_MINUS);
+        test4.setNavigable(true);
 
         teacherRepository.save(teacher);
         studentRepository.save(student);
@@ -215,7 +257,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         questionRepository.saveAll(Lists.newArrayList(q1, q2, q3, q4));
         answerRepository.saveAll(Lists.newArrayList(an1q1, an2q1, an3q1, an1q2, an2q2, an3q2,
                 an1q3, an2q3, an3q3, an1q4, an2q4, an3q4));
-        testRepository.saveAll(Lists.newArrayList(test));
+        testRepository.saveAll(Lists.newArrayList(test1, test2, test3, test4));
     }
 
 }

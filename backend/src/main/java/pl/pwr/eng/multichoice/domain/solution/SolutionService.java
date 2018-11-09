@@ -135,5 +135,13 @@ public class SolutionService {
         Solution solution = findById(uuid);
         return gradingService.gradeSolution(solution);
     }
+
+    public GradeForm getGrade(UUID uuid) {
+        Solution solution = findById(uuid);
+        int maxPoints = solution.getTest().getPoints();
+        int points = solution.getPoints();
+        double percent = (points * 100d / maxPoints);
+        return new GradeForm(points, maxPoints, percent);
+    }
 }
 
