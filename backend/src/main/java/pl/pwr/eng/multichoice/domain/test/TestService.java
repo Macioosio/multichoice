@@ -13,6 +13,7 @@ import pl.pwr.eng.multichoice.domain.test.dto.TestSolvingForm;
 
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -114,8 +115,17 @@ public class TestService {
     }
 
     public TestSolvingForm getTestSolving(UUID uuid) {
-        boolean navigable = findById(uuid).isNavigable();
+        Test test = findById(uuid);
+        boolean navigable = test.isNavigable();
         List<SafeQuestionForm> questions = getTestsQuestionsSafe(uuid);
-        return new TestSolvingForm(navigable, questions);
+        boolean isSolvingTime = isSolvingTime(test);
+        return new TestSolvingForm(navigable, questions, isSolvingTime);
+    }
+
+    private boolean isSolvingTime(Test test) {
+        Date a = test.getStart();
+        Date b = test.getEnd();
+        Date c = new Date();
+        return a.compareTo(c) * c.compareTo(b) > 0;
     }
 }

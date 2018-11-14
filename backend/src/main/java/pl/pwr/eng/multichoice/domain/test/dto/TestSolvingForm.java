@@ -18,4 +18,7 @@ public class TestSolvingForm {
 
     @NotNull
     private List<SafeQuestionForm> questions;
+
+    @NotNull
+    private boolean isSolvingTime;
 }

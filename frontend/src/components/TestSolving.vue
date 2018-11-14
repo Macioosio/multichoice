@@ -5,8 +5,15 @@
       </div>
       <div class="md-layout-item">
         <div v-if="!solution.posted">
+          <div v-if="isSolvingTime">
           <input class="input input-width" v-model="password" type="password" placeholder="Password"/>
           <button class="button" v-on:click="startTest">Zacznij rozwiązywać</button>
+          </div>
+          <div v-if="!isSolvingTime" class="box" style="font-size: medium">
+            <p>
+              Nie nadesłano rozwiązania
+            </p>
+          </div>
         </div>
         <div class="box" style="font-size: medium" v-if="solution.posted">
           <p>
@@ -58,6 +65,7 @@
     <md-snackbar :md-position="snackBarPosition" :md-duration="snackBarDuration" :md-active.sync="showSnackbar" md-persistent>
       <span>Wprowadzone hasło nie jest poprawne</span>
     </md-snackbar>
+    {{isSolvingTime}}
   </div>
 </template>
 
@@ -69,6 +77,7 @@ export default {
   props: ['testId'],
   data () {
     return {
+      isSolvingTime: false,
       isAuthorized: false,
       password: '',
       questions: {},
@@ -112,6 +121,7 @@ export default {
     },
     handleQuestions (solvingDto) {
       this.navigable = solvingDto.navigable
+      this.isSolvingTime = solvingDto.solvingTime
       let questions = solvingDto.questions
       questions.forEach(
         question => question.answers.forEach(answer => (answer.selected = false))
