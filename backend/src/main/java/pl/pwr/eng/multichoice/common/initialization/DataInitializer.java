@@ -105,7 +105,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         q3.setCourse(course2);
         q3.setArea(a1c2);
         q3.setContent("Pytanie trzecie, proszę odpowiedzieć");
-        q2.setPoints(1);
+        q3.setPoints(1);
 
         Question q4 = new Question();
         q4.setCourse(course2);
