@@ -113,6 +113,30 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         q4.setContent("Pytanie czwarte, proszę odpowiedzieć");
         q4.setPoints(1);
 
+        Question q5 = new Question();
+        q5.setCourse(course1);
+        q5.setArea(a1c1);
+        q5.setContent("Pytanie piąte, proszę odpowiedzieć");
+        q5.setPoints(2);
+
+        Question q6 = new Question();
+        q6.setCourse(course1);
+        q6.setArea(a1c1);
+        q6.setContent("Pytanie szóste, proszę odpowiedzieć");
+        q6.setPoints(1);
+
+        Question q7 = new Question();
+        q7.setCourse(course2);
+        q7.setArea(a1c2);
+        q7.setContent("Pytanie siódme, proszę odpowiedzieć");
+        q7.setPoints(1);
+
+        Question q8 = new Question();
+        q8.setCourse(course2);
+        q8.setArea(a1c2);
+        q8.setContent("Pytanie ósme, proszę odpowiedzieć");
+        q8.setPoints(1);
+
         Answer an1q1 = new Answer();
         an1q1.setCorrect(true);
         an1q1.setQuestion(q1);
@@ -185,6 +209,78 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         an3q4.setQuestion(q4);
         an3q4.setPoints(-1);
 
+        Answer an1q5 = new Answer();
+        an1q5.setCorrect(true);
+        an1q5.setQuestion(q5);
+        an1q5.setContent("Prawda");
+        an1q5.setPoints(1);
+
+        Answer an2q5 = new Answer();
+        an2q5.setContent("Prawda");
+        an2q5.setCorrect(true);
+        an2q5.setQuestion(q5);
+        an2q5.setPoints(1);
+
+        Answer an3q5 = new Answer();
+        an3q5.setContent("Fałsz");
+        an3q5.setCorrect(false);
+        an3q5.setQuestion(q5);
+        an3q5.setPoints(-1);
+
+        Answer an1q6 = new Answer();
+        an1q6.setCorrect(true);
+        an1q6.setQuestion(q6);
+        an1q6.setContent("Prawda");
+        an1q6.setPoints(1);
+
+        Answer an2q6 = new Answer();
+        an2q6.setContent("Fałsz");
+        an2q6.setCorrect(false);
+        an2q6.setQuestion(q6);
+        an2q6.setPoints(-1);
+
+        Answer an3q6 = new Answer();
+        an3q6.setContent("Fałsz");
+        an3q6.setCorrect(false);
+        an3q6.setQuestion(q6);
+        an3q6.setPoints(-1);
+
+        Answer an1q7 = new Answer();
+        an1q7.setCorrect(true);
+        an1q7.setQuestion(q7);
+        an1q7.setContent("Prawda");
+        an1q7.setPoints(1);
+
+        Answer an2q7 = new Answer();
+        an2q7.setContent("Fałsz");
+        an2q7.setCorrect(false);
+        an2q7.setQuestion(q7);
+        an2q7.setPoints(-1);
+
+        Answer an3q7 = new Answer();
+        an3q7.setContent("Fałsz");
+        an3q7.setCorrect(false);
+        an3q7.setQuestion(q7);
+        an3q7.setPoints(-1);
+
+        Answer an1q8 = new Answer();
+        an1q8.setCorrect(true);
+        an1q8.setQuestion(q8);
+        an1q8.setContent("Prawda");
+        an1q8.setPoints(1);
+
+        Answer an2q8 = new Answer();
+        an2q8.setContent("Fałsz");
+        an2q8.setCorrect(false);
+        an2q8.setQuestion(q8);
+        an2q8.setPoints(-1);
+
+        Answer an3q8 = new Answer();
+        an3q8.setContent("Fałsz");
+        an3q8.setCorrect(false);
+        an3q8.setQuestion(q8);
+        an3q8.setPoints(-1);
+
         Date todayDate = new Date();
         Calendar todayCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+1"));
         todayCalendar.setTime(todayDate);
@@ -202,9 +298,9 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         test1.setPassword("password");
         test1.setCourse(course1);
         test1.setStudents(Lists.newArrayList(student));
-        test1.setQuestions(Lists.newArrayList(q1, q2));
+        test1.setQuestions(Lists.newArrayList(q1, q2, q3, q4, q5, q6, q7, q8));
         test1.setAuthor(teacher);
-        test1.setPoints(3);
+        test1.setPoints(10);
         test1.setGradingMethod(GradingMethod.DO);
         test1.setNavigable(true);
 
@@ -216,9 +312,9 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         test2.setPassword("password");
         test2.setCourse(course1);
         test2.setStudents(Lists.newArrayList(student));
-        test2.setQuestions(Lists.newArrayList(q1, q2));
+        test2.setQuestions(Lists.newArrayList(q1, q2, q3, q4, q5, q6, q7, q8));
         test2.setAuthor(teacher);
-        test2.setPoints(3);
+        test2.setPoints(10);
         test2.setGradingMethod(GradingMethod.CO);
         test2.setNavigable(true);
 
@@ -230,9 +326,9 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         test3.setPassword("password");
         test3.setCourse(course1);
         test3.setStudents(Lists.newArrayList(student));
-        test3.setQuestions(Lists.newArrayList(q1, q2));
+        test3.setQuestions(Lists.newArrayList(q1, q2, q3, q4, q5, q6, q7, q8));
         test3.setAuthor(teacher);
-        test3.setPoints(3);
+        test3.setPoints(10);
         test3.setGradingMethod(GradingMethod.TO);
         test3.setNavigable(true);
 
@@ -244,9 +340,9 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         test4.setPassword("password");
         test4.setCourse(course1);
         test4.setStudents(Lists.newArrayList(student));
-        test4.setQuestions(Lists.newArrayList(q1, q2));
+        test4.setQuestions(Lists.newArrayList(q1, q2, q3, q4, q5, q6, q7, q8));
         test4.setAuthor(teacher);
-        test4.setPoints(3);
+        test4.setPoints(10);
         test4.setGradingMethod(GradingMethod.TO_MINUS);
         test4.setNavigable(true);
 
@@ -254,9 +350,17 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         studentRepository.save(student);
         courseRepository.saveAll(Lists.newArrayList(course1, course2));
         areaRepository.saveAll(Lists.newArrayList(a1c1, a2c1, a1c2, a2c2));
-        questionRepository.saveAll(Lists.newArrayList(q1, q2, q3, q4));
-        answerRepository.saveAll(Lists.newArrayList(an1q1, an2q1, an3q1, an1q2, an2q2, an3q2,
-                an1q3, an2q3, an3q3, an1q4, an2q4, an3q4));
+        questionRepository.saveAll(Lists.newArrayList(q1, q2, q3, q4, q5, q6, q7, q8));
+        answerRepository.saveAll(Lists.newArrayList(
+                an1q1, an2q1, an3q1,
+                an1q2, an2q2, an3q2,
+                an1q3, an2q3, an3q3,
+                an1q4, an2q4, an3q4,
+                an1q5, an2q5, an3q5,
+                an1q6, an2q6, an3q6,
+                an1q7, an2q7, an3q7,
+                an1q8, an2q8, an3q8
+        ));
         testRepository.saveAll(Lists.newArrayList(test1, test2, test3, test4));
     }
 
