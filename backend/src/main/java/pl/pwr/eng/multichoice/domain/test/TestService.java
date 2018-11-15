@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.question.QuestionService;
 import pl.pwr.eng.multichoice.domain.question.dto.SafeQuestionForm;
+import pl.pwr.eng.multichoice.domain.solution.Solution;
+import pl.pwr.eng.multichoice.domain.solution.SolutionService;
 import pl.pwr.eng.multichoice.domain.teacher.Teacher;
 import pl.pwr.eng.multichoice.domain.teacher.TeacherService;
 import pl.pwr.eng.multichoice.domain.test.dto.TestSolvingForm;
@@ -29,6 +31,9 @@ public class TestService {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private SolutionService solutionService;
 
 
     public List<Test> findAll(){
@@ -127,5 +132,13 @@ public class TestService {
         Date b = test.getEnd();
         Date c = new Date();
         return a.compareTo(c) * c.compareTo(b) > 0;
+    }
+
+    public List<Solution> getTestsSolutions(UUID uuid) {
+        Test test = findById(uuid);
+        List<Solution> testSolutions = solutionService.findAll().stream()
+                .filter(solution -> solution.getTest().equals(test))
+                .collect(Collectors.toList());
+        return testSolutions;
     }
 }

@@ -10,6 +10,7 @@ import pl.pwr.eng.multichoice.common.util.ConstraintViolationHandler;
 import pl.pwr.eng.multichoice.common.util.DTO;
 import pl.pwr.eng.multichoice.domain.question.Question;
 import pl.pwr.eng.multichoice.domain.question.dto.SafeQuestionForm;
+import pl.pwr.eng.multichoice.domain.solution.Solution;
 import pl.pwr.eng.multichoice.domain.test.dto.TestForm;
 import pl.pwr.eng.multichoice.domain.test.dto.TestSolvingForm;
 
@@ -46,6 +47,16 @@ public class TestController implements ConstraintViolationHandler {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(questions);
+    }
+
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @GetMapping("/{id}/solutions")
+    public ResponseEntity getTestsSolutions(@PathVariable(value = "id") UUID uuid) {
+        List<Solution> solutions = testService.getTestsSolutions(uuid);
+        if (solutions == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(solutions);
     }
 
     @PreAuthorize("hasAnyAuthority('TEACHER', 'STUDENT')")

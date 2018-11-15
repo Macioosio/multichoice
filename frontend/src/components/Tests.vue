@@ -13,6 +13,9 @@
         <md-table-cell width="50">
           <router-link class="button" :to="'/tests/edit/' + item.id">Edytuj</router-link>
         </md-table-cell>
+        <md-table-cell width="50">
+          <router-link class="button" :to="'/test/results/' + item.id">Wyniki</router-link>
+        </md-table-cell>
       </md-table-row>
     </md-table>
   </div>
