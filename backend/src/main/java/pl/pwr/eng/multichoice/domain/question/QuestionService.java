@@ -47,6 +47,7 @@ public class QuestionService {
     private int getPoints(List<AnswerCreationForm> answers) {
         int pointsSum = answers.stream()
                 .map(AnswerCreationForm::getPoints)
+                .filter(p -> p > 0)
                 .reduce(0, Integer::sum);
         return pointsSum;
     }
