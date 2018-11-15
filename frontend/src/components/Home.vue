@@ -1,6 +1,6 @@
 <template>
-<div class="container">
-  <p class = "subtitle">Homepage</p>
+<div class="container padding-class">
+  <p class = "subtitle">Strona główna</p>
 </div>
 </template>
 
@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .padding-class {
+    padding: 25px;
+  }
 </style>
