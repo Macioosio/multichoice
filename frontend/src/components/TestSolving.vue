@@ -65,7 +65,6 @@
     <md-snackbar :md-position="snackBarPosition" :md-duration="snackBarDuration" :md-active.sync="showSnackbar" md-persistent>
       <span>Wprowadzone hasło nie jest poprawne</span>
     </md-snackbar>
-    {{isSolvingTime}}
   </div>
 </template>
 
