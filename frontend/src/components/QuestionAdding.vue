@@ -56,7 +56,7 @@
       <div class="md-layout-item padding-class md-size-20">
         <button class="button" @click="saveQuestion()">Zapisz</button>
         <router-link class="button" to="/questions/">Wróć</router-link>
-        <router-link class="button" v-if="questionId" :to="'/questions/delete/' + questionId">Usuń</router-link>
+        <button class="button" v-if="questionId" v-on:click="verifyQuestionDeleting">Usuń</button>
       </div>
     </div>
   </div>
@@ -67,6 +67,7 @@ import axios from 'axios'
 import { mapMutations } from 'vuex'
 import { mapMultiRowFields } from 'vuex-map-fields'
 import $store from '../store/store'
+import {router} from '../router/index'
 
 export default {
   name: 'question_adding',
@@ -82,6 +83,9 @@ export default {
   },
   computed: {
     ...mapMultiRowFields(['answers'])
+  },
+  mounted () {
+    this.prepareData()
   },
   methods: {
     fetchAllCourses () {
@@ -144,15 +148,14 @@ export default {
       ]
     },
     prepareData () {
+      this.clearElements()
       this.fetchAllCourses()
       if (this.courseId) {
-        this.clearElements()
         axios
           .get('/api/courses/' + this.courseId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(response => (this.setDataFromCourse(response.data)))
       }
       if (this.areaId) {
-        this.clearElements()
         axios
           .get('/api/areas/' + this.areaId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(response => (this.setDataFromArea(response.data)))
@@ -189,10 +192,12 @@ export default {
         }
       })
       $store.state.answers = mappedAnswers
+    },
+    verifyQuestionDeleting () {
+      if (confirm('Czy na pewno chcesz usunąć to pytanie?')) {
+        router.push('/questions/delete/' + this.questionId)
+      }
     }
-  },
-  mounted () {
-    this.prepareData()
   }
 }
 </script>

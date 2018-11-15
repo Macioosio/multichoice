@@ -28,7 +28,7 @@
       <button class="button" v-if="!isEditMode && !isAddMode" v-on:click="turnOnEditMode">Edytuj</button>
       <button class="button" v-if="isEditMode" v-on:click="saveChanges">Zapisz</button>
       <button class="button" v-if="isEditMode" v-on:click="abandonChanges">Wróć</button>
-      <router-link class="button" v-if="!isAddMode" :to="'/courses/delete/' + courseId">Usuń</router-link>
+      <button class="button" v-if="!isAddMode" v-on:click="verifyDeleting">Usuń</button>
     </div>
   </div>
 </div>
@@ -36,6 +36,7 @@
 
 <script>
 import axios from 'axios'
+import {router} from '../router/index'
 
 export default {
   name: 'Areas',
@@ -89,6 +90,11 @@ export default {
         // .then(() => this.areas.push(this.area))
         .then(() => this.fetchCourseAreas())
       this.isAddMode = false
+    },
+    verifyDeleting () {
+      if (confirm('Czy na pewno chcesz usunąć ten dział?')) {
+        router.push('/courses/delete/' + this.courseId)
+      }
     }
   }
 }
