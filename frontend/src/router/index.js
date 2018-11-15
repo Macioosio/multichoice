@@ -87,6 +87,12 @@ export const router = new Router({
       meta: { requiresAuth: true, teacherAuth: true, studentAuth: true }
     },
     {
+      path: '/student/profile',
+      name: 'Profile',
+      component: Profile,
+      meta: { requiresAuth: true, teacherAuth: false, studentAuth: true }
+    },
+    {
       path: '/course/:courseId/areas',
       name: 'Areas',
       component: Areas,

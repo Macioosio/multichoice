@@ -1,7 +1,7 @@
 <template>
   <div v-if="isVisible">
     <md-tabs md-sync-route class="container" md-alignment="fixed" v-if="teacherView">
-      <md-tab id="tab-home" md-label="Home" to="/"></md-tab>
+      <md-tab id="tab-home" md-label="Główna" to="/"></md-tab>
       <md-tab id="tab-pages" md-label="Pytania" to="/courses"></md-tab>
       <md-tab id="tab-posts" md-label="Testy" to="/tests"></md-tab>
       <md-tab id="tab-settings" md-label="Profil" to="/profile"></md-tab>
@@ -9,7 +9,7 @@
     <md-tabs md-sync-route class="container" md-alignment="fixed" v-if="studentView">
       <md-tab id="tab-home" md-label="Główna" to="/"></md-tab>
       <md-tab id="tab-posts" md-label="Testy" to="/tests/mine"></md-tab>
-      <md-tab id="tab-settings" md-label="Profil" to="/profile"></md-tab>
+      <md-tab id="tab-settings" md-label="Profil" to="/student/profile"></md-tab>
     </md-tabs>
   </div>
 </template>

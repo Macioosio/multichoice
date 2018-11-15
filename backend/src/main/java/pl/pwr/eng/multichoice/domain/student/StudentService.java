@@ -48,7 +48,7 @@ public class StudentService {
     }
 
     public void modifyStudent(Student modifiedStudent) {
-        Student originalStudent = findById(modifiedStudent.getId());
+        Student originalStudent = findByEmail(modifiedStudent.getEmail());
         originalStudent.setEmail(modifiedStudent.getEmail());
         String encodedPassword = bCryptPasswordEncoder.encode(modifiedStudent.getPassword());
         originalStudent.setPassword(encodedPassword);

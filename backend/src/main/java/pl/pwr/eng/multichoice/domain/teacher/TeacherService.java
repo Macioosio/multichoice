@@ -42,7 +42,7 @@ public class TeacherService {
     }
 
     public void modifyTeacher(Teacher modifiedTeacher) {
-        Teacher originalTeacher = findById(modifiedTeacher.getId());
+        Teacher originalTeacher = findByEmail(modifiedTeacher.getEmail());
         originalTeacher.setEmail(modifiedTeacher.getEmail());
         String encodedPassword = bCryptPasswordEncoder.encode(modifiedTeacher.getPassword());
         originalTeacher.setPassword(encodedPassword);
