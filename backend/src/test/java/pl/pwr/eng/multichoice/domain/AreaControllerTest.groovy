@@ -14,7 +14,7 @@ import static org.springframework.http.HttpStatus.OK
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class AreaControlerTest extends Specification {
+class AreaControllerTest extends Specification {
 
     private AreaController areaController
     private AreaService areaService

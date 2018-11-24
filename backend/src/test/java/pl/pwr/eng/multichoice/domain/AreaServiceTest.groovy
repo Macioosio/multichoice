@@ -20,7 +20,7 @@ class AreaServiceTest extends Specification {
         area = new Area()
         area.id = UUID.randomUUID()
         area.name = "Test Area"
-        areaService.save(area)
+        areaRepository.save(area)
     }
 
     def "Find All"() {
@@ -46,13 +46,13 @@ class AreaServiceTest extends Specification {
 
     def "Modify area"(){
         given:
-            Area modifiedArea = new Area(area.id, area.name, new Course(UUID.randomUUID(),"name"))
-            modifiedArea.name = "Modified Area"
+            Area modifiedArea = new Area(area.id, "Modified Area", new Course(UUID.randomUUID(),"Test Course"))
         when:
             areaRepository.findById(modifiedArea.id) >> area
             areaService.modifyArea(modifiedArea)
         then:
             area.name.is(modifiedArea.name)
+            area.course.is(modifiedArea.course)
             1 * areaRepository.save(area)
 
     }
