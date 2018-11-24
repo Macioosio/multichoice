@@ -9,8 +9,13 @@
         <md-table-cell md-label="Start">{{convertDate(item.start)}}</md-table-cell>
         <md-table-cell md-label="Koniec">{{convertDate(item.end)}}</md-table-cell>
         <md-table-cell width="50">
-          <button class="button" v-if="!isAfterSolvingTime(item)" :disabled="!isSolvingTime(item)" v-on:click="routeToTestSolving(item)">Rozwiąż</button>
-          <button class="button" v-if="isAfterSolvingTime(item)" v-on:click="routeToTestSolving(item)">Wynik</button>
+          <button class="button" v-if="!isAfterSolvingTime(item)"
+                  :disabled="!isSolvingTime(item)" v-on:click="routeToTestSolving(item)">
+            Rozwiąż
+          </button>
+          <button class="button" v-if="isAfterSolvingTime(item)" v-on:click="routeToTestSolving(item)">
+            Wynik
+          </button>
         </md-table-cell>
       </md-table-row>
     </md-table>
