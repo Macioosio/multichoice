@@ -14,7 +14,7 @@ import static org.springframework.http.HttpStatus.OK
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class AreaControllerTest extends Specification {
+class AreaControlerTest extends Specification {
 
     private AreaController areaController
     private AreaService areaService
@@ -35,43 +35,43 @@ class AreaControllerTest extends Specification {
 
     def "get all areas"() {
         when:
-            def response = mockMvc.perform(get("/api/areas"))
+        def response = mockMvc.perform(get("/api/areas"))
         then:
-            1 * areaService.findAll()
-            response.andExpect(status().isOk())
+        1 * areaService.findAll()
+        response.andExpect(status().isOk())
     }
 
     def "get by id"() {
         when:
-            def response = mockMvc.perform(get("/api/areas/" + area.id)).andReturn().response
-            def content = new JsonSlurper().parseText(response.contentAsString)
+        def response = mockMvc.perform(get("/api/areas/" + area.id)).andReturn().response
+        def content = new JsonSlurper().parseText(response.contentAsString)
         then:
-            1 * areaService.findById(area.id) >> area
-            response.status == OK.value()
-            content.name == ("Test Area")
+        1 * areaService.findById(area.id) >> area
+        response.status == OK.value()
+        content.name == ("Test Area")
 
     }
 
     def "delete"() {
         when:
-            def response = mockMvc.perform(delete("/api/areas/" + area.id))
+        def response = mockMvc.perform(delete("/api/areas/" + area.id))
         then:
-            1 * areaService.findById(area.id) >> area
-            response.andExpect(status().isOk())
+        1 * areaService.findById(area.id) >> area
+        response.andExpect(status().isOk())
     }
 
     def "post"(){
         given:
-            Map request = [
-                    name : "New Area"
-            ]
+        Map request = [
+                name : "New Area"
+        ]
         when:
-            def response = mockMvc.perform(post("/api/areas")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(toJson(request)))
-                    .andReturn().response
+        def response = mockMvc.perform(post("/api/areas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(request)))
+                .andReturn().response
         then:
-            response.status == OK.value()
+        response.status == OK.value()
     }
     def "put"(){
         given:

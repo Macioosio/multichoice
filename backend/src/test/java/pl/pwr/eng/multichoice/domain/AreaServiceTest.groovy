@@ -3,6 +3,7 @@ package pl.pwr.eng.multichoice.domain
 import pl.pwr.eng.multichoice.domain.area.Area
 import pl.pwr.eng.multichoice.domain.area.AreaRepository
 import pl.pwr.eng.multichoice.domain.area.AreaService
+import pl.pwr.eng.multichoice.domain.course.Course
 import spock.lang.Specification
 
 class AreaServiceTest extends Specification {
@@ -43,9 +44,9 @@ class AreaServiceTest extends Specification {
             1 * areaRepository.save(area)
     }
 
-    def "Modify cinema"(){
+    def "Modify area"(){
         given:
-            Area modifiedArea = new Area(area.id, area.name)
+            Area modifiedArea = new Area(area.id, area.name, new Course(UUID.randomUUID(),"name"))
             modifiedArea.name = "Modified Area"
         when:
             areaRepository.findById(modifiedArea.id) >> area
