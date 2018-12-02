@@ -49,6 +49,7 @@
         </div>
         <div class="small-padding-class">
           <button class="button" v-on:click="saveAndClose">Zapisz</button>
+          <button class="button" v-if="this.testId" v-on:click="deleteAndClose">Usun</button>
           <router-link class="button" to="/tests">Wróć</router-link>
         </div>
       </div>
@@ -213,6 +214,13 @@ export default {
         }
         axios
           .post('/api/tests', test, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
+          .then(() => router.push('/tests'))
+      }
+    },
+    deleteAndClose () {
+      if (confirm('Czy na pewno chcesz usunąć ten test?')) {
+        axios
+          .delete('/api/tests' + this.testId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
           .then(() => router.push('/tests'))
       }
     },
