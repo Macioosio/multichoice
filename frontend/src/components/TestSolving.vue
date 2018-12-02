@@ -4,17 +4,26 @@
       <div class="md-layout-item" >
       </div>
       <div class="md-layout-item">
-        <div v-if="!solution.posted">
+        <form class="solve" @submit.prevent="startTest" v-if="!solution.posted">
           <div v-if="isSolvingTime">
+            <div class="box">
+              <p><b>Nawigacja po pytaniach</b> może przebiegać za pomocą przycisków zawierających numery pytań znajdujących się po lewej stronie
+              lub za pomocą przycisku "Następne pytanie" znajdującego się po prawej stronie.</p>
+              <P><b>Przycisk "Następne pytanie"</b> zapisuje również wybrane odpowiedzi.</P>
+              <p>
+                <b>Przycisk "Zapisz odpowiedź"</b> zapisuje odpowiedzi bez nawigacji do kolejnego pytania.
+              </p>
+              <p><b>Zakończenie rozwiązywania testu</b> odbywa się za pomocą przycisku "Zakończ test"</p>
+            </div>
           <input class="input input-width" v-model="password" type="password" placeholder="Password"/>
-          <button class="button" v-on:click="startTest">Zacznij rozwiązywać</button>
+          <button class="button" type="submit">Zacznij rozwiązywać</button>
           </div>
           <div v-if="!isSolvingTime" class="box" style="font-size: medium">
             <p>
               Nie nadesłano rozwiązania
             </p>
           </div>
-        </div>
+        </form>
         <div class="box" style="font-size: medium" v-if="solution.posted">
           <p>
           Twoje rozwiązanie zostało już przesłane
