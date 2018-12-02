@@ -1,5 +1,15 @@
 <template>
 <div class="container padding-class">
+  <h2 v-if="areaId" class = "subtitle">Pytania
+    <span v-if="!isEditMode">z działu {{areaName}}</span>
+    <span v-if="isEditMode">działu <input v-model="areaName" placeholder="this.course.name"/></span>
+    <p align="right">
+    <button class="button" v-if="!isEditMode" v-on:click="turnOnEditMode">Edytuj</button>
+    <button class="button" v-if="!isEditMode" v-on:click="verifyDeleting">Usuń</button>
+      <button class="button" v-if="isEditMode" v-on:click="saveChanges">Zapisz</button>
+      <button class="button" v-if="isEditMode" v-on:click="abandonChanges">Wróć</button>
+    </p>
+  </h2>
   <md-table v-model="questions" md-card md-fixed-header>
     <md-table-toolbar>
       <h1 class="md-title md-toolbar-section-start">Pytania</h1>
@@ -20,13 +30,16 @@
 <script>
 import axios from 'axios'
 import $store from '../store/store'
+import {router} from '../router'
 
 export default {
   name: 'Questions',
   props: ['courseId', 'areaId', 'questionId'],
   data () {
     return {
-      questions: []
+      questions: [],
+      isEditMode: false,
+      areaName: ''
     }
   },
   mounted () {
@@ -55,9 +68,15 @@ export default {
         .then(response => (this.handleData(response.data)))
     },
     fetchAreaQuestions () {
+      this.fetchAreaName()
       axios
         .get('/api/areas/' + this.areaId + '/questions', {headers: {'Authorization': sessionStorage.getItem('user-token')}})
         .then(response => (this.handleData(response.data)))
+    },
+    fetchAreaName () {
+      axios
+        .get('/api/areas/' + this.areaId, {headers: {'Authorization': sessionStorage.getItem('user-token')}})
+        .then((response) => (this.areaName = response.data.name))
     },
     handleData (questions) {
       if (this.questionId) {
@@ -102,6 +121,20 @@ export default {
           correct: false
         }
       ]
+    },
+    turnOnEditMode () {
+      this.isEditMode = true
+    },
+    verifyDeleting () {
+      if (confirm('Czy na pewno chcesz usunąć ten dział?')) {
+        router.push('/courses')
+      }
+    },
+    abandonChanges () {
+      this.isEditMode = false
+    },
+    saveChanges () {
+      this.isEditMode = false
     }
   }
 }

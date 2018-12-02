@@ -92,7 +92,7 @@ export default {
       this.isAddMode = false
     },
     verifyDeleting () {
-      if (confirm('Czy na pewno chcesz usunąć ten dział?')) {
+      if (confirm('Czy na pewno chcesz usunąć ten kurs?')) {
         router.push('/courses/delete/' + this.courseId)
       }
     }
